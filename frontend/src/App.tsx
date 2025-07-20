@@ -1,23 +1,34 @@
 import { useState, useEffect } from "react";
+//@ts-expect-error it actually works, no actions needed (probably installed types are not-perfect)
 import { io } from "socket.io-client";
 
 const socket = io("http://localhost:3001");
 
+interface gameState {
+  lastAction: {
+    name: string;
+    damage: string;
+  };
+}
+
 export default function App() {
-  const [actions, setActions] = useState<string[]>([]);
+  const [gameState, setGameState] = useState<gameState>({
+    lastAction: {
+      name: "start",
+      damage: "0d0",
+    },
+  });
 
   useEffect(() => {
-    socket.on("pendingAction", (action) => {
-      setActions((prev) => [...prev, `Oczekuje: ${action.name}`]);
-    });
-
-    socket.on("executeAction", (action) => {
-      setActions((prev) => [...prev, `Wykonano: ${action.name}`]);
+    socket.on("updateGameState", (gameState: gameState) => {
+      setGameState(gameState);
     });
   }, []);
 
   const handleAttack = () => {
-    socket.emit("playerAction", { name: "Atak mieczem", damage: "2d6" });
+    const numberOfDice: number = Math.floor(Math.random() * 5) + 1;
+    const damage = `${numberOfDice}d6`;
+    socket.emit("playerAction", { name: "Atak mieczem", damage: damage });
   };
 
   return (
@@ -25,9 +36,7 @@ export default function App() {
       <h1>Walka Wiedźmina</h1>
       <button onClick={handleAttack}>Atakuj</button>
       <div>
-        {actions.map((action, i) => (
-          <div key={i}>{action}</div>
-        ))}
+        {gameState.lastAction.name} zadał {gameState.lastAction.damage}
       </div>
     </div>
   );

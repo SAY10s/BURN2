@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@dice-roller/rpg-dice-roller": "^5.5.1",
     "@prisma/client": "^6.12.0",
     "express": "^5.1.0",
     "socket.io": "^4.8.1"
