@@ -1,0 +1,28 @@
+{
+  "name": "burn2 backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.ts",
+    "dev": "ts-node src/server.ts",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev"
+  },
+  "keywords": [],
+  "author": "SAY10s",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.12.0",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.14",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.12.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
