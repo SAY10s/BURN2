@@ -32,10 +32,17 @@ export default function App() {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h1>Walka Wiedźmina</h1>
-      <button onClick={handleAttack}>Atakuj</button>
-      <div>
+    <div className="p-4 max-w-2xl mx-auto bg-gray-100 rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
+        Walka Wiedźmina
+      </h1>
+      <button
+        onClick={handleAttack}
+        className="block w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded transition-colors mb-4"
+      >
+        Atakuj
+      </button>
+      <div className="text-center text-lg text-gray-700">
         {gameState.lastAction.name} zadał {gameState.lastAction.damage}
       </div>
     </div>
