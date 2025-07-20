@@ -26,6 +26,8 @@ const gameState = {
 io.on("connection", (socket) => {
   console.log("Użytkownik podłączony");
 
+  socket.emit("updateGameState", gameState);
+
   socket.on("playerAction", (action) => {
     console.log("Akcja gracza:", action);
 
