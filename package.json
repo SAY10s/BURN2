@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "copyfiles": "^2.4.1"
+  },
+  "scripts": {
+    "sync-types": "copyfiles -u 2 shared/types/*.* backend/src/shared/types && copyfiles -u 2 shared/types/*.* frontend/src/shared/types && copyfiles -u 2 shared/consts/*.* backend/src/shared/consts && copyfiles -u 2 shared/consts/*.* frontend/src/shared/consts"
+  }
+}

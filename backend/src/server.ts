@@ -3,42 +3,16 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { PrismaClient } from "./generated/prisma/client";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
+import { GameState } from "./shared/types/gameState";
+import { Action } from "./shared/types/action";
+import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
 
 const prisma = new PrismaClient();
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: "*" } });
 
-interface Player {
-  socketID: string;
-  name: string;
-  maxHP: number;
-  currentHP: number;
-}
-
-interface Action {
-  actor: string;
-  target: string;
-  name: string;
-  damage: string;
-}
-
-interface GameState {
-  players: Player[];
-  lastAction: Action;
-  debugMessage: string;
-}
-
-const gameState: GameState = {
-  players: [],
-  lastAction: {
-    actor: "",
-    target: "",
-    name: "start",
-    damage: "0d0",
-  },
-  debugMessage: "",
-};
+const gameState: GameState = INITIAL_GAME_STATE;
 
 io.on("connection", (socket) => {
   const updateGameState = () => {

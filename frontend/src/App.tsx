@@ -1,26 +1,9 @@
 import { useState, useEffect } from "react";
 //@ts-expect-error it actually works, no actions needed (probably installed types are not-perfect)
 import { io } from "socket.io-client";
+import type { GameState } from "./shared/types/gameState";
 
 const socket = io("http://localhost:3001");
-
-interface Player {
-  socketID: string;
-  name: string;
-  maxHP: number;
-  currentHP: number;
-}
-
-interface GameState {
-  players: Player[];
-  lastAction: {
-    actor: string;
-    target: string;
-    name: string;
-    damage: string;
-  };
-  debugMessage: string;
-}
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>({
