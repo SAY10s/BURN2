@@ -41,6 +41,9 @@ const gameState: GameState = {
 };
 
 io.on("connection", (socket) => {
+  const updateGameState = () => {
+    io.emit("updateGameState", gameState);
+  };
   console.log("Użytkownik podłączony");
 
   // FIXME: its hardcoded so far
@@ -51,7 +54,7 @@ io.on("connection", (socket) => {
     currentHP: 100,
   });
 
-  io.emit("updateGameState", gameState);
+  updateGameState();
 
   socket.on("playerAction", (action: Action) => {
     const damageRoll = new DiceRoll(action.damage);
@@ -69,8 +72,7 @@ io.on("connection", (socket) => {
       } else return player;
     });
     gameState.debugMessage = damageRoll.rolls.toString();
-
-    io.emit("updateGameState", gameState);
+    updateGameState();
   });
 
   socket.on("disconnect", () => {
