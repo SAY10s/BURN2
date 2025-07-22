@@ -16,14 +16,16 @@ interface Player {
   currentHP: number;
 }
 
+interface Action {
+  actor: string;
+  target: string;
+  name: string;
+  damage: string;
+}
+
 interface GameState {
   players: Player[];
-  lastAction: {
-    actor: string;
-    target: string;
-    name: string;
-    damage: string;
-  };
+  lastAction: Action;
   debugMessage: string;
 }
 
@@ -37,10 +39,11 @@ const gameState: GameState = {
   },
   debugMessage: "",
 };
-// Socket.io
+
 io.on("connection", (socket) => {
   console.log("Użytkownik podłączony");
 
+  // FIXME: its hardcoded so far
   gameState.players.push({
     socketID: socket.id,
     name: "taco",
@@ -50,16 +53,23 @@ io.on("connection", (socket) => {
 
   io.emit("updateGameState", gameState);
 
-  socket.on("playerAction", (action) => {
-    console.log("Akcja gracza:", action);
-
+  socket.on("playerAction", (action: Action) => {
     const damageRoll = new DiceRoll(action.damage);
 
     gameState.lastAction = {
       ...action,
       damage: damageRoll.total.toString(),
     };
+    gameState.players = gameState.players.map((player) => {
+      if (player.socketID === action.target) {
+        return {
+          ...player,
+          currentHP: player.currentHP - damageRoll.total,
+        };
+      } else return player;
+    });
     gameState.debugMessage = damageRoll.rolls.toString();
+
     io.emit("updateGameState", gameState);
   });
 
