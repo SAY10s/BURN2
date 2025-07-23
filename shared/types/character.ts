@@ -1,7 +1,11 @@
 export interface Character {
   socketID: string;
   name: string;
-  //TODO: write actual formula for calculating max hp
+  /**
+   * @Formula Math.floor(Body + Will / 2 ) * 5
+   * @min 10
+   * @max 65
+   */
   maxHP: number;
   currentHP: number;
   stats: {
@@ -19,6 +23,20 @@ export interface Character {
      * @default 2
      */
     dexterity: number;
+    /**
+     * (pol. **ciało**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    body: number;
+    /**
+     * (pol. **Wola**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    will: number;
   };
   skills: {
     reflexSkills: {

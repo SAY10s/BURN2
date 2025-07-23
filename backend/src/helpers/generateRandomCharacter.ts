@@ -46,15 +46,20 @@ const getRandomSkillValue = () => {
 };
 
 export const generateRandomCharacter = (socketID: string) => {
+  const stats = {
+    reflex: getRandomStatValue(),
+    dexterity: getRandomStatValue(),
+    body: getRandomStatValue(),
+    will: getRandomStatValue(),
+  };
+  const maxHP = Math.floor(stats.body + stats.will / 2) * 5;
+
   const character: Character = {
     socketID,
     name: getRandomName(),
-    maxHP: 30,
-    currentHP: 30,
-    stats: {
-      reflex: getRandomStatValue(),
-      dexterity: getRandomStatValue(),
-    },
+    maxHP,
+    currentHP: maxHP,
+    stats,
     skills: {
       reflexSkills: {
         dodgeEscape: getRandomSkillValue(),
