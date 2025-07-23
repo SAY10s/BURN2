@@ -6,6 +6,7 @@ import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { GameState } from "./shared/types/gameState";
 import { Action } from "./shared/types/action";
 import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
+import { generateRandomCharacter } from "./helpers/generateRandomCharacter";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -18,15 +19,9 @@ io.on("connection", (socket) => {
   const updateGameState = () => {
     io.emit("updateGameState", gameState);
   };
-  console.log("Użytkownik podłączony");
 
-  // FIXME: its hardcoded so far
-  gameState.players.push({
-    socketID: socket.id,
-    name: "taco",
-    maxHP: 100,
-    currentHP: 100,
-  });
+  //add a new player that just joined
+  gameState.players.push(generateRandomCharacter(socket.id));
 
   updateGameState();
 

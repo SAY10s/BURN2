@@ -1,7 +1,7 @@
-import { Player } from "./player";
+import { Character } from "./character";
 import { Action } from "./action";
 export interface GameState {
-  players: Player[];
+  players: Character[];
   lastAction: Action;
   debugMessage: string;
 }
