@@ -1,5 +1,15 @@
 export interface Character {
-  socketID: string;
+  /**
+   * States if given Character is playable by player. If it is, then it's value is `true`, if not, then it's NPC controlled by GameMaster, and therefore it's value is `false`.
+   * @default false
+   */
+  isPlayer: boolean;
+  /**
+   * Random string of 7 characters that allows to identify Character
+   * @formula Math.random().toString(36).substring(2, 9);
+   * @example "4f7d2e9"
+   */
+  id: string;
   name: string;
   /**
    * @Formula Math.floor(Body + Will / 2 ) * 5
@@ -10,7 +20,42 @@ export interface Character {
   currentHP: number;
   stats: {
     /**
-     * (pol. **Reakcja**)
+     * (pol. **Tempo**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    speed: number;
+    /**
+     * (pol. **Fach**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    craft: number;
+    /**
+     * (pol. **Fart**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    luck: number;
+    /**
+     * (pol. **Emocje**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    empathy: number;
+    /**
+     * (pol. **Rozum**)
+     * @creationRange 2-8 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 2
+     */
+    intelligence: number;
+    /**
+     * (pol. **Rozum**)
      * @creationRange 2-8 The initial range during character creation
      * @max 10 The maximum achievable value through progression
      * @default 2

@@ -36,3 +36,21 @@ cd frontend
 npm i
 npm run dev
 ```
+
+## Sequences
+
+### Attack sequence
+
+| **Action** | **Description**                                           |
+| ---------- | --------------------------------------------------------- |
+| Attack     | Player A attacks Player B by pressing button on frontend. |
+
+```mermaid
+sequenceDiagram
+  Player A->>Server: Attack
+  Server->>Player B: Request Defence
+  Player B->>Server: Deffence action
+  Server->>GM: Request approval
+  GM->>Server: Approval/dissaproval/modify
+  Server->>Everyone: Modified gamestatetrzeba se zatrzymać i chuj, bo mi się nie chciało inaczej montowaćv
+```

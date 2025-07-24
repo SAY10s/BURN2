@@ -1,4 +1,4 @@
-import { Character } from "../shared/types/character";
+import { Character } from "../types/character";
 
 /**
  * Collection of predefined character names for random selection
@@ -45,17 +45,23 @@ const getRandomSkillValue = () => {
   return Math.floor(Math.random() * 7);
 };
 
-export const generateRandomCharacter = (socketID: string) => {
+export const generateRandomCharacter = (isPlayer = false) => {
   const stats = {
     reflex: getRandomStatValue(),
     dexterity: getRandomStatValue(),
     body: getRandomStatValue(),
     will: getRandomStatValue(),
+    speed: getRandomStatValue(),
+    empathy: getRandomStatValue(),
+    craft: getRandomStatValue(),
+    luck: getRandomStatValue(),
+    intelligence: getRandomStatValue(),
   };
   const maxHP = Math.floor(stats.body + stats.will / 2) * 5;
 
   const character: Character = {
-    socketID,
+    isPlayer: isPlayer,
+    id: Math.random().toString(36).substring(2, 9),
     name: getRandomName(),
     maxHP,
     currentHP: maxHP,

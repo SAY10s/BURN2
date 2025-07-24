@@ -6,7 +6,7 @@ import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { GameState } from "./shared/types/gameState";
 import { Action } from "./shared/types/action";
 import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
-import { generateRandomCharacter } from "./helpers/generateRandomCharacter";
+import { generateRandomCharacter } from "./shared/helpers/generateRandomCharacter";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -21,26 +21,40 @@ io.on("connection", (socket) => {
   };
 
   //add a new player that just joined
-  gameState.players.push(generateRandomCharacter(socket.id));
+  gameState.players.push({
+    socketID: socket.id,
+    controlledCharacterID: "none",
+    isGameMaster: false,
+  });
 
   updateGameState();
 
   socket.on("playerAction", (action: Action) => {
-    const damageRoll = new DiceRoll(action.damage);
-
-    gameState.lastAction = {
-      ...action,
-      damage: damageRoll.total.toString(),
-    };
+    // const damageRoll = new DiceRoll(action.damage);
+    // gameState.lastAction = {
+    //   ...action,
+    //   damage: damageRoll.total.toString(),
+    // };
+    // gameState.players = gameState.players.map((player) => {
+    //   if (player.socketID === action.target) {
+    //     return {
+    //       ...player,
+    //       currentHP: player.currentHP - damageRoll.total,
+    //     };
+    //   } else return player;
+    // });
+    // gameState.debugMessage = damageRoll.rolls.toString();
+    // updateGameState();
+  });
+  socket.on("chooseCharacter", (characterID) => {
     gameState.players = gameState.players.map((player) => {
-      if (player.socketID === action.target) {
+      if (player.socketID === socket.id) {
         return {
           ...player,
-          currentHP: player.currentHP - damageRoll.total,
+          controlledCharacterID: characterID,
         };
       } else return player;
     });
-    gameState.debugMessage = damageRoll.rolls.toString();
     updateGameState();
   });
 
@@ -48,6 +62,7 @@ io.on("connection", (socket) => {
     gameState.players = gameState.players.filter(
       (player) => player.socketID != socket.id
     );
+    updateGameState();
   });
 });
 

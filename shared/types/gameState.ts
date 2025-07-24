@@ -1,7 +1,15 @@
 import { Character } from "./character";
 import { Action } from "./action";
+import { Player } from "./player";
 export interface GameState {
-  players: Character[];
+  /**
+   * Array of connected players.
+   */
+  players: Player[];
+  /**
+   * Array of ALL characters, both Players and NPC's.
+   */
+  characters: Character[];
   lastAction: Action;
   debugMessage: string;
 }
