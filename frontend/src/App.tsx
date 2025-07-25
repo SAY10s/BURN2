@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import type { GameState } from "./shared/types/gameState";
 import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
+import PlayersTable from "./components/PlayersTable/PlayersTable";
 
 const socket = io("http://localhost:3001");
 
@@ -34,41 +35,7 @@ export default function App() {
         {gameState.debugMessage}
       </div>
       <div className="p-2">
-        <table className="w-full max-w-2xl mx-auto mt-6 bg-white rounded-lg shadow-md overflow-hidden">
-          <thead className="bg-gray-800 text-white">
-            <tr>
-              <th className="px-4 py-3 text-left">Socket ID</th>
-              <th className="px-4 py-3 text-left">Character ID</th>
-              <th className="px-4 py-3 text-left">Role</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {gameState.players.map((player) => (
-              <tr
-                key={player.socketID}
-                className="hover:bg-gray-50 transition-colors"
-              >
-                <td className="px-4 py-3 text-sm font-mono text-gray-700 truncate max-w-[120px]">
-                  {player.socketID}
-                </td>
-                <td className="px-4 py-3 text-sm font-mono text-gray-700 truncate max-w-[120px]">
-                  {player.controlledCharacterID}
-                </td>
-                <td className="px-4 py-3 text-sm font-medium">
-                  {(player.isGameMaster && (
-                    <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
-                      GM
-                    </span>
-                  )) || (
-                    <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
-                      Player
-                    </span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <PlayersTable players={gameState.players} />
       </div>
       <CharacterTable
         characters={gameState.characters}
