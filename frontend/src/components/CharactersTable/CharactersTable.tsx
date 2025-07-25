@@ -31,15 +31,13 @@ export default function CharacterTable({
               className="hover:bg-gray-50 transition-colors"
             >
               {/* Character Info */}
-              <td className="px-4 py-3">
-                <div
-                  className="font-medium"
-                  onClick={() => {
-                    chooseCharacter(character.id);
-                  }}
-                >
-                  {character.name}
-                </div>
+              <td
+                className="px-4 py-3 cursor-pointer"
+                onClick={() => {
+                  chooseCharacter(character.id);
+                }}
+              >
+                <div className="font-medium ">{character.name}</div>
                 <div className="text-xs text-gray-500 font-mono mt-1">
                   ID: {character.id}
                 </div>
