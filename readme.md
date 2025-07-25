@@ -52,5 +52,5 @@ sequenceDiagram
   Player B->>Server: Deffence action
   Server->>GM: Request approval
   GM->>Server: Approval/dissaproval/modify
-  Server->>Everyone: Modified gamestatetrzeba se zatrzymać i chuj, bo mi się nie chciało inaczej montowaćv
+  Server->>Everyone: Modified gamestate
 ```
