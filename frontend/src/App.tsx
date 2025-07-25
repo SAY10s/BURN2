@@ -20,6 +20,9 @@ export default function App() {
   const chooseCharacter = (characterID: string) => {
     socket.emit("chooseCharacter", characterID);
   };
+  const changePlayersRole = (socketID: string) => {
+    socket.emit("changePlayersRole", socketID);
+  };
 
   return (
     <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md">
@@ -35,7 +38,10 @@ export default function App() {
         {gameState.debugMessage}
       </div>
       <div className="p-2">
-        <PlayersTable players={gameState.players} />
+        <PlayersTable
+          players={gameState.players}
+          changePlayersRole={changePlayersRole}
+        />
       </div>
       <CharacterTable
         characters={gameState.characters}

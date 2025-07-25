@@ -29,29 +29,24 @@ io.on("connection", (socket) => {
 
   updateGameState();
 
-  socket.on("playerAction", (action: Action) => {
-    // const damageRoll = new DiceRoll(action.damage);
-    // gameState.lastAction = {
-    //   ...action,
-    //   damage: damageRoll.total.toString(),
-    // };
-    // gameState.players = gameState.players.map((player) => {
-    //   if (player.socketID === action.target) {
-    //     return {
-    //       ...player,
-    //       currentHP: player.currentHP - damageRoll.total,
-    //     };
-    //   } else return player;
-    // });
-    // gameState.debugMessage = damageRoll.rolls.toString();
-    // updateGameState();
-  });
+  socket.on("playerAction", (action: Action) => {});
   socket.on("chooseCharacter", (characterID) => {
     gameState.players = gameState.players.map((player) => {
       if (player.socketID === socket.id) {
         return {
           ...player,
           controlledCharacterID: characterID,
+        };
+      } else return player;
+    });
+    updateGameState();
+  });
+  socket.on("changePlayersRole", (socketID: string) => {
+    gameState.players = gameState.players.map((player) => {
+      if (player.socketID === socketID) {
+        return {
+          ...player,
+          isGameMaster: !player.isGameMaster,
         };
       } else return player;
     });

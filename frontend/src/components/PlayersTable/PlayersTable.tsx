@@ -1,6 +1,13 @@
 import type { Player } from "../../shared/types/player";
+interface PlayersTableProps {
+  players: Player[];
+  changePlayersRole: (socketID: string) => void;
+}
 
-export default function PlayersTable({ players }: { players: Player[] }) {
+export default function PlayersTable({
+  players,
+  changePlayersRole,
+}: PlayersTableProps) {
   return (
     <table className="w-full max-w-2xl mx-auto mt-6 bg-white rounded-lg shadow-md overflow-hidden">
       <thead className="bg-gray-800 text-white">
@@ -22,7 +29,12 @@ export default function PlayersTable({ players }: { players: Player[] }) {
             <td className="px-4 py-3 text-sm font-mono text-gray-700 truncate max-w-[120px]">
               {player.controlledCharacterID}
             </td>
-            <td className="px-4 py-3 text-sm font-medium">
+            <td
+              className="px-4 py-3 text-sm font-medium cursor-pointer"
+              onClick={() => {
+                changePlayersRole(player.socketID);
+              }}
+            >
               {(player.isGameMaster && (
                 <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
                   GM
