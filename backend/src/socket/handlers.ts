@@ -3,7 +3,11 @@ import { Server, Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 import { insertCharacter, getAllCharacters } from "../db/character.repository";
 import { generateRandomCharacter } from "../shared/helpers/generateRandomCharacter";
-import { getCharacterByCharactersId } from "../shared/helpers/characterGetters";
+import {
+  getCharacterByCharactersId,
+  getPlayerByCharactersId,
+  getPlayerByPlayersSocketId,
+} from "../shared/helpers/characterGetters";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
   io.on("connection", (socket: Socket) => {
@@ -46,12 +50,25 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
     });
 
     socket.on("attackCharacter", async (targetCharacterID) => {
-      console.log(`Actor: ${socket.id}, targer: ${targetCharacterID}`);
-      const target = getCharacterByCharactersId(
+      const actorPlayer = getPlayerByPlayersSocketId(
+        socket.id,
+        gameState.players
+      );
+      const actorCharacter = getCharacterByCharactersId(
+        actorPlayer.controlledCharacterID,
+        gameState.characters
+      );
+      const targetPlayer = getPlayerByCharactersId(
+        targetCharacterID,
+        gameState.players
+      );
+      const targetCharacter = getCharacterByCharactersId(
         targetCharacterID,
         gameState.characters
       );
-      gameState.debugMessage = `Oczekiwanie na obronę postaci ${target?.name}`;
+
+      gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID})`;
+
       updateGameState();
     });
 
