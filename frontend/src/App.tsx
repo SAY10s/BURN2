@@ -10,10 +10,16 @@ const socket = io("http://localhost:3001");
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
+  const [clientsCharacterID, setClientsCharacterID] = useState("");
 
   useEffect(() => {
     socket.on("updateGameState", (gameState: GameState) => {
       setGameState(gameState);
+
+      const controlledCharacterID = gameState.players.find(
+        (player) => player.socketID === socket.id
+      )?.controlledCharacterID;
+      setClientsCharacterID(controlledCharacterID || "none");
     });
   }, []);
 
@@ -56,6 +62,7 @@ export default function App() {
       <CharacterTable
         characters={gameState.characters}
         chooseCharacter={chooseCharacter}
+        clientsCharacterId={clientsCharacterID}
       />
     </div>
   );

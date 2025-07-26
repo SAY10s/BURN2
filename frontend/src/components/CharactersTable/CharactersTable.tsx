@@ -6,11 +6,13 @@ import StatsTable from "./StatsTable";
 interface CharacterTableProps {
   characters: Character[];
   chooseCharacter: (characterId: string) => void;
+  clientsCharacterId: string;
 }
 
 export default function CharacterTable({
   characters,
   chooseCharacter,
+  clientsCharacterId,
 }: CharacterTableProps) {
   return (
     <div className="overflow-x-auto">
@@ -37,7 +39,13 @@ export default function CharacterTable({
                   chooseCharacter(character.id);
                 }}
               >
-                <div className="font-medium ">{character.name}</div>
+                <div className={`font-medium`}>
+                  {clientsCharacterId === character.id ? (
+                    <span className="font-black">→{character.name}</span>
+                  ) : (
+                    character.name
+                  )}
+                </div>
                 <div className="text-xs text-gray-500 font-mono mt-1">
                   ID: {character.id}
                 </div>
