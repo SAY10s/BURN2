@@ -7,12 +7,14 @@ interface CharacterTableProps {
   characters: Character[];
   chooseCharacter: (characterId: string) => void;
   clientsCharacterId: string;
+  attackCharacter: (targetID: string) => void;
 }
 
 export default function CharacterTable({
   characters,
   chooseCharacter,
   clientsCharacterId,
+  attackCharacter,
 }: CharacterTableProps) {
   return (
     <div className="overflow-x-auto">
@@ -24,6 +26,7 @@ export default function CharacterTable({
             <th className="px-4 py-3 text-left min-w-[150px]">HP</th>
             <th className="px-4 py-3 text-left">Stats</th>
             <th className="px-4 py-3 text-left">Skills</th>
+            <th className="px-4 py-3 text-left">x</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -80,6 +83,14 @@ export default function CharacterTable({
               {/* Skills - Dynamically rendered */}
               <td className="px-4 py-3">
                 <SkillsTable skills={character.skills} />
+              </td>
+              <td
+                className="px-4 py-3"
+                onClick={() => {
+                  attackCharacter(character.id);
+                }}
+              >
+                ATTACK
               </td>
             </tr>
           ))}

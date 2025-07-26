@@ -32,6 +32,9 @@ export default function App() {
   const addCharacter = () => {
     socket.emit("createCharacter");
   };
+  const attackCharacter = (targetCharacterID: string) => {
+    socket.emit("attackCharacter", targetCharacterID);
+  };
 
   return (
     <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md">
@@ -45,11 +48,11 @@ export default function App() {
       >
         New char
       </div>
-      <div className="text-center text-lg text-gray-700">
+      {/* <div className="text-center text-lg text-gray-700">
         {gameState.lastAction.actorSocketID} zadał{" "}
         {gameState.lastAction.weapon.damage} graczowi
         {gameState.lastAction.targetSocketID}
-      </div>
+      </div> */}
       <div className="text-center text-lg text-gray-700">
         {gameState.debugMessage}
       </div>
@@ -63,6 +66,7 @@ export default function App() {
         characters={gameState.characters}
         chooseCharacter={chooseCharacter}
         clientsCharacterId={clientsCharacterID}
+        attackCharacter={attackCharacter}
       />
     </div>
   );

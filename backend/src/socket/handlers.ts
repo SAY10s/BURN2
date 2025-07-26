@@ -3,6 +3,7 @@ import { Server, Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 import { insertCharacter, getAllCharacters } from "../db/character.repository";
 import { generateRandomCharacter } from "../shared/helpers/generateRandomCharacter";
+import { getCharacterByCharactersId } from "../shared/helpers/characterGetters";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
   io.on("connection", (socket: Socket) => {
@@ -41,6 +42,16 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
       await insertCharacter(newChar);
       const characters = await getAllCharacters();
       gameState.characters = characters;
+      updateGameState();
+    });
+
+    socket.on("attackCharacter", async (targetCharacterID) => {
+      console.log(`Actor: ${socket.id}, targer: ${targetCharacterID}`);
+      const target = getCharacterByCharactersId(
+        targetCharacterID,
+        gameState.characters
+      );
+      gameState.debugMessage = `Oczekiwanie na obronę postaci ${target?.name}`;
       updateGameState();
     });
 
