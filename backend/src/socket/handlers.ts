@@ -18,7 +18,7 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
     gameState.players.push({
       socketID: socket.id,
       controlledCharacterID: "none",
-      isGameMaster: false,
+      isGameMaster: gameState.players.length === 0 ? true : false,
     });
 
     updateGameState();
@@ -67,9 +67,31 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
         gameState.characters
       );
 
-      gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID})`;
-
+      gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
       updateGameState();
+
+      io.to(targetPlayer.socketID).emit("requestDefence", actorCharacter);
+
+      const targetSocket = io.sockets.sockets.get(targetPlayer.socketID);
+      if (!targetSocket) {
+        throw new Error(`Target socket (${targetSocket}) not found`);
+      }
+
+      targetSocket.once("defend", (typeOfDefence: "DODGE" | "REPOSITION") => {
+        switch (typeOfDefence) {
+          case "DODGE":
+            gameState.debugMessage += ` ${targetCharacter.name} próbuje uniknąć.`;
+            break;
+
+          case "REPOSITION":
+            gameState.debugMessage += ` ${targetCharacter.name} próbuje zejść z linii.`;
+            break;
+
+          default:
+            gameState.debugMessage = "Error occured while getting defence info";
+        }
+        updateGameState();
+      });
     });
 
     socket.on("disconnect", () => {
