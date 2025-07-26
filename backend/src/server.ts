@@ -1,66 +1,28 @@
+// server.ts
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { PrismaClient } from "./generated/prisma/client";
-import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { GameState } from "./shared/types/gameState";
-import { Action } from "./shared/types/action";
 import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
-import { generateRandomCharacter } from "./shared/helpers/generateRandomCharacter";
+import { registerSocketHandlers } from "./socket/handlers";
+import { connectToDB } from "./db/mongo";
+import { getAllCharacters } from "./db/character.repository";
 
-const prisma = new PrismaClient();
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: "*" } });
 
 const gameState: GameState = INITIAL_GAME_STATE;
 
-io.on("connection", (socket) => {
-  const updateGameState = () => {
-    io.emit("updateGameState", gameState);
-  };
+async function startServer() {
+  await connectToDB();
+  const charactersFromDB = await getAllCharacters();
+  gameState.characters = charactersFromDB;
+  registerSocketHandlers(io, gameState);
 
-  //add a new player that just joined
-  gameState.players.push({
-    socketID: socket.id,
-    controlledCharacterID: "none",
-    isGameMaster: false,
+  httpServer.listen(3001, () => {
+    console.log("✅ Server is running on http://localhost:3001");
   });
+}
 
-  updateGameState();
-
-  socket.on("playerAction", (action: Action) => {});
-  socket.on("chooseCharacter", (characterID) => {
-    gameState.players = gameState.players.map((player) => {
-      if (player.socketID === socket.id) {
-        return {
-          ...player,
-          controlledCharacterID: characterID,
-        };
-      } else return player;
-    });
-    updateGameState();
-  });
-  socket.on("changePlayersRole", (socketID: string) => {
-    gameState.players = gameState.players.map((player) => {
-      if (player.socketID === socketID) {
-        return {
-          ...player,
-          isGameMaster: !player.isGameMaster,
-        };
-      } else return player;
-    });
-    updateGameState();
-  });
-
-  socket.on("disconnect", () => {
-    gameState.players = gameState.players.filter(
-      (player) => player.socketID != socket.id
-    );
-    updateGameState();
-  });
-});
-
-httpServer.listen(3001, () => {
-  console.log("Server is running on http://localhost:3001");
-});
+startServer();

@@ -23,12 +23,22 @@ export default function App() {
   const changePlayersRole = (socketID: string) => {
     socket.emit("changePlayersRole", socketID);
   };
+  const addCharacter = () => {
+    socket.emit("createCharacter");
+  };
 
   return (
     <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md">
       <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
         Walka Wiedźmina
       </h1>
+      <div
+        onClick={() => {
+          addCharacter();
+        }}
+      >
+        New char
+      </div>
       <div className="text-center text-lg text-gray-700">
         {gameState.lastAction.actorSocketID} zadał{" "}
         {gameState.lastAction.weapon.damage} graczowi

@@ -114,6 +114,7 @@ export interface Character {
   isPlayer: boolean;
   /**
    * Random string of 7 characters that allows to identify Character
+   * @warning _id !== id ; (THIS "id" NOT THE SAME AS "_id" IN MONGODB!)
    * @formula Math.random().toString(36).substring(2, 9);
    * @example "4f7d2e9"
    */
