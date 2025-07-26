@@ -40,6 +40,14 @@ export const getPlayerByPlayersSocketId = (
   return player;
 };
 
+export const getGameMasterPlayer = (players: Player[]) => {
+  const gameMaster = players.find((player) => player.isGameMaster);
+  if (!gameMaster) {
+    throw new Error(`No game master was found`);
+  }
+  return gameMaster;
+};
+
 export const isPlayerAdmin = (socketID: string, players: Player[]) => {
   const player = getPlayerByPlayersSocketId(socketID, players);
   return player.isGameMaster;
