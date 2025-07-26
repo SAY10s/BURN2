@@ -39,3 +39,8 @@ export const getPlayerByPlayersSocketId = (
   }
   return player;
 };
+
+export const isPlayerAdmin = (socketID: string, players: Player[]) => {
+  const player = getPlayerByPlayersSocketId(socketID, players);
+  return player.isGameMaster;
+};

@@ -7,6 +7,7 @@ import {
   getCharacterByCharactersId,
   getPlayerByCharactersId,
   getPlayerByPlayersSocketId,
+  isPlayerAdmin,
 } from "../shared/helpers/characterGetters";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
@@ -32,12 +33,13 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
       updateGameState();
     });
 
-    socket.on("changePlayersRole", (socketID: string) => {
-      gameState.players = gameState.players.map((player) =>
-        player.socketID === socketID
-          ? { ...player, isGameMaster: !player.isGameMaster }
-          : player
-      );
+    socket.on("changeGameMaster", (socketID: string) => {
+      if (isPlayerAdmin(socket.id, gameState.players))
+        gameState.players = gameState.players.map((player) =>
+          player.socketID === socketID
+            ? { ...player, isGameMaster: true }
+            : { ...player, isGameMaster: false }
+        );
       updateGameState();
     });
 
@@ -98,6 +100,7 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
       gameState.players = gameState.players.filter(
         (player) => player.socketID !== socket.id
       );
+      if (gameState.players[0]) gameState.players[0].isGameMaster = true;
       updateGameState();
     });
   });

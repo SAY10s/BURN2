@@ -37,8 +37,8 @@ export default function App() {
   const chooseCharacter = (characterID: string) => {
     socket.emit("chooseCharacter", characterID);
   };
-  const changePlayersRole = (socketID: string) => {
-    socket.emit("changePlayersRole", socketID);
+  const changeGameMaster = (socketID: string) => {
+    socket.emit("changeGameMaster", socketID);
   };
   const addCharacter = () => {
     socket.emit("createCharacter");
@@ -61,7 +61,7 @@ export default function App() {
       <div className="p-2">
         <PlayersTable
           players={gameState.players}
-          changePlayersRole={changePlayersRole}
+          changeGameMaster={changeGameMaster}
         />
       </div>
       <CharacterTable

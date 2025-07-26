@@ -1,12 +1,12 @@
 import type { Player } from "../../shared/types/player";
 interface PlayersTableProps {
   players: Player[];
-  changePlayersRole: (socketID: string) => void;
+  changeGameMaster: (socketID: string) => void;
 }
 
 export default function PlayersTable({
   players,
-  changePlayersRole,
+  changeGameMaster,
 }: PlayersTableProps) {
   return (
     <table className="w-full max-w-2xl mx-auto mt-6 bg-white rounded-lg shadow-md overflow-hidden">
@@ -32,7 +32,7 @@ export default function PlayersTable({
             <td
               className="px-4 py-3 text-sm font-medium cursor-pointer"
               onClick={() => {
-                changePlayersRole(player.socketID);
+                changeGameMaster(player.socketID);
               }}
             >
               {(player.isGameMaster && (
