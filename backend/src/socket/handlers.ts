@@ -1,4 +1,3 @@
-// socket/handlers.ts
 import { Server, Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 import { insertCharacter, getAllCharacters } from "../db/character.repository";
