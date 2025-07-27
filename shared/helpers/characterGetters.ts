@@ -16,11 +16,13 @@ export const getCharacterByCharactersId = (
 
 export const getPlayerByCharactersId = (
   characterID: string,
-  players: Player[]
+  players: Player[],
+  returnGameMasterOnError = false
 ): Player => {
-  const player = players.find(
+  let player = players.find(
     (player) => player.controlledCharacterID === characterID
   );
+  if (returnGameMasterOnError && !player) player = getGameMasterPlayer(players);
   if (!player) {
     throw new Error(
       `Player with controlledCharacterID ${characterID} not found`

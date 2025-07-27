@@ -64,7 +64,8 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
       );
       const targetPlayer = getPlayerByCharactersId(
         targetCharacterID,
-        gameState.players
+        gameState.players,
+        true
       );
       const targetCharacter = getCharacterByCharactersId(
         targetCharacterID,
