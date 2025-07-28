@@ -12,7 +12,7 @@ import { chooseCharacter } from "./chooseCharacter";
 import { changeGameMaster } from "./changeGameMaster";
 import { createRandomCharacter } from "./createRandomCharacter";
 import { disconnect } from "./disconnect";
-import { attackCharacter } from "./attackCharacter";
+import { attackCharacter } from "./attackCharacter/attackCharacter";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
   io.on("connection", (socket: Socket) => {

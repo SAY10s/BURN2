@@ -1,13 +1,14 @@
-import { AttackData } from "../shared/types/attackData";
-import { GameState } from "../shared/types/gameState";
+import { AttackData } from "../../shared/types/attackData";
+import { GameState } from "../../shared/types/gameState";
 import {
-  getActorAndTarget,
   createAttackData,
   resolveDefence,
   applyAttackResults,
   checkHit,
 } from "./attackSteps";
 import { Socket, Server } from "socket.io";
+import { getSocketFromIO } from "../utils/getSocketFromIO";
+import { getActorAndTarget } from "./getActorAndTarget";
 
 export async function attackCharacter(
   socket: Socket,
@@ -29,13 +30,8 @@ export async function attackCharacter(
   gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
   updateGameState();
 
-  const targetSocket = io.sockets.sockets.get(targetPlayer.socketID);
-  if (!targetSocket)
-    throw new Error(`Target socket (${targetPlayer.socketID}) not found`);
-
-  const gameMasterSocket = io.sockets.sockets.get(gameMasterPlayer.socketID);
-  if (!gameMasterSocket)
-    throw new Error(`GM socket (${gameMasterPlayer.socketID}) not found`);
+  const targetSocket = getSocketFromIO(io, targetPlayer.socketID);
+  const gameMasterSocket = getSocketFromIO(io, gameMasterPlayer.socketID);
 
   io.to(targetPlayer.socketID).emit("requestDefence", actorCharacter);
 

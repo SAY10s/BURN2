@@ -1,44 +1,7 @@
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
-import {
-  getCharacterByCharactersId,
-  getGameMasterPlayer,
-  getPlayerByCharactersId,
-  getPlayerByPlayersSocketId,
-} from "../shared/helpers/characterGetters";
-import { AttackData } from "../shared/types/attackData";
-import { Character } from "../shared/types/character";
-import { GameState } from "../shared/types/gameState";
-import { Socket } from "socket.io";
-
-export function getActorAndTarget(
-  socket: Socket,
-  gameState: GameState,
-  targetCharacterID: string
-) {
-  const actorPlayer = getPlayerByPlayersSocketId(socket.id, gameState.players);
-  const actorCharacter = getCharacterByCharactersId(
-    actorPlayer.controlledCharacterID,
-    gameState.characters
-  );
-  const targetPlayer = getPlayerByCharactersId(
-    targetCharacterID,
-    gameState.players,
-    true
-  );
-  const targetCharacter = getCharacterByCharactersId(
-    targetCharacterID,
-    gameState.characters
-  );
-  const gameMasterPlayer = getGameMasterPlayer(gameState.players);
-
-  return {
-    actorPlayer,
-    actorCharacter,
-    targetPlayer,
-    targetCharacter,
-    gameMasterPlayer,
-  };
-}
+import { AttackData } from "../../shared/types/attackData";
+import { Character } from "../../shared/types/character";
+import { GameState } from "../../shared/types/gameState";
 
 export function createAttackData(actorCharacter: Character): AttackData {
   return {
