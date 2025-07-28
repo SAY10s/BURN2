@@ -14,7 +14,7 @@ export default function StatsTable({
   gamemasterView,
 }: StatsTableProps) {
   if (!gamemasterView && !isPlayerStats) {
-    return <div>SECRET!</div>;
+    return <></>;
   }
 
   return (

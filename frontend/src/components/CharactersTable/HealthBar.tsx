@@ -2,12 +2,12 @@ export const HealthBar = ({
   current,
   max,
   gamemasterView = false,
-  isPlayerStats = false,
+  isPlayerHealth = false,
 }: {
   current: number;
   max: number;
-  gamemasterView?: boolean;
-  isPlayerStats?: boolean;
+  gamemasterView: boolean;
+  isPlayerHealth: boolean;
 }) => {
   const percentage = (current / max) * 100;
   let colorClass = "bg-green-500";
@@ -21,7 +21,7 @@ export const HealthBar = ({
           className={`h-4 transition-all duration-300 ${colorClass}`}
           style={{ width: `${percentage}%` }}
         ></div>
-        {(isPlayerStats || gamemasterView) && (
+        {(isPlayerHealth || gamemasterView) && (
           <div className="absolute inset-0 flex items-center justify-center text-sm font-mono text-white">
             {current}/{max}
           </div>

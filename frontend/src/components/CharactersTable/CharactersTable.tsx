@@ -78,7 +78,7 @@ export default function CharacterTable({
                   current={character.currentHP}
                   max={character.maxHP}
                   gamemasterView={gameMasterView}
-                  isPlayerStats={character.isPlayer}
+                  isPlayerHealth={character.isPlayer}
                 />
               </td>
 
@@ -93,7 +93,11 @@ export default function CharacterTable({
 
               {/* Skills - Dynamically rendered */}
               <td className="px-4 py-3">
-                <SkillsTable skills={character.skills} />
+                <SkillsTable
+                  skills={character.skills}
+                  gamemasterView={gameMasterView}
+                  isPlayerSkills={character.isPlayer}
+                />
               </td>
               <td className="px-4 py-3">
                 <button
