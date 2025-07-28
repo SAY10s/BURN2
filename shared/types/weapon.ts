@@ -1,4 +1,4 @@
-import { TypesOfDamage } from "./typesOfDamage";
+import type { TypesOfDamage } from "./typesOfDamage";
 
 /**
  * Chances for a status to be aplied upon attack, given in %.

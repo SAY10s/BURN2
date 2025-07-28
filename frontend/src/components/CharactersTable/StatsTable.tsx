@@ -3,17 +3,17 @@ import { STATS_TRANSLATION, type Stats } from "../../shared/types/character";
 interface StatsTableProps {
   stats: Stats;
   className?: string;
-  isPlayerStats: boolean;
+  isPlayer: boolean;
   gamemasterView: boolean;
 }
 
 export default function StatsTable({
   stats,
   className = "",
-  isPlayerStats,
+  isPlayer,
   gamemasterView,
 }: StatsTableProps) {
-  if (!gamemasterView && !isPlayerStats) {
+  if (!gamemasterView && !isPlayer) {
     return <></>;
   }
 

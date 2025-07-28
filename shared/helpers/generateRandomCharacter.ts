@@ -79,7 +79,15 @@ const getRandomSkillValue = (): number => {
 const getRandomArmorPiece = (): ArmorPiece => {
   const maxSP = Math.floor(Math.random() * 5) + 1;
   return {
-    reductions: INITIAL_TYPES_OF_DAMAGE_STAT,
+    reductions: {
+      slashing: 0,
+      piercing: 0,
+      bludgeoning: 0,
+      elemental: 0,
+      silver: 0,
+      monster: 0,
+      fire: 0,
+    },
     maxSP: maxSP,
     currentSP: maxSP,
     encumbranceValue: 0,

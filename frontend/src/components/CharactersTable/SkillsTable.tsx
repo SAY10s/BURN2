@@ -5,7 +5,7 @@ interface SkillsTableProps {
   className?: string;
   showCategory?: boolean;
   gamemasterView: boolean;
-  isPlayerSkills: boolean;
+  isPlayer: boolean;
 }
 
 export default function SkillsTable({
@@ -13,7 +13,7 @@ export default function SkillsTable({
   className = "",
   showCategory = false,
   gamemasterView,
-  isPlayerSkills,
+  isPlayer,
 }: SkillsTableProps) {
   return (
     <div className={`space-y-2 ${className} grid grid-cols-2 gap-x-12 `}>
@@ -23,7 +23,7 @@ export default function SkillsTable({
             key={`${category}-${skill}`}
             className="grid grid-cols-2 gap-x-2"
           >
-            {gamemasterView || isPlayerSkills ? (
+            {gamemasterView || isPlayer ? (
               <>
                 <span className="text-gray-600 capitalize">
                   {showCategory && `${category} - `}
