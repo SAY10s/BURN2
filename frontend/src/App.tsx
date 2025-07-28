@@ -8,6 +8,7 @@ import type { GameState } from "./shared/types/gameState";
 import type { AttackData } from "./shared/types/attackData";
 import AttackApprovalModal from "./components/AttackApprovalModal/AttackApprovalModal";
 import DefenceModal from "./components/DefenceModal/DefenceModal";
+import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
@@ -15,19 +16,7 @@ export default function App() {
   const [showDefenceModal, setShowDefenceModal] = useState(false);
   const [showGameMastersApprovalModal, setShowGameMastersApprovalModal] =
     useState(false);
-  const [attackData, setAttackData] = useState<AttackData>({
-    offensiveStat: 0,
-    offensiveSkill: 0,
-    offensiveRoll: 5,
-    offensiveModifier: 0,
-    defensiveStat: 0,
-    defensiveSkill: 0,
-    defensiveRoll: 5,
-    defensiveModifier: 0,
-    damageRoll: 0,
-    location: 0,
-    isTargetHit: false,
-  });
+  const [attackData, setAttackData] = useState<AttackData>(INITIAL_ATTACK_DATA);
   const [defenceMessage, setDefenceMessage] = useState("");
 
   useSocketHandlers(
@@ -49,7 +38,7 @@ export default function App() {
       <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
         Walka Wiedźmina
       </h1>
-      {/* <div onClick={() => socket.emit("createRandomCharacter")}>New char</div> */}
+      <div onClick={() => socket.emit("createRandomCharacter")}>New char</div>
 
       <div className="text-center text-lg text-gray-700">
         {gameState.debugMessage}
