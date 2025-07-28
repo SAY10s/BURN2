@@ -1,26 +1,34 @@
-export default function HealthBar({
+export const HealthBar = ({
   current,
   max,
+  gamemasterView = false,
+  isPlayerStats = false,
 }: {
   current: number;
   max: number;
-}) {
+  gamemasterView?: boolean;
+  isPlayerStats?: boolean;
+}) => {
   const percentage = (current / max) * 100;
   let colorClass = "bg-green-500";
   if (percentage <= 50) colorClass = "bg-yellow-500";
   if (percentage <= 25) colorClass = "bg-red-500";
 
   return (
-    <div className="flex items-center">
-      <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+    <div className="flex items-center flex-col w-full">
+      <div className="w-full bg-gray-600 rounded-full overflow-hidden shadow-inner relative">
         <div
-          className={`h-2.5 rounded-full ${colorClass}`}
+          className={`h-4 transition-all duration-300 ${colorClass}`}
           style={{ width: `${percentage}%` }}
         ></div>
+        {(isPlayerStats || gamemasterView) && (
+          <div className="absolute inset-0 flex items-center justify-center text-sm font-mono text-white">
+            {current}/{max}
+          </div>
+        )}
       </div>
-      <span className="text-sm font-mono whitespace-nowrap">
-        {current}/{max}
-      </span>
     </div>
   );
-}
+};
+
+export default HealthBar;

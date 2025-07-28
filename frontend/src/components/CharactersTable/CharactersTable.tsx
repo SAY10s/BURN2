@@ -77,6 +77,8 @@ export default function CharacterTable({
                 <HealthBar
                   current={character.currentHP}
                   max={character.maxHP}
+                  gamemasterView={gameMasterView}
+                  isPlayerStats={character.isPlayer}
                 />
               </td>
 
@@ -93,13 +95,15 @@ export default function CharacterTable({
               <td className="px-4 py-3">
                 <SkillsTable skills={character.skills} />
               </td>
-              <td
-                className="px-4 py-3"
-                onClick={() => {
-                  attackCharacter(character.id);
-                }}
-              >
-                ATTACK
+              <td className="px-4 py-3">
+                <button
+                  className="px-3 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  onClick={() => {
+                    attackCharacter(character.id);
+                  }}
+                >
+                  Attack
+                </button>
               </td>
             </tr>
           ))}
