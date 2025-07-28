@@ -48,6 +48,9 @@ export default function CharacterTable({
                   ) : (
                     character.name
                   )}
+                  {character.status.isBleeding && "🩸"}
+                  {character.status.isBurning && "🔥"}
+                  {character.status.isPoisoned && "🧪"}
                 </div>
                 <div className="text-xs text-gray-500 font-mono mt-1">
                   ID: {character.id}
