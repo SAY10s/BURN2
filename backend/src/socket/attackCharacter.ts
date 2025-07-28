@@ -9,7 +9,7 @@ import {
 } from "./attackSteps";
 import { Socket, Server } from "socket.io";
 
-export async function handleAttack(
+export async function attackCharacter(
   socket: Socket,
   io: Server,
   gameState: GameState,
