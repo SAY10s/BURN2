@@ -101,12 +101,12 @@ export default function CharacterTable({
               </td>
               <td className="px-4 py-3">
                 <button
-                  className="px-3 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  className="flex items-center justify-center cursoir-pointer"
                   onClick={() => {
                     attackCharacter(character.id);
                   }}
                 >
-                  Attack
+                  <img src="/fight-icon.png" alt="Attack" className="w-8 h-8" />
                 </button>
               </td>
             </tr>
