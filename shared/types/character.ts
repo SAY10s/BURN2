@@ -1,5 +1,16 @@
 import { TypesOfDamage } from "./typesOfDamage";
 import { Weapon } from "./weapon";
+export const STATS_TRANSLATION = {
+  speed: "Tempo",
+  craft: "Fach",
+  luck: "Fart",
+  empathy: "Emocje",
+  intelligence: "Rozum",
+  reflex: "Reakcja",
+  dexterity: "Gracja",
+  body: "Ciało",
+  will: "Wola",
+};
 
 export interface Stats {
   /**
