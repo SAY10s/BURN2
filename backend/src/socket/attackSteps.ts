@@ -45,12 +45,15 @@ export function createAttackData(actorCharacter: Character): AttackData {
     offensiveStat: actorCharacter.skills.reflexSkills.swordsmanship,
     offensiveSkill: actorCharacter.stats.reflex,
     offensiveRoll: new DiceRoll("1d10!").total,
+    offensiveModifier: 0,
 
     defensiveStat: 0,
     defensiveSkill: 0,
     defensiveRoll: new DiceRoll("1d10!").total,
+    defensiveModifier: 0,
 
     damageRoll: new DiceRoll("3d6").total,
+    location: new DiceRoll("1d10").total,
 
     isTargetHit: false,
   };

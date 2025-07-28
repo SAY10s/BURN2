@@ -1,4 +1,5 @@
 import { generateRandomCharacter } from "../helpers/generateRandomCharacter";
+//@ts-ignore
 import { Character } from "../types/character";
 import { GameState } from "../types/gameState";
 
@@ -13,15 +14,5 @@ const INITIAL_CHARACTERS: Character[] = [
 export const INITIAL_GAME_STATE: GameState = {
   players: [],
   characters: INITIAL_CHARACTERS,
-  lastAction: {
-    actorSocketID: "",
-    targetSocketID: "",
-    actionName: "Strong attack",
-    type: "ATTACK",
-    weapon: {
-      damage: "2d6",
-      name: "Battle axe",
-    },
-  },
   debugMessage: "",
 };

@@ -10,6 +10,5 @@ export interface GameState {
    * Array of ALL characters, both Players and NPC's.
    */
   characters: Character[];
-  lastAction: Action;
   debugMessage: string;
 }
