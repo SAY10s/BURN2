@@ -8,6 +8,7 @@ interface CharacterTableProps {
   chooseCharacter: (characterId: string) => void;
   clientsCharacterId: string;
   attackCharacter: (targetID: string) => void;
+  gameMasterView: boolean;
 }
 
 export default function CharacterTable({
@@ -15,6 +16,7 @@ export default function CharacterTable({
   chooseCharacter,
   clientsCharacterId,
   attackCharacter,
+  gameMasterView,
 }: CharacterTableProps) {
   return (
     <div className="overflow-x-auto">
@@ -80,7 +82,11 @@ export default function CharacterTable({
 
               {/* Stats - Dynamically rendered */}
               <td className="px-4 py-3">
-                <StatsTable stats={character.stats} />
+                <StatsTable
+                  stats={character.stats}
+                  gamemasterView={gameMasterView}
+                  isPlayerStats={character.isPlayer}
+                />
               </td>
 
               {/* Skills - Dynamically rendered */}

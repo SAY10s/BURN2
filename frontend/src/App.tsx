@@ -3,12 +3,12 @@ import { useSocketHandlers, socket } from "./hooks/useSocketHandlers";
 import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
-
 import type { GameState } from "./shared/types/gameState";
 import type { AttackData } from "./shared/types/attackData";
 import AttackApprovalModal from "./components/AttackApprovalModal/AttackApprovalModal";
 import DefenceModal from "./components/DefenceModal/DefenceModal";
 import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
+import type { Player } from "./shared/types/player";
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
@@ -18,6 +18,11 @@ export default function App() {
     useState(false);
   const [attackData, setAttackData] = useState<AttackData>(INITIAL_ATTACK_DATA);
   const [defenceMessage, setDefenceMessage] = useState("");
+  const [clientPlayer, setClientPlayer] = useState<Player>({
+    controlledCharacterID: "",
+    isGameMaster: false,
+    socketID: "",
+  });
 
   useSocketHandlers(
     setGameState,
@@ -25,7 +30,8 @@ export default function App() {
     setShowDefenceModal,
     setDefenceMessage,
     setShowGameMastersApprovalModal,
-    setAttackData
+    setAttackData,
+    setClientPlayer
   );
 
   const defendSelf = (type: "DODGE" | "REPOSITION") => {
@@ -36,7 +42,8 @@ export default function App() {
   return (
     <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md relative">
       <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
-        Walka Wiedźmina
+        Walka Wiedźmina {clientPlayer.socketID}{" "}
+        {clientPlayer.isGameMaster ? "(GM)" : ""}
       </h1>
       <div onClick={() => socket.emit("createRandomCharacter")}>New char</div>
 
@@ -54,6 +61,7 @@ export default function App() {
         chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
         clientsCharacterId={clientsCharacterID}
         attackCharacter={(id) => socket.emit("attackCharacter", id)}
+        gameMasterView={clientPlayer.isGameMaster}
       />
 
       {showDefenceModal && (

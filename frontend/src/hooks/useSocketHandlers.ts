@@ -4,6 +4,8 @@ import { io } from "socket.io-client";
 import type { GameState } from "../shared/types/gameState";
 import type { Character } from "../shared/types/character";
 import type { AttackData } from "../shared/types/attackData";
+import type { Player } from "../shared/types/player";
+import { getPlayerByPlayersSocketId } from "../shared/helpers/characterGetters";
 
 const socket = io("http://localhost:3001");
 
@@ -13,7 +15,8 @@ export function useSocketHandlers(
   setShowDefenceModal: (show: boolean) => void,
   setDefenceMessage: (msg: string) => void,
   setShowGameMastersApprovalModal: (show: boolean) => void,
-  setAttackData: (data: AttackData) => void
+  setAttackData: (data: AttackData) => void,
+  setClientPlayer: (player: Player) => void
 ) {
   useEffect(() => {
     socket.on("updateGameState", (gameState: GameState) => {
@@ -22,6 +25,7 @@ export function useSocketHandlers(
         (player) => player.socketID === socket.id
       )?.controlledCharacterID;
       setClientsCharacterID(controlledCharacterID || "none");
+      setClientPlayer(getPlayerByPlayersSocketId(socket.id, gameState.players));
     });
 
     socket.on("requestDefence", (actorCharacter: Character) => {
