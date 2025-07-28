@@ -11,6 +11,10 @@ import {
 } from "../shared/helpers/characterGetters";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { AttackData } from "../shared/types/attackData";
+import { chooseCharacter } from "./chooseCharacter";
+import { changeGameMaster } from "./changeGameMaster";
+import { createRandomCharacter } from "./createRandomCharacter";
+import { disconnect } from "./disconnect";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
   io.on("connection", (socket: Socket) => {
@@ -26,31 +30,16 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
 
     updateGameState();
 
-    socket.on("chooseCharacter", (characterID) => {
-      gameState.players = gameState.players.map((player) =>
-        player.socketID === socket.id
-          ? { ...player, controlledCharacterID: characterID }
-          : player
-      );
-      updateGameState();
+    socket.on("chooseCharacter", (characterID: string) => {
+      chooseCharacter(socket, gameState, characterID, updateGameState);
     });
 
     socket.on("changeGameMaster", (socketID: string) => {
-      if (isPlayerAdmin(socket.id, gameState.players))
-        gameState.players = gameState.players.map((player) =>
-          player.socketID === socketID
-            ? { ...player, isGameMaster: true }
-            : { ...player, isGameMaster: false }
-        );
-      updateGameState();
+      changeGameMaster(socket, gameState, socketID, updateGameState);
     });
 
-    socket.on("createCharacter", async () => {
-      const newChar = generateRandomCharacter();
-      await insertCharacter(newChar);
-      const characters = await getAllCharacters();
-      gameState.characters = characters;
-      updateGameState();
+    socket.on("createRandomCharacter", async () => {
+      createRandomCharacter(gameState, updateGameState);
     });
 
     socket.on("attackCharacter", async (targetCharacterID) => {
@@ -168,11 +157,7 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
     });
 
     socket.on("disconnect", () => {
-      gameState.players = gameState.players.filter(
-        (player) => player.socketID !== socket.id
-      );
-      if (gameState.players[0]) gameState.players[0].isGameMaster = true;
-      updateGameState();
+      disconnect(socket, gameState, updateGameState);
     });
   });
 }

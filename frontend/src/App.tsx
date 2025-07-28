@@ -61,7 +61,7 @@ export default function App() {
     socket.emit("changeGameMaster", socketID);
   };
   const addCharacter = () => {
-    socket.emit("createCharacter");
+    socket.emit("createRandomCharacter");
   };
   const attackCharacter = (targetCharacterID: string) => {
     socket.emit("attackCharacter", targetCharacterID);
