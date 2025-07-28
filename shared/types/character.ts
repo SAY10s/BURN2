@@ -142,6 +142,7 @@ export interface Skills {
 export interface ArmorPiece {
   /**
    *Reductions tell you if armor piece reduces damage by 50%
+   *. By default they are all set to 0
    */
   reductions: TypesOfDamage;
   /**
@@ -150,6 +151,9 @@ export interface ArmorPiece {
   maxSP: number;
   /**
    *Stopping Power describes how much damage armor stops when struck by a weapon or attack.
+   * @default maxSP
+   * @warning This value should never be higher than maxSP
+   * @example If maxSP is 10, then currentSP can be 10,
    */
   currentSP: number;
   /**
@@ -201,10 +205,12 @@ export interface Character {
   weapons: Weapon[];
   /**
    * Character gets 2x more damage from given type of damage
+   * By default all vulnerabilities are set to False, meaning that character is not vulnerable to any type of damage.
    */
   susceptibilities: TypesOfDamage;
   /**
    * Character gets NO damage from given type of damage
+   * By default all immunities are set to False, meaning that character is not immune to any type of damage.
    */
   immunities: TypesOfDamage;
 }

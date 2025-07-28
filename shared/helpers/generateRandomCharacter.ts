@@ -1,4 +1,14 @@
-import { Character } from "../types/character";
+import { ArmorPiece, Character } from "../types/character";
+import { TypesOfDamage } from "../types/typesOfDamage";
+const INITIAL_TYPES_OF_DAMAGE_STAT: TypesOfDamage = {
+  slashing: false,
+  piercing: false,
+  bludgeoning: false,
+  elemental: false,
+  silver: false,
+  monster: false,
+  fire: false,
+};
 
 /**
  * Collection of predefined character names for random selection
@@ -12,6 +22,29 @@ const randomNames: string[] = [
   "Azrael",
   "Mika",
   "Geralt",
+  "Ciri",
+  "Yennefer",
+  "Triss",
+  "Dandelion",
+  "Vesemir",
+  "Zoltan",
+  "Roach",
+  "Ves",
+  "Lambert",
+  "Eskel",
+  "Shani",
+  "Priscilla",
+  "Emhyr",
+  "Cahir",
+  "Dijkstra",
+  "Philippa",
+  "Fringilla",
+  "Keira",
+  "Saskia",
+  "Iorveth",
+  "Letho",
+  "Aveline",
+  "Isabelle",
 ];
 
 /**
@@ -37,6 +70,20 @@ const getRandomStatValue = (): number => {
  */
 const getRandomSkillValue = (): number => {
   return Math.floor(Math.random() * 7);
+};
+
+/**
+ * Generates a random ArmorPiece with default values
+ * @returns {ArmorPiece} A randomly generated armor piece
+ */
+const getRandomArmorPiece = (): ArmorPiece => {
+  const maxSP = Math.floor(Math.random() * 5) + 1;
+  return {
+    reductions: INITIAL_TYPES_OF_DAMAGE_STAT,
+    maxSP: maxSP,
+    currentSP: maxSP,
+    encumbranceValue: 0,
+  };
 };
 
 /**
@@ -92,110 +139,16 @@ export const generateRandomCharacter = (
       isPoisoned: false,
     },
     characterArmor: {
-      head: {
-        reductions: {
-          slashing: Math.random() > 0.5,
-          piercing: Math.random() > 0.5,
-          bludgeoning: Math.random() > 0.5,
-          elemental: Math.random() > 0.5,
-          silver: Math.random() > 0.8,
-          monster: Math.random() > 0.8,
-          fire: Math.random() > 0.5,
-        },
-        maxSP: Math.floor(Math.random() * 5),
-        currentSP: Math.floor(Math.random() * 5),
-        encumbranceValue: Math.floor(Math.random() * 2),
-      },
-      torso: {
-        reductions: {
-          slashing: Math.random() > 0.5,
-          piercing: Math.random() > 0.5,
-          bludgeoning: Math.random() > 0.5,
-          elemental: Math.random() > 0.5,
-          silver: Math.random() > 0.8,
-          monster: Math.random() > 0.8,
-          fire: Math.random() > 0.5,
-        },
-        maxSP: Math.floor(Math.random() * 8) + 2,
-        currentSP: Math.floor(Math.random() * 8) + 2,
-        encumbranceValue: Math.floor(Math.random() * 3) + 1,
-      },
-      leftArm: {
-        reductions: {
-          slashing: Math.random() > 0.5,
-          piercing: Math.random() > 0.5,
-          bludgeoning: Math.random() > 0.5,
-          elemental: Math.random() > 0.5,
-          silver: Math.random() > 0.8,
-          monster: Math.random() > 0.8,
-          fire: Math.random() > 0.5,
-        },
-        maxSP: Math.floor(Math.random() * 5),
-        currentSP: Math.floor(Math.random() * 5),
-        encumbranceValue: Math.floor(Math.random() * 2),
-      },
-      rightArm: {
-        reductions: {
-          slashing: Math.random() > 0.5,
-          piercing: Math.random() > 0.5,
-          bludgeoning: Math.random() > 0.5,
-          elemental: Math.random() > 0.5,
-          silver: Math.random() > 0.8,
-          monster: Math.random() > 0.8,
-          fire: Math.random() > 0.5,
-        },
-        maxSP: Math.floor(Math.random() * 5),
-        currentSP: Math.floor(Math.random() * 5),
-        encumbranceValue: Math.floor(Math.random() * 2),
-      },
-      leftLeg: {
-        reductions: {
-          slashing: Math.random() > 0.5,
-          piercing: Math.random() > 0.5,
-          bludgeoning: Math.random() > 0.5,
-          elemental: Math.random() > 0.5,
-          silver: Math.random() > 0.8,
-          monster: Math.random() > 0.8,
-          fire: Math.random() > 0.5,
-        },
-        maxSP: Math.floor(Math.random() * 5),
-        currentSP: Math.floor(Math.random() * 5),
-        encumbranceValue: Math.floor(Math.random() * 2),
-      },
-      rightLeg: {
-        reductions: {
-          slashing: Math.random() > 0.5,
-          piercing: Math.random() > 0.5,
-          bludgeoning: Math.random() > 0.5,
-          elemental: Math.random() > 0.5,
-          silver: Math.random() > 0.8,
-          monster: Math.random() > 0.8,
-          fire: Math.random() > 0.5,
-        },
-        maxSP: Math.floor(Math.random() * 5),
-        currentSP: Math.floor(Math.random() * 5),
-        encumbranceValue: Math.floor(Math.random() * 2),
-      },
+      head: getRandomArmorPiece(),
+      torso: getRandomArmorPiece(),
+      rightArm: getRandomArmorPiece(),
+      leftArm: getRandomArmorPiece(),
+      rightLeg: getRandomArmorPiece(),
+      leftLeg: getRandomArmorPiece(),
     },
     weapons: [],
-    susceptibilities: {
-      slashing: Math.random() > 0.9,
-      piercing: Math.random() > 0.9,
-      bludgeoning: Math.random() > 0.9,
-      elemental: Math.random() > 0.9,
-      silver: Math.random() > 0.9,
-      monster: Math.random() > 0.9,
-      fire: Math.random() > 0.9,
-    },
-    immunities: {
-      slashing: Math.random() > 0.9,
-      piercing: Math.random() > 0.9,
-      bludgeoning: Math.random() > 0.9,
-      elemental: Math.random() > 0.9,
-      silver: Math.random() > 0.9,
-      monster: Math.random() > 0.9,
-      fire: Math.random() > 0.9,
-    },
+    susceptibilities: INITIAL_TYPES_OF_DAMAGE_STAT,
+    immunities: INITIAL_TYPES_OF_DAMAGE_STAT,
   };
 
   return character;
