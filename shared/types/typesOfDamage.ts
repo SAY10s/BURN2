@@ -1,5 +1,5 @@
 export interface TypesOfDamage {
-  slahing: boolean;
+  slashing: boolean;
   piercing: boolean;
   bludgeoning: boolean;
   elemental: boolean;
