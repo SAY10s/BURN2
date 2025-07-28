@@ -1,13 +1,10 @@
 import { Server, Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
-import { insertCharacter, getAllCharacters } from "../db/character.repository";
-import { generateRandomCharacter } from "../shared/helpers/generateRandomCharacter";
 import {
   getCharacterByCharactersId,
   getGameMasterPlayer,
   getPlayerByCharactersId,
   getPlayerByPlayersSocketId,
-  isPlayerAdmin,
 } from "../shared/helpers/characterGetters";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { AttackData } from "../shared/types/attackData";

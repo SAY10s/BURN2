@@ -1,3 +1,6 @@
+import { TypesOfDamage } from "./typesOfDamage";
+import { Weapon } from "./weapon";
+
 export interface Stats {
   /**
    * (pol. **Tempo**)
@@ -67,6 +70,13 @@ export interface Stats {
 export interface Skills {
   reflexSkills: {
     /**
+     * (pol. **Bójka**) + **Reflex** (pol.  **Reakcja**)
+     * @creationRange 0-6 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 0
+     */
+    brawling: number;
+    /**
      * (pol. **Broń krótka**) + **Reflex** (pol.  **Reakcja**)
      * @creationRange 0-6 The initial range during character creation
      * @max 10 The maximum achievable value through progression
@@ -103,7 +113,64 @@ export interface Skills {
      * @default 0
      */
     athletics: number;
+    /**
+     * (pol. **łucznictwo**) + **Dexterity** (pol.  **Gracja**)
+     * @creationRange 0-6 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 0
+     */
+    archery: number;
+    /**
+     * (pol. **Kusznistwo**) + **Dexterity** (pol.  **Gracja**)
+     * @creationRange 0-6 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 0
+     */
+    crossbow: number;
   };
+  willSkills: {
+    /**
+     * (pol. **Zaklęcia**) + **Will** (pol.  **Wola**)
+     * @creationRange 0-6 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 0
+     */
+    spellCasting: number;
+  };
+}
+
+export interface ArmorPiece {
+  /**
+   *Reductions tell you if armor piece reduces damage by 50%
+   */
+  reductions: TypesOfDamage;
+  /**
+   *Stopping Power describes how much damage armor stops when struck by a weapon or attack.
+   */
+  maxSP: number;
+  /**
+   *Stopping Power describes how much damage armor stops when struck by a weapon or attack.
+   */
+  currentSP: number;
+  /**
+   * Encumbrance Value describes how stiff the armor is and how hard it is to move in. This value is subtracted from your Reflex and Dexterity.
+   */
+  encumbranceValue: number;
+}
+interface CharacterArmor {
+  head: ArmorPiece;
+  torso: ArmorPiece;
+  rightArm: ArmorPiece;
+  leftArm: ArmorPiece;
+  rightLeg: ArmorPiece;
+  leftLeg: ArmorPiece;
+}
+
+export interface CharacterStatus {
+  isBurning: false;
+  isChoking: false;
+  isBleeding: false;
+  isPoisoned: false;
 }
 
 export interface Character {
@@ -129,4 +196,15 @@ export interface Character {
   currentHP: number;
   stats: Stats;
   skills: Skills;
+  status: CharacterStatus;
+  characterArmor: CharacterArmor;
+  weapons: Weapon[];
+  /**
+   * Character gets 2x more damage from given type of damage
+   */
+  susceptibilities: TypesOfDamage;
+  /**
+   * Character gets NO damage from given type of damage
+   */
+  immunities: TypesOfDamage;
 }
