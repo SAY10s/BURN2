@@ -14,6 +14,13 @@ export interface StatusChances {
 }
 
 export interface Weapon {
+  /**
+   * Random string of 7 characters that allows to identify Character
+   * @formula Math.random().toString(36).substring(2, 9);
+   * @example "1234567"
+   */
+  id: string;
+
   name: string;
   /**
    * Weapons damage written in standard notation
