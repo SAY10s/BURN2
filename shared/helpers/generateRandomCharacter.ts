@@ -1,3 +1,4 @@
+import { WEAPON_1, WEAPON_2 } from "../consts/initialWeapons";
 import { ArmorPiece, Character } from "../types/character";
 import { TypesOfDamage } from "../types/typesOfDamage";
 const INITIAL_TYPES_OF_DAMAGE_STAT: TypesOfDamage = {
@@ -154,7 +155,7 @@ export const generateRandomCharacter = (
       rightLeg: getRandomArmorPiece(),
       leftLeg: getRandomArmorPiece(),
     },
-    weapons: [],
+    weapons: [WEAPON_1, WEAPON_2],
     susceptibilities: INITIAL_TYPES_OF_DAMAGE_STAT,
     immunities: INITIAL_TYPES_OF_DAMAGE_STAT,
   };
