@@ -2,7 +2,7 @@ import { GameState } from "../shared/types/gameState";
 import { generateRandomCharacter } from "../shared/helpers/generateRandomCharacter";
 import { getAllCharacters, insertCharacter } from "../db/character.repository";
 
-export const createRandomCharacter = async (
+export const handleCreateRandomCharacter = async (
   gameState: GameState,
   updateGameState: () => void
 ) => {

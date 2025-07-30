@@ -1,11 +1,11 @@
 import { Server, Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 import { AttackData } from "../shared/types/attackData";
-import { chooseCharacter } from "./chooseCharacter";
-import { changeGameMaster } from "./changeGameMaster";
-import { createRandomCharacter } from "./createRandomCharacter";
-import { disconnect } from "./disconnect";
-import { attackCharacter } from "./attackCharacter/attackCharacter";
+import { handleChooseCharacter } from "./handleChooseCharacter";
+import { handleChangeGameMaster } from "./handleChangeGameMaster";
+import { handleCreateRandomCharacter } from "./handleCreateRandomCharacter";
+import { handleDisconnect } from "./handleDisconnect";
+import { handleAttackCharacter } from "./attackCharacter/handleAttackCharacter";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
   io.on("connection", (socket: Socket) => {
@@ -22,26 +22,26 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
     updateGameState();
 
     socket.on("chooseCharacter", (characterID: string) => {
-      chooseCharacter(socket, gameState, characterID, updateGameState);
+      handleChooseCharacter(socket, gameState, characterID, updateGameState);
     });
 
     socket.on("changeGameMaster", (socketID: string) => {
-      changeGameMaster(socket, gameState, socketID, updateGameState);
+      handleChangeGameMaster(socket, gameState, socketID, updateGameState);
     });
 
     socket.on("createRandomCharacter", async () => {
-      createRandomCharacter(gameState, updateGameState);
+      handleCreateRandomCharacter(gameState, updateGameState);
     });
 
     socket.on("attackCharacter", async (attackData: AttackData) => {
       console.table(
         `actorCharacterID: "${attackData.actorCharacterID}" | targetCharacterID: "${attackData.targetCharacterID}"`
       );
-      attackCharacter(socket, io, gameState, attackData, updateGameState);
+      handleAttackCharacter(socket, io, gameState, attackData, updateGameState);
     });
 
     socket.on("disconnect", () => {
-      disconnect(socket, gameState, updateGameState);
+      handleDisconnect(socket, gameState, updateGameState);
     });
   });
 }

@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 
-export const disconnect = async (
+export const handleDisconnect = async (
   socket: Socket,
   gameState: GameState,
   updateGameState: () => void

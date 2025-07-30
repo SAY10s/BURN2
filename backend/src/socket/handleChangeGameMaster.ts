@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 import { isPlayerAdmin } from "../shared/helpers/characterGetters";
 
-export const changeGameMaster = (
+export const handleChangeGameMaster = (
   socket: Socket,
   gameState: GameState,
   /**

@@ -10,7 +10,7 @@ import { Socket, Server } from "socket.io";
 import { getSocketFromIO } from "../utils/getSocketFromIO";
 import { getActorAndTarget } from "./getActorAndTarget";
 
-export async function attackCharacter(
+export async function handleAttackCharacter(
   socket: Socket,
   io: Server,
   gameState: GameState,

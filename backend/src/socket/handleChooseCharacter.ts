@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
 
-export const chooseCharacter = (
+export const handleChooseCharacter = (
   socket: Socket,
   gameState: GameState,
   characterID: string,
