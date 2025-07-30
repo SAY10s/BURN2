@@ -6,10 +6,10 @@ import ArmorPiece from "./ArmorPiece";
 
 interface CharacterTableProps {
   characters: Character[];
-  chooseCharacter: (characterId: string) => void;
   clientsCharacterId: string;
-  attackCharacter: (targetID: string) => void;
   gameMasterView: boolean;
+  chooseCharacter: (characterId: string) => void;
+  attackCharacter: (targetID: string) => void;
 }
 
 export default function CharacterTable({

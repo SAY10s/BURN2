@@ -14,7 +14,7 @@ export async function attackCharacter(
   socket: Socket,
   io: Server,
   gameState: GameState,
-  targetCharacterID: string,
+  attackDataProp: AttackData,
   updateGameState: () => void
 ) {
   const {
@@ -23,9 +23,10 @@ export async function attackCharacter(
     targetPlayer,
     targetCharacter,
     gameMasterPlayer,
-  } = getActorAndTarget(socket, gameState, targetCharacterID);
+  } = getActorAndTarget(socket, gameState, attackDataProp.targetCharacterID);
 
-  const attackData = createAttackData(actorCharacter);
+  attackDataProp.actorCharacterID = actorCharacter.id;
+  const attackData = createAttackData(attackDataProp, gameState.characters);
 
   gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
   updateGameState();
@@ -49,7 +50,11 @@ export async function attackCharacter(
     );
 
     gameMasterSocket.once("executeAttack", (finalAttackData: AttackData) => {
-      applyAttackResults(finalAttackData, targetCharacterID, gameState);
+      applyAttackResults(
+        finalAttackData,
+        attackDataProp.targetCharacterID,
+        gameState
+      );
       updateGameState();
     });
   });

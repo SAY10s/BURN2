@@ -1,12 +1,5 @@
 import { Server, Socket } from "socket.io";
 import { GameState } from "../shared/types/gameState";
-import {
-  getCharacterByCharactersId,
-  getGameMasterPlayer,
-  getPlayerByCharactersId,
-  getPlayerByPlayersSocketId,
-} from "../shared/helpers/characterGetters";
-import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { AttackData } from "../shared/types/attackData";
 import { chooseCharacter } from "./chooseCharacter";
 import { changeGameMaster } from "./changeGameMaster";
@@ -40,14 +33,11 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
       createRandomCharacter(gameState, updateGameState);
     });
 
-    socket.on("attackCharacter", async (targetCharacterID) => {
-      attackCharacter(
-        socket,
-        io,
-        gameState,
-        targetCharacterID,
-        updateGameState
+    socket.on("attackCharacter", async (attackData: AttackData) => {
+      console.table(
+        `actorCharacterID: "${attackData.actorCharacterID}" | targetCharacterID: "${attackData.targetCharacterID}"`
       );
+      attackCharacter(socket, io, gameState, attackData, updateGameState);
     });
 
     socket.on("disconnect", () => {
