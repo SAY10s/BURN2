@@ -1,6 +1,7 @@
 import { getCharacterByCharactersId } from "../../shared/helpers/characterGetters";
 import type { AttackData } from "../../shared/types/attackData";
 import type { Character } from "../../shared/types/character";
+import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
 
 type Props = {
   attackData: AttackData;
@@ -23,6 +24,7 @@ export default function AttackModal({
     actorCharacterID,
     characters
   );
+  console.table(attackData.weapon.typesOfDamage);
   return (
     <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs backdrop-brightness-50 z-50">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
@@ -55,6 +57,51 @@ export default function AttackModal({
             {actorCharacter.weapons.map((weapon) => (
               <option key={weapon.id} value={weapon.id}>
                 {weapon.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Wybierz typ Ataku
+          </label>
+          <select
+            value={attackData.typeOfAttack}
+            onChange={(e) =>
+              setAttackData({
+                ...attackData,
+                typeOfAttack: e.target.value as AttackData["typeOfAttack"],
+              })
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          >
+            {Object.values(TypesOfAttack).map((type) => (
+              <option key={type} value={type}>
+                {type.replace(/_/g, " ")}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mt-4">
+          <label className="block text-gray-700 font-medium mb-1">
+            Wybierz typ obrażeń
+          </label>
+          <select
+            value={attackData.typeOfDamage}
+            onChange={(e) =>
+              setAttackData({
+                ...attackData,
+                typeOfDamage: e.target.value as AttackData["typeOfDamage"],
+              })
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          >
+            <option value="" disabled>
+              -- Wybierz typ obrażeń --
+            </option>
+            {attackData.weapon.typesOfDamage.map((damageType) => (
+              <option key={damageType} value={damageType}>
+                {damageType.replace(/_/g, " ")}
               </option>
             ))}
           </select>

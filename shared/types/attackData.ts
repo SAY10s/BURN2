@@ -1,8 +1,7 @@
+import { TypesOfAttack } from "./TypesOfAttack";
 import { TypesOfDamage } from "./typesOfDamage";
 import { TypesOfDefence } from "./typesOfDefence";
 import type { Weapon } from "./weapon";
-
-export type TypesOfAttack = "FAST_STRIKE" | "STRONG_STRIKE" | "SPELL";
 
 export interface AttackData {
   actorCharacterID: string;
