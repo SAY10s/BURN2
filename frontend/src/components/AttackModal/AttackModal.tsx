@@ -36,15 +36,17 @@ export default function AttackModal({
           </label>
           <select
             value={attackData.weapon.id}
-            onChange={(e) =>
-              setAttackData({
-                ...attackData,
-                weapon: {
-                  ...attackData.weapon,
-                  id: e.target.value,
-                },
-              })
-            }
+            onChange={(e) => {
+              const selectedWeapon = actorCharacter.weapons.find(
+                (weapon) => weapon.id === e.target.value
+              );
+              if (selectedWeapon) {
+                setAttackData({
+                  ...attackData,
+                  weapon: selectedWeapon,
+                });
+              }
+            }}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           >
             <option value="" disabled>
@@ -56,6 +58,49 @@ export default function AttackModal({
               </option>
             ))}
           </select>
+        </div>
+
+        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+          Szczegóły Broni
+        </h3>
+        {attackData.weapon.id ? (
+          <div className="text-gray-700">
+            <p>
+              <strong>Nazwa:</strong> {attackData.weapon.name}
+            </p>
+            <p>
+              <strong>Obrażenia:</strong> {attackData.weapon.damage}
+            </p>
+          </div>
+        ) : (
+          <p className="text-gray-500">Brak wybranej broni.</p>
+        )}
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            Szczegóły efektów
+          </h3>
+          {attackData.weapon.statusChances ? (
+            <div className="text-gray-700">
+              <p>
+                <strong>Podpalenie:</strong>{" "}
+                {attackData.weapon.statusChances.burn}%
+              </p>
+              <p>
+                <strong>Krwawienie:</strong>{" "}
+                {attackData.weapon.statusChances.bleed}%
+              </p>
+              <p>
+                <strong>Zatrucie:</strong>{" "}
+                {attackData.weapon.statusChances.poison}%
+              </p>
+              <p>
+                <strong>Duszenie:</strong>{" "}
+                {attackData.weapon.statusChances.choke}%
+              </p>
+            </div>
+          ) : (
+            <p className="text-gray-500">Brak statusów dla tej broni.</p>
+          )}
         </div>
 
         {/* Buttons */}
