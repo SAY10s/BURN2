@@ -47,7 +47,20 @@ export default function App() {
         Walka Wiedźmina {clientPlayer.socketID}{" "}
         {clientPlayer.isGameMaster ? "(GM)" : ""}
       </h1>
-      <div onClick={() => socket.emit("createRandomCharacter")}>New char</div>
+      <div className="flex justify-center gap-4 mb-4">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={() => socket.emit("createRandomCharacter")}
+        >
+          New character
+        </button>
+        <button
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          onClick={() => socket.emit("deleteAllCharacters")}
+        >
+          DELETE ALL CHARACTERS
+        </button>
+      </div>
 
       <div className="text-center text-lg text-gray-700">
         {gameState.debugMessage}

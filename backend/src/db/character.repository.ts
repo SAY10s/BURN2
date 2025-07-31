@@ -10,3 +10,12 @@ export async function insertCharacter(character: Character): Promise<void> {
   const db = await connectToDB();
   await db.collection<Character>("characters").insertOne(character);
 }
+
+export async function deleteAllCharacters(): Promise<void> {
+  const db = await connectToDB();
+  await db.collection<Character>("characters").deleteMany({});
+}
+export async function deleteCharacterById(characterId: string): Promise<void> {
+  const db = await connectToDB();
+  await db.collection<Character>("characters").deleteOne({ id: characterId });
+}

@@ -6,6 +6,7 @@ import { handleChangeGameMaster } from "./handleChangeGameMaster";
 import { handleCreateRandomCharacter } from "./handleCreateRandomCharacter";
 import { handleDisconnect } from "./handleDisconnect";
 import { handleAttackCharacter } from "./attackCharacter/handleAttackCharacter";
+import { handleDeleteAllCharacters } from "./handleDeleteAllCharacters";
 
 export function registerSocketHandlers(io: Server, gameState: GameState) {
   io.on("connection", (socket: Socket) => {
@@ -20,6 +21,10 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
     });
 
     updateGameState();
+
+    socket.on("deleteAllCharacters", () => {
+      handleDeleteAllCharacters(gameState, updateGameState);
+    });
 
     socket.on("chooseCharacter", (characterID: string) => {
       handleChooseCharacter(socket, gameState, characterID, updateGameState);
