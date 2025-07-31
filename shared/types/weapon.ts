@@ -34,7 +34,7 @@ export interface Weapon {
    * @default 0
    */
   weaponAccuracy: number;
-  typesOfDamaga: TypesOfDamage;
+  typesOfDamage: TypesOfDamage[];
   statusChances: StatusChances;
   /**
    * This weapon reduces Stopping Power by an additional 1d6/2 upon armor penetration.

@@ -226,10 +226,10 @@ export interface Character {
    * Character gets 2x more damage from given type of damage
    * By default all vulnerabilities are set to False, meaning that character is not vulnerable to any type of damage.
    */
-  susceptibilities: TypesOfDamage;
+  susceptibilities: TypesOfDamage[];
   /**
    * Character gets NO damage from given type of damage
    * By default all immunities are set to False, meaning that character is not immune to any type of damage.
    */
-  immunities: TypesOfDamage;
+  immunities: TypesOfDamage[];
 }

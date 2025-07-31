@@ -1,6 +1,8 @@
+import { TypesOfDamage } from "./typesOfDamage";
+import { TypesOfDefence } from "./typesOfDefence";
 import type { Weapon } from "./weapon";
 
-export type typeOfAttack = "FAST_STRIKE" | "STRONG_STRIKE" | "SPELL";
+export type TypesOfAttack = "FAST_STRIKE" | "STRONG_STRIKE" | "SPELL";
 
 export interface AttackData {
   actorCharacterID: string;
@@ -13,8 +15,9 @@ export interface AttackData {
   offensiveRoll: number;
   offensiveModifier: number;
 
-  typeOfDamage: string;
-  typeOfAttack: typeOfAttack;
+  typeOfDamage: TypesOfDamage;
+  typeOfAttack: TypesOfAttack;
+  typeOfDefence: TypesOfDefence;
 
   defensiveStat: number;
   defensiveSkill: number;

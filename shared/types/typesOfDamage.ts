@@ -1,9 +1,12 @@
-export interface TypesOfDamage {
-  slashing: boolean;
-  piercing: boolean;
-  bludgeoning: boolean;
-  elemental: boolean;
-  silver: boolean;
-  monster: boolean;
-  fire: boolean;
+//@ts-expect-error this code is valid after copying its to its final destination. This file itself is never used.
+export enum TypesOfDamage {
+  SLASHING = "slashing",
+  PIERCING = "piercing",
+  BLUDGEONING = "bludgeoning",
+  ELEMENTAL = "elemental",
+  SILVER = "silver",
+  MONSTER = "monster",
+  MAGIC = "magic",
+  FIRE = "fire",
+  TRUE = "true",
 }

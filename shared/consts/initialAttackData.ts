@@ -1,4 +1,6 @@
 import { AttackData } from "../types/attackData";
+import { TypesOfDamage } from "../types/typesOfDamage";
+import { TypesOfDefence } from "../types/typesOfDefence";
 import { WEAPON_1 } from "./initialWeapons";
 
 export const INITIAL_ATTACK_DATA: AttackData = {
@@ -12,7 +14,8 @@ export const INITIAL_ATTACK_DATA: AttackData = {
   offensiveRoll: 5,
   offensiveModifier: 0,
 
-  typeOfDamage: "SLASHING",
+  typeOfDamage: TypesOfDamage.SLASHING,
+  typeOfDefence: TypesOfDefence.DODGE,
   typeOfAttack: "FAST_STRIKE",
 
   defensiveStat: 0,

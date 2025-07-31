@@ -2,7 +2,6 @@ import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { AttackData } from "../../shared/types/attackData";
 import { Character } from "../../shared/types/character";
 import { GameState } from "../../shared/types/gameState";
-import { INITIAL_ATTACK_DATA } from "../../shared/consts/initialAttackData";
 import { getCharacterByCharactersId } from "../../shared/helpers/characterGetters";
 
 export function createAttackData(

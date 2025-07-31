@@ -1,15 +1,7 @@
 import { WEAPON_1, WEAPON_2 } from "../consts/initialWeapons";
 import { ArmorPiece, Character } from "../types/character";
 import { TypesOfDamage } from "../types/typesOfDamage";
-const INITIAL_TYPES_OF_DAMAGE_STAT: TypesOfDamage = {
-  slashing: false,
-  piercing: false,
-  bludgeoning: false,
-  elemental: false,
-  silver: false,
-  monster: false,
-  fire: false,
-};
+const INITIAL_TYPES_OF_DAMAGE_STAT: TypesOfDamage[] = [];
 
 /**
  * Collection of predefined character names for random selection
