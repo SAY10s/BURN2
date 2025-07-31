@@ -105,7 +105,6 @@ export default function App() {
           characters={gameState.characters}
           actorCharacterID={clientsCharacterID}
           onConfirmAttack={(attackData: AttackData) => {
-            console.table(attackData);
             socket.emit("attackCharacter", attackData);
             setShowAttackModal(false);
           }}

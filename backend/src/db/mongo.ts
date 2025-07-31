@@ -1,8 +1,6 @@
 import { MongoClient, ServerApiVersion, Db } from "mongodb";
 import "dotenv/config"; // This loads the .env file
 
-console.log(process.env.MONGODB_URI);
-
 const uri = process.env.MONGODB_URI;
 if (!uri) {
   throw new Error("MONGODB_URI is not defined in .env file");

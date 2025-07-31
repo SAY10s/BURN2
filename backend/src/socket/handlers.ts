@@ -39,9 +39,6 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
     });
 
     socket.on("attackCharacter", async (attackData: AttackData) => {
-      console.table(
-        `actorCharacterID: "${attackData.actorCharacterID}" | targetCharacterID: "${attackData.targetCharacterID}"`
-      );
       handleAttackCharacter(socket, io, gameState, attackData, updateGameState);
     });
 

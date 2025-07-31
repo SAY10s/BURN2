@@ -1,14 +1,12 @@
 import { AttackData } from "../../shared/types/attackData";
 import { GameState } from "../../shared/types/gameState";
-import {
-  createAttackData,
-  resolveDefence,
-  applyAttackResults,
-  checkHit,
-} from "./attackSteps";
+import { createAttackData } from "./createAttackData";
+import { resolveDefence } from "./resolveDefence";
+import { checkHit } from "./checkHit";
+import { applyAttackResults } from "./applyAttackResults";
 import { Socket, Server } from "socket.io";
-import { getSocketFromIObySocketID } from "../utils/getSocketFromIObySocketID";
 import { getActorAndTarget } from "./getActorAndTarget";
+import { getSocketFromIObySocketID } from "../utils/getSocketFromIObySocketID";
 
 export async function handleAttackCharacter(
   socket: Socket,
