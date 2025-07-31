@@ -7,7 +7,7 @@ import {
   checkHit,
 } from "./attackSteps";
 import { Socket, Server } from "socket.io";
-import { getSocketFromIO } from "../utils/getSocketFromIO";
+import { getSocketFromIObySocketID } from "../utils/getSocketFromIObySocketID";
 import { getActorAndTarget } from "./getActorAndTarget";
 
 export async function handleAttackCharacter(
@@ -31,8 +31,11 @@ export async function handleAttackCharacter(
   gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
   updateGameState();
 
-  const targetSocket = getSocketFromIO(io, targetPlayer.socketID);
-  const gameMasterSocket = getSocketFromIO(io, gameMasterPlayer.socketID);
+  const targetSocket = getSocketFromIObySocketID(io, targetPlayer.socketID);
+  const gameMasterSocket = getSocketFromIObySocketID(
+    io,
+    gameMasterPlayer.socketID
+  );
 
   io.to(targetPlayer.socketID).emit("requestDefence", actorCharacter);
 
