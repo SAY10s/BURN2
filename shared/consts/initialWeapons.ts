@@ -21,6 +21,7 @@ export const WEAPON_1: Weapon = {
   armorShreding: false,
   armorPiercing: false,
   improvedArmorPiercing: false,
+  associatedSkill: "staffSpear",
 };
 export const WEAPON_2: Weapon = {
   id: Math.random().toString(36).substring(2, 9),
@@ -37,4 +38,5 @@ export const WEAPON_2: Weapon = {
   armorShreding: false,
   armorPiercing: false,
   improvedArmorPiercing: false,
+  associatedSkill: "swordsmanship",
 };

@@ -1,3 +1,4 @@
+import type { Skills } from "../../frontend/src/shared/types/character";
 import type { TypesOfDamage } from "./typesOfDamage";
 
 /**
@@ -48,4 +49,12 @@ export interface Weapon {
    * When subtracting armor from this weapon’s damage, only subtract half the armor’s current value
    */
   improvedArmorPiercing: boolean;
+  /**
+   * Skill associated with using this weapon.
+   * @example "swordsmanship"
+   */
+  associatedSkill:
+    | keyof Skills["reflexSkills"]
+    | keyof Skills["dexteritySkills"]
+    | keyof Skills["willSkills"];
 }
