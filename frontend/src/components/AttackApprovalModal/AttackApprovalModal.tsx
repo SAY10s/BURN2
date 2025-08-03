@@ -190,10 +190,14 @@ export default function AttackApprovalModal({
               >
                 <option value={1}>Głowa (x3)</option>
                 <option value={2}>Tułów (x1)</option>
+                <option value={3}>Tułów (x1)</option>
+                <option value={4}>Tułów (x1)</option>
                 <option value={5}>Prawa Ręka (x0.5)</option>
                 <option value={6}>Lewa Ręka (x0.5)</option>
                 <option value={7}>Prawa Noga (x0.5)</option>
+                <option value={8}>Prawa Noga (x0.5)</option>
                 <option value={9}>Lewa Noga (x0.5)</option>
+                <option value={10}>Lewa Noga (x0.5)</option>
               </select>
             </div>
           </div>
