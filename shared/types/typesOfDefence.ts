@@ -3,5 +3,4 @@ export enum TypesOfDefence {
   REPOSITION = "reposition",
   BLOCK = "block",
   PARRY = "parry",
-  SHIELD = "shield",
 }
