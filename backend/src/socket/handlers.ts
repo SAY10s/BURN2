@@ -8,10 +8,17 @@ import { handleDisconnect } from "./handleDisconnect";
 import { handleAttackCharacter } from "./attackCharacter/handleAttackCharacter";
 import { handleDeleteAllCharacters } from "./handleDeleteAllCharacters";
 
-export function registerSocketHandlers(io: Server, gameState: GameState) {
+export function registerSocketHandlers(
+  io: Server,
+  gameState: GameState,
+  attackData: AttackData
+) {
   io.on("connection", (socket: Socket) => {
     const updateGameState = () => {
       io.emit("updateGameState", gameState);
+    };
+    const updateAttackData = () => {
+      io.emit("updateAttackData", attackData);
     };
 
     gameState.players.push({
@@ -38,8 +45,16 @@ export function registerSocketHandlers(io: Server, gameState: GameState) {
       handleCreateRandomCharacter(gameState, updateGameState);
     });
 
-    socket.on("attackCharacter", async (attackData: AttackData) => {
-      handleAttackCharacter(socket, io, gameState, attackData, updateGameState);
+    socket.on("attackCharacter", async (attackDataProp: AttackData) => {
+      handleAttackCharacter(
+        socket,
+        io,
+        gameState,
+        attackData,
+        attackDataProp,
+        updateGameState,
+        updateAttackData
+      );
     });
 
     socket.on("disconnect", () => {

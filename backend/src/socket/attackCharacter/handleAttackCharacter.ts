@@ -12,8 +12,10 @@ export async function handleAttackCharacter(
   socket: Socket,
   io: Server,
   gameState: GameState,
+  attackData: AttackData,
   attackDataProp: AttackData,
-  updateGameState: () => void
+  updateGameState: () => void,
+  updateAttackData: () => void
 ) {
   const {
     actorPlayer,
@@ -24,10 +26,14 @@ export async function handleAttackCharacter(
   } = getActorAndTarget(socket, gameState, attackDataProp.targetCharacterID);
 
   attackDataProp.actorCharacterID = actorCharacter.id;
-  const attackData = createAttackData(attackDataProp, gameState.characters);
+  Object.assign(
+    attackData,
+    createAttackData(attackDataProp, gameState.characters)
+  );
 
   gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
   updateGameState();
+  updateAttackData();
 
   const targetSocket = getSocketFromIObySocketID(io, targetPlayer.socketID);
   const gameMasterSocket = getSocketFromIObySocketID(
@@ -43,7 +49,7 @@ export async function handleAttackCharacter(
     const isHit = checkHit(attackData);
     attackData.isTargetHit = isHit;
 
-    updateGameState();
+    updateAttackData();
 
     io.to(gameMasterPlayer.socketID).emit(
       "requestGameMastersApproval",
@@ -57,6 +63,7 @@ export async function handleAttackCharacter(
         gameState
       );
       updateGameState();
+      updateAttackData();
     });
   });
 }

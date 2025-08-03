@@ -2,7 +2,6 @@ import { useEffect } from "react";
 //@ts-expect-error it actually works, no actions needed (probably installed types are not-perfect)
 import { io } from "socket.io-client";
 import type { GameState } from "../shared/types/gameState";
-import type { Character } from "../shared/types/character";
 import type { AttackData } from "../shared/types/attackData";
 import type { Player } from "../shared/types/player";
 import { getPlayerByPlayersSocketId } from "../shared/helpers/characterGetters";
@@ -13,7 +12,6 @@ export function useSocketHandlers(
   setGameState: (state: GameState) => void,
   setClientsCharacterID: (id: string) => void,
   setShowDefenceModal: (show: boolean) => void,
-  setDefenceMessage: (msg: string) => void,
   setShowGameMastersApprovalModal: (show: boolean) => void,
   setAttackData: (data: AttackData) => void,
   setClientPlayer: (player: Player) => void
@@ -28,14 +26,16 @@ export function useSocketHandlers(
       setClientPlayer(getPlayerByPlayersSocketId(socket.id, gameState.players));
     });
 
-    socket.on("requestDefence", (actorCharacter: Character) => {
-      setShowDefenceModal(true);
-      setDefenceMessage(`${actorCharacter.name} zaatakował Cię!`);
+    socket.on("updateAttackData", (attackData: AttackData) => {
+      setAttackData(attackData);
     });
 
-    socket.on("requestGameMastersApproval", (attackData: AttackData) => {
+    socket.on("requestDefence", () => {
+      setShowDefenceModal(true);
+    });
+
+    socket.on("requestGameMastersApproval", () => {
       setShowGameMastersApprovalModal(true);
-      setAttackData(attackData);
     });
   }, []);
 }

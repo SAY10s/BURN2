@@ -21,7 +21,6 @@ export default function App() {
   const [showGameMastersApprovalModal, setShowGameMastersApprovalModal] =
     useState(false);
   const [attackData, setAttackData] = useState<AttackData>(INITIAL_ATTACK_DATA);
-  const [defenceMessage, setDefenceMessage] = useState("");
   const [clientPlayer, setClientPlayer] = useState<Player>({
     controlledCharacterID: "",
     isGameMaster: false,
@@ -32,7 +31,6 @@ export default function App() {
     setGameState,
     setClientsCharacterID,
     setShowDefenceModal,
-    setDefenceMessage,
     setShowGameMastersApprovalModal,
     setAttackData,
     setClientPlayer
@@ -92,7 +90,7 @@ export default function App() {
       />
 
       {showDefenceModal && (
-        <DefenceModal message={defenceMessage} onDefend={defendSelf} />
+        <DefenceModal onDefend={defendSelf} attackData={attackData} />
       )}
       {showGameMastersApprovalModal && (
         <AttackApprovalModal
