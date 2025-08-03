@@ -1,6 +1,8 @@
+import { TypesOfDefence } from "../../shared/types/typesOfDefence";
+
 type DefenceModalProps = {
   message: string;
-  onDefend: (type: "DODGE" | "REPOSITION") => void;
+  onDefend: (type: TypesOfDefence) => void;
 };
 
 export default function DefenceModal({ message, onDefend }: DefenceModalProps) {
@@ -12,18 +14,15 @@ export default function DefenceModal({ message, onDefend }: DefenceModalProps) {
         </h2>
         <p className="text-sm text-gray-600 text-center mb-6">{message}</p>
         <div className="flex justify-center gap-4">
-          <button
-            onClick={() => onDefend("DODGE")}
-            className="px-4 py-2 bg-gray-800 text-white text-sm rounded-md hover:bg-gray-700 transition-colors font-medium"
-          >
-            Dodge
-          </button>
-          <button
-            onClick={() => onDefend("REPOSITION")}
-            className="px-4 py-2 bg-gray-800 text-white text-sm rounded-md hover:bg-gray-700 transition-colors font-medium"
-          >
-            Reposition
-          </button>
+          {Object.values(TypesOfDefence).map((value) => (
+            <button
+              key={value}
+              onClick={() => onDefend(value as TypesOfDefence)}
+              className="px-4 py-2 bg-gray-800 text-white text-sm rounded-md hover:bg-gray-700 transition-colors font-medium"
+            >
+              {value.charAt(0) + value.slice(1).toLowerCase()}
+            </button>
+          ))}
         </div>
       </div>
     </div>
