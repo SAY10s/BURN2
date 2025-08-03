@@ -12,6 +12,7 @@ import type { Player } from "./shared/types/player";
 import AttackModal from "./components/AttackModal/AttackModal";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
 import AttackDataTable from "./components/DEV/attackData/AttackData";
+import Header from "./components/Header/Header";
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
@@ -43,30 +44,9 @@ export default function App() {
 
   return (
     <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md relative">
-      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
-        Walka Wiedźmina {clientPlayer.socketID}{" "}
-        {clientPlayer.isGameMaster ? "(GM)" : ""}
-      </h1>
-      <div className="flex justify-center gap-4 mb-4">
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={() => socket.emit("createRandomCharacter")}
-        >
-          New character
-        </button>
-        <button
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-          onClick={() => socket.emit("deleteAllCharacters")}
-        >
-          DELETE ALL CHARACTERS
-        </button>
-      </div>
+      <Header clientPlayer={clientPlayer} gameState={gameState} />
 
-      <div className="text-center text-lg text-gray-700">
-        {gameState.debugMessage}
-      </div>
-
-      <div className="flex  items-center space-y-4">
+      <div className="flex  items-center">
         <PlayersTable
           players={gameState.players}
           changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
