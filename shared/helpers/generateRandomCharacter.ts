@@ -123,6 +123,7 @@ export const generateRandomCharacter = (
         staffSpear: getRandomSkillValue(),
         swordsmanship: getRandomSkillValue(),
         dodgeEscape: getRandomSkillValue(),
+        melee: getRandomSkillValue(),
       },
       dexteritySkills: {
         athletics: getRandomSkillValue(),

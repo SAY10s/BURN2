@@ -1,24 +1,25 @@
 import { AttackData } from "../../shared/types/attackData";
 import { Character } from "../../shared/types/character";
 import { GameState } from "../../shared/types/gameState";
+import { TypesOfDefence } from "../../shared/types/typesOfDefence";
 import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
 export function resolveDefence(
-  defenceType: "DODGE" | "REPOSITION",
+  defenceType: TypesOfDefence,
   targetCharacter: Character
 ) {
   const attackData = AttackDataSingleton.getInstance();
   const gameState = GameStateSingleton.getInstance();
 
   switch (defenceType) {
-    case "DODGE":
+    case TypesOfDefence.DODGE:
       gameState.debugMessage += ` ${targetCharacter.name} próbuje uniknąć.`;
       attackData.defensiveStat = targetCharacter.stats.reflex;
       attackData.defensiveSkill =
         targetCharacter.skills.reflexSkills.dodgeEscape;
       break;
-    case "REPOSITION":
+    case TypesOfDefence.REPOSITION:
       gameState.debugMessage += ` ${targetCharacter.name} próbuje zejść z linii.`;
       attackData.defensiveStat = targetCharacter.stats.dexterity;
       attackData.defensiveSkill =

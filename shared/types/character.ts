@@ -102,12 +102,19 @@ export interface Skills {
      */
     staffSpear: number;
     /**
-     * (pol. **Broń bitewna**) + **Reflex** (pol.  **Reakcja**)
+     * (pol. **Szermierka**) + **Reflex** (pol.  **Reakcja**)
      * @creationRange 0-6 The initial range during character creation
      * @max 10 The maximum achievable value through progression
      * @default 0
      */
     swordsmanship: number;
+    /**
+     * (pol. **Broń Bitewna**) + **Reflex** (pol.  **Reakcja**)
+     * @creationRange 0-6 The initial range during character creation
+     * @max 10 The maximum achievable value through progression
+     * @default 0
+     */
+    melee: number;
     /**
      * (pol. **Zwinność**) + **Reflex** (pol.  **Reakcja**)
      * @creationRange 0-6 The initial range during character creation
