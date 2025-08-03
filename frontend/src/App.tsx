@@ -10,6 +10,8 @@ import DefenceModal from "./components/DefenceModal/DefenceModal";
 import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
 import type { Player } from "./shared/types/player";
 import AttackModal from "./components/AttackModal/AttackModal";
+import type { TypesOfDefence } from "./shared/types/typesOfDefence";
+import AttackDataTable from "./components/DEV/attackData/AttackData";
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
@@ -36,7 +38,7 @@ export default function App() {
     setClientPlayer
   );
 
-  const defendSelf = (type: "DODGE" | "REPOSITION") => {
+  const defendSelf = (type: TypesOfDefence) => {
     socket.emit("defend", type);
     setShowDefenceModal(false);
   };
@@ -66,10 +68,13 @@ export default function App() {
         {gameState.debugMessage}
       </div>
 
-      <PlayersTable
-        players={gameState.players}
-        changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
-      />
+      <div className="flex  items-center space-y-4">
+        <PlayersTable
+          players={gameState.players}
+          changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
+        />
+        <AttackDataTable attackData={attackData} />
+      </div>
 
       <CharacterTable
         characters={gameState.characters}
