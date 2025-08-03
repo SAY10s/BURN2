@@ -1,5 +1,4 @@
 import { Socket } from "socket.io";
-import { GameState } from "../../shared/types/gameState";
 import {
   getCharacterByCharactersId,
   getGameMasterPlayer,
