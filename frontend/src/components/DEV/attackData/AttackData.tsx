@@ -1,4 +1,5 @@
 import type { AttackData } from "../../../shared/types/attackData";
+
 interface AttackDataTableProps {
   attackData: AttackData;
 }
@@ -19,7 +20,7 @@ const fieldLabels: Record<keyof AttackData, string> = {
   defensiveRoll: "Defensive Roll",
   defensiveModifier: "Defensive Modifier",
   damageRoll: "Damage Roll",
-  location: "Location",
+  locationRoll: "Location Roll",
   isTargetHit: "Is Target Hit",
 };
 
@@ -37,6 +38,10 @@ function renderValue(key: keyof AttackData, value: any) {
   }
   if (typeof value === "boolean") {
     return value ? "Yes" : "No";
+  }
+  if (value instanceof Object && "notation" in value) {
+    // Handle DiceRoll objects
+    return value.output;
   }
   return value;
 }

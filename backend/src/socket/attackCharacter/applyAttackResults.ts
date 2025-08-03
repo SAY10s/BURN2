@@ -12,11 +12,11 @@ export function applyAttackResults(
       character.id === targetCharacterID
         ? {
             ...character,
-            currentHP: character.currentHP - attackDataProp.damageRoll,
+            currentHP: character.currentHP - attackDataProp.damageRoll.total,
           }
         : character
     );
-    gameState.debugMessage += ` Trafienie za ${attackDataProp.damageRoll}`;
+    gameState.debugMessage += ` Trafienie za ${attackDataProp.damageRoll.total}`;
   } else {
     gameState.debugMessage += ` Atak nie trafia`;
   }

@@ -1,7 +1,6 @@
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { getCharacterByCharactersId } from "../../shared/helpers/characterGetters";
 import { AttackData } from "../../shared/types/attackData";
-import { Character } from "../../shared/types/character";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
 export function createAttackData(attackDataProp: AttackData): AttackData {
@@ -14,16 +13,16 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
     ...attackDataProp,
     offensiveStat: actorCharacter.skills.reflexSkills.swordsmanship,
     offensiveSkill: actorCharacter.stats.reflex,
-    offensiveRoll: new DiceRoll("1d10!").total,
+    offensiveRoll: new DiceRoll("1d10!"),
     offensiveModifier: 0,
 
     defensiveStat: 0,
     defensiveSkill: 0,
-    defensiveRoll: new DiceRoll("1d10!").total,
+    defensiveRoll: new DiceRoll("1d10!"),
     defensiveModifier: 0,
 
-    damageRoll: new DiceRoll("3d6").total,
-    location: new DiceRoll("1d10").total,
+    damageRoll: new DiceRoll(attackDataProp.weapon.damage),
+    locationRoll: new DiceRoll("1d10"),
 
     isTargetHit: false,
   };

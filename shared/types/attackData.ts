@@ -1,3 +1,4 @@
+import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { TypesOfAttack } from "./TypesOfAttack";
 import { TypesOfDamage } from "./typesOfDamage";
 import { TypesOfDefence } from "./typesOfDefence";
@@ -11,7 +12,7 @@ export interface AttackData {
 
   offensiveStat: number;
   offensiveSkill: number;
-  offensiveRoll: number;
+  offensiveRoll: DiceRoll;
   offensiveModifier: number;
 
   typeOfDamage: TypesOfDamage;
@@ -20,10 +21,10 @@ export interface AttackData {
 
   defensiveStat: number;
   defensiveSkill: number;
-  defensiveRoll: number;
+  defensiveRoll: DiceRoll;
   defensiveModifier: number;
 
-  damageRoll: number;
+  damageRoll: DiceRoll;
   /**
    * @head 1
    * @torso 2-4
@@ -32,7 +33,7 @@ export interface AttackData {
    * @rightLeg 7-8
    * @leftLeg 9-10
    */
-  location: number;
+  locationRoll: DiceRoll;
 
   isTargetHit: boolean;
 }

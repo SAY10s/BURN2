@@ -27,6 +27,7 @@ export function registerSocketHandlers(io: Server) {
     });
 
     updateGameState();
+    updateAttackData();
 
     socket.on("deleteAllCharacters", () => {
       handleDeleteAllCharacters(updateGameState);

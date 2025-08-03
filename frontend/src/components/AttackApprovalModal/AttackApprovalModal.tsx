@@ -1,10 +1,11 @@
 import type { AttackData } from "../../shared/types/attackData";
 import type { Socket } from "socket.io-client";
+import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 
 type Props = {
   socket: typeof Socket;
   attackData: AttackData;
-  setAttackData: (data: AttackData) => void;
+  setAttackData: (attackData: AttackData) => void;
   setShowGameMastersApprovalModal: (showModal: boolean) => void;
 };
 
@@ -14,6 +15,43 @@ export default function AttackApprovalModal({
   setAttackData,
   setShowGameMastersApprovalModal,
 }: Props) {
+  function checkHit(attackData: AttackData): boolean {
+    const attackTotal =
+      attackData.offensiveRoll.total +
+      attackData.offensiveStat +
+      attackData.offensiveSkill;
+    const defenceTotal =
+      attackData.defensiveRoll.total +
+      attackData.defensiveStat +
+      attackData.defensiveSkill;
+    return attackTotal > defenceTotal;
+  }
+
+  const handleRollChange = (
+    rollType: "offensiveRoll" | "defensiveRoll" | "damageRoll",
+    total: number,
+    /**
+     * Optional parameter to specify the dice notation.
+     * If not provided, defaults to "1d10".
+     * @default "1d10"
+     */
+    diceNotation: string = "1d10"
+  ) => {
+    const newRoll = new DiceRoll({
+      notation: diceNotation,
+      rolls: [total],
+    });
+
+    setAttackData({
+      ...attackData,
+      isTargetHit: checkHit({
+        ...attackData,
+        [rollType]: newRoll,
+      }),
+      [rollType]: newRoll,
+    });
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs backdrop-brightness-50 z-50">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
@@ -22,7 +60,6 @@ export default function AttackApprovalModal({
         </h2>
 
         <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm text-gray-700">
-          {/* Offensive */}
           <div className="col-span-2">
             <label className="block text-gray-700 font-medium mb-1">
               Rzut Ataku
@@ -30,12 +67,9 @@ export default function AttackApprovalModal({
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                value={attackData.offensiveRoll}
+                value={attackData.offensiveRoll.total}
                 onChange={(e) =>
-                  setAttackData({
-                    ...attackData,
-                    offensiveRoll: +e.target.value,
-                  })
+                  handleRollChange("offensiveRoll", Number(e.target.value))
                 }
                 className="w-16 px-2 py-1 border border-gray-300 rounded-md"
               />
@@ -43,7 +77,7 @@ export default function AttackApprovalModal({
                 + ({attackData.offensiveStat} stat + {attackData.offensiveSkill}{" "}
                 skill) ={" "}
                 <span className="font-semibold text-gray-800">
-                  {attackData.offensiveRoll +
+                  {attackData.offensiveRoll.total +
                     attackData.offensiveStat +
                     attackData.offensiveSkill}
                 </span>
@@ -51,7 +85,6 @@ export default function AttackApprovalModal({
             </div>
           </div>
 
-          {/* Defensive */}
           <div className="col-span-2">
             <label className="block text-gray-700 font-medium mb-1">
               Rzut Obrony
@@ -59,12 +92,9 @@ export default function AttackApprovalModal({
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                value={attackData.defensiveRoll}
+                value={attackData.defensiveRoll.total}
                 onChange={(e) =>
-                  setAttackData({
-                    ...attackData,
-                    defensiveRoll: +e.target.value,
-                  })
+                  handleRollChange("defensiveRoll", Number(e.target.value))
                 }
                 className="w-16 px-2 py-1 border border-gray-300 rounded-md"
               />
@@ -72,7 +102,7 @@ export default function AttackApprovalModal({
                 + ({attackData.defensiveStat} stat + {attackData.defensiveSkill}{" "}
                 skill) ={" "}
                 <span className="font-semibold text-gray-800">
-                  {attackData.defensiveRoll +
+                  {attackData.defensiveRoll.total +
                     attackData.defensiveStat +
                     attackData.defensiveSkill}
                 </span>
@@ -80,25 +110,24 @@ export default function AttackApprovalModal({
             </div>
           </div>
 
-          {/* Damage */}
           <div className="col-span-2">
             <label className="block text-gray-700 font-medium mb-1">
               Obrażenia
             </label>
             <input
               type="number"
-              value={attackData.damageRoll}
+              value={attackData.damageRoll.total}
               onChange={(e) =>
-                setAttackData({
-                  ...attackData,
-                  damageRoll: +e.target.value,
-                })
+                handleRollChange(
+                  "damageRoll",
+                  Number(e.target.value),
+                  attackData.weapon.damage
+                )
               }
               className="w-24 px-2 py-1 border border-gray-300 rounded-md"
             />
           </div>
 
-          {/* isTargetHit */}
           <div className="col-span-2 flex items-center mt-2">
             <input
               id="isTargetHit"

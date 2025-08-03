@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dice-roller/rpg-dice-roller": "^5.5.1",
     "@tailwindcss/postcss": "^4.1.11",
     "postcss": "^8.5.6",
     "react": "^19.1.0",

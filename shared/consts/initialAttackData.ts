@@ -1,3 +1,4 @@
+import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { AttackData } from "../types/attackData";
 import { TypesOfAttack } from "../types/TypesOfAttack";
 import { TypesOfDamage } from "../types/typesOfDamage";
@@ -12,7 +13,7 @@ export const INITIAL_ATTACK_DATA: AttackData = {
 
   offensiveStat: 0,
   offensiveSkill: 0,
-  offensiveRoll: 5,
+  offensiveRoll: new DiceRoll("1d10!"),
   offensiveModifier: 0,
 
   typeOfDamage: TypesOfDamage.SLASHING,
@@ -21,10 +22,10 @@ export const INITIAL_ATTACK_DATA: AttackData = {
 
   defensiveStat: 0,
   defensiveSkill: 0,
-  defensiveRoll: 5,
+  defensiveRoll: new DiceRoll("1d10!"),
   defensiveModifier: 0,
 
-  damageRoll: 0,
-  location: 0,
+  damageRoll: new DiceRoll("3d6"),
+  locationRoll: new DiceRoll("1d10"),
   isTargetHit: false,
 };
