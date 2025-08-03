@@ -4,7 +4,7 @@ export enum TypesOfAttack {
    */
   FAST_STRIKE = "FAST_STRIKE",
   /**
-   * (pol. zwykły cios)
+   * (pol. zwykły cios), used only by ranged weapons
    */
   REGULAR_STRIKE = "REGULAR_STRIKE",
   /**
@@ -32,7 +32,7 @@ export enum TypesOfAttack {
    */
   POMMEL_STRIKE = "POMMEL_STRIKE",
   /**
-   * (pol. finta), 2 step attack. First step is a feint, second step is a regular strike.
+   * (pol. finta), 2 step attack. First step is a feint, second step is a fast strike.
    * Deceit (pol. oszustwo) + Empathy (pol. empatia) vs Awarness (pol. czujność) + Intelligence (pol. inteligencja), if successful, second ste has +3 mod.
    */
   FEINT = "FEINT",
