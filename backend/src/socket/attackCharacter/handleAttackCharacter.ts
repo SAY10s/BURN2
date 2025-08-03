@@ -7,12 +7,12 @@ import { applyAttackResults } from "./applyAttackResults";
 import { Socket, Server } from "socket.io";
 import { getActorAndTarget } from "./getActorAndTarget";
 import { getSocketFromIObySocketID } from "../utils/getSocketFromIObySocketID";
+import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
+import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
 export async function handleAttackCharacter(
   socket: Socket,
   io: Server,
-  gameState: GameState,
-  attackData: AttackData,
   attackDataProp: AttackData,
   updateGameState: () => void,
   updateAttackData: () => void
@@ -23,15 +23,15 @@ export async function handleAttackCharacter(
     targetPlayer,
     targetCharacter,
     gameMasterPlayer,
-  } = getActorAndTarget(socket, gameState, attackDataProp.targetCharacterID);
+  } = getActorAndTarget(socket, attackDataProp.targetCharacterID);
 
   attackDataProp.actorCharacterID = actorCharacter.id;
   Object.assign(
-    attackData,
-    createAttackData(attackDataProp, gameState.characters)
+    AttackDataSingleton.getInstance(),
+    createAttackData(attackDataProp)
   );
 
-  gameState.debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
+  GameStateSingleton.getInstance().debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
   updateGameState();
   updateAttackData();
 
@@ -44,24 +44,21 @@ export async function handleAttackCharacter(
   io.to(targetPlayer.socketID).emit("requestDefence", actorCharacter);
 
   targetSocket.once("defend", (defenceType) => {
-    resolveDefence(defenceType, attackData, targetCharacter, gameState);
+    resolveDefence(defenceType, targetCharacter);
 
-    const isHit = checkHit(attackData);
-    attackData.isTargetHit = isHit;
+    AttackDataSingleton.getInstance().isTargetHit = checkHit(
+      AttackDataSingleton.getInstance()
+    );
 
     updateAttackData();
 
     io.to(gameMasterPlayer.socketID).emit(
       "requestGameMastersApproval",
-      attackData
+      AttackDataSingleton.getInstance()
     );
 
     gameMasterSocket.once("executeAttack", (finalAttackData: AttackData) => {
-      applyAttackResults(
-        finalAttackData,
-        attackDataProp.targetCharacterID,
-        gameState
-      );
+      applyAttackResults(attackDataProp.targetCharacterID, finalAttackData);
       updateGameState();
       updateAttackData();
     });

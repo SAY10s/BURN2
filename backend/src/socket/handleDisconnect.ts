@@ -1,11 +1,11 @@
 import { Socket } from "socket.io";
-import { GameState } from "../shared/types/gameState";
+import { GameStateSingleton } from "../singletons/GameStateSingleton";
 
 export const handleDisconnect = async (
   socket: Socket,
-  gameState: GameState,
   updateGameState: () => void
 ) => {
+  const gameState = GameStateSingleton.getInstance();
   gameState.players = gameState.players.filter(
     (player) => player.socketID !== socket.id
   );

@@ -1,13 +1,16 @@
 import { AttackData } from "../../shared/types/attackData";
 import { Character } from "../../shared/types/character";
 import { GameState } from "../../shared/types/gameState";
+import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
+import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
 export function resolveDefence(
   defenceType: "DODGE" | "REPOSITION",
-  attackData: AttackData,
-  targetCharacter: Character,
-  gameState: GameState
+  targetCharacter: Character
 ) {
+  const attackData = AttackDataSingleton.getInstance();
+  const gameState = GameStateSingleton.getInstance();
+
   switch (defenceType) {
     case "DODGE":
       gameState.debugMessage += ` ${targetCharacter.name} próbuje uniknąć.`;

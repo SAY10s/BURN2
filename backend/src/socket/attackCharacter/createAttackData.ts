@@ -2,18 +2,16 @@ import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { getCharacterByCharactersId } from "../../shared/helpers/characterGetters";
 import { AttackData } from "../../shared/types/attackData";
 import { Character } from "../../shared/types/character";
+import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
-export function createAttackData(
-  attackData: AttackData,
-  characters: Character[]
-): AttackData {
+export function createAttackData(attackDataProp: AttackData): AttackData {
   const actorCharacter = getCharacterByCharactersId(
-    attackData.actorCharacterID,
-    characters
+    attackDataProp.actorCharacterID,
+    GameStateSingleton.getInstance().characters
   );
 
   return {
-    ...attackData,
+    ...attackDataProp,
     offensiveStat: actorCharacter.skills.reflexSkills.swordsmanship,
     offensiveSkill: actorCharacter.stats.reflex,
     offensiveRoll: new DiceRoll("1d10!").total,

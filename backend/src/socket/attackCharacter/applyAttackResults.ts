@@ -1,21 +1,22 @@
 import { AttackData } from "../../shared/types/attackData";
-import { GameState } from "../../shared/types/gameState";
+import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
+import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
 export function applyAttackResults(
-  attackData: AttackData,
   targetCharacterID: string,
-  gameState: GameState
+  attackDataProp: AttackData
 ) {
-  if (attackData.isTargetHit) {
+  const gameState = GameStateSingleton.getInstance();
+  if (attackDataProp.isTargetHit) {
     gameState.characters = gameState.characters.map((character) =>
       character.id === targetCharacterID
         ? {
             ...character,
-            currentHP: character.currentHP - attackData.damageRoll,
+            currentHP: character.currentHP - attackDataProp.damageRoll,
           }
         : character
     );
-    gameState.debugMessage += ` Trafienie za ${attackData.damageRoll}`;
+    gameState.debugMessage += ` Trafienie za ${attackDataProp.damageRoll}`;
   } else {
     gameState.debugMessage += ` Atak nie trafia`;
   }
