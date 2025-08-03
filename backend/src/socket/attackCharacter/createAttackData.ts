@@ -14,7 +14,7 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
     offensiveStat: actorCharacter.skills.reflexSkills.swordsmanship,
     offensiveSkill: actorCharacter.stats.reflex,
     offensiveRoll: new DiceRoll("1d10!"),
-    offensiveModifier: 0,
+    offensiveModifier: attackDataProp.weapon.weaponAccuracy,
 
     defensiveStat: 0,
     defensiveSkill: 0,

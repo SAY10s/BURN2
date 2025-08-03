@@ -1,6 +1,4 @@
-import { AttackData } from "../../shared/types/attackData";
 import { Character } from "../../shared/types/character";
-import { GameState } from "../../shared/types/gameState";
 import { TypesOfDefence } from "../../shared/types/typesOfDefence";
 import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
