@@ -1,7 +1,6 @@
 import { WEAPON_1, WEAPON_2 } from "../consts/initialWeapons";
 import { ArmorPiece, Character } from "../types/character";
 import { TypesOfDamage } from "../types/typesOfDamage";
-const INITIAL_TYPES_OF_DAMAGE_STAT: TypesOfDamage[] = [];
 
 /**
  * Collection of predefined character names for random selection
@@ -72,15 +71,7 @@ const getRandomSkillValue = (): number => {
 const getRandomArmorPiece = (): ArmorPiece => {
   const maxSP = Math.floor(Math.random() * 5) + 1;
   return {
-    reductions: {
-      slashing: 0,
-      piercing: 0,
-      bludgeoning: 0,
-      elemental: 0,
-      silver: 0,
-      monster: 0,
-      fire: 0,
-    },
+    reductions: [TypesOfDamage.BLUDGEONING],
     maxSP: maxSP,
     currentSP: maxSP,
     encumbranceValue: 0,
@@ -149,8 +140,8 @@ export const generateRandomCharacter = (
       leftLeg: getRandomArmorPiece(),
     },
     weapons: [WEAPON_1, WEAPON_2],
-    susceptibilities: INITIAL_TYPES_OF_DAMAGE_STAT,
-    immunities: INITIAL_TYPES_OF_DAMAGE_STAT,
+    susceptibilities: [TypesOfDamage.SLASHING],
+    immunities: [TypesOfDamage.PIERCING],
   };
 
   return character;

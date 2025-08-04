@@ -1,5 +1,4 @@
 import { Character } from "./character";
-import { Action } from "./action";
 import { Player } from "./player";
 export interface GameState {
   /**

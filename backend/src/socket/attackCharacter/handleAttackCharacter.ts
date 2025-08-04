@@ -31,7 +31,7 @@ export async function handleAttackCharacter(
     createAttackData(attackDataProp)
   );
 
-  GameStateSingleton.getInstance().debugMessage = `${actorCharacter.name}(${actorPlayer.socketID}) zaatakował ${targetCharacter.name}(${targetPlayer.socketID}).`;
+  GameStateSingleton.getInstance().debugMessage = `${actorCharacter.name} zaatakował ${targetCharacter.name}.`;
   updateGameState();
   updateAttackData();
 
@@ -50,6 +50,7 @@ export async function handleAttackCharacter(
       AttackDataSingleton.getInstance()
     );
 
+    updateGameState();
     updateAttackData();
 
     io.to(gameMasterPlayer.socketID).emit(
@@ -58,7 +59,7 @@ export async function handleAttackCharacter(
     );
 
     gameMasterSocket.once("executeAttack", (finalAttackData: AttackData) => {
-      applyAttackResults(attackDataProp.targetCharacterID, finalAttackData);
+      applyAttackResults(socket, finalAttackData);
       Object.assign(AttackDataSingleton.getInstance(), finalAttackData);
       updateGameState();
       updateAttackData();

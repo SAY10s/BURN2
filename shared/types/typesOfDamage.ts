@@ -8,5 +8,5 @@ export enum TypesOfDamage {
   MONSTER = "monster",
   MAGIC = "magic",
   FIRE = "fire",
-  TRUE = "true",
+  TRUE_DAMAGE = "true_damage",
 }

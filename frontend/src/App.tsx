@@ -13,6 +13,7 @@ import AttackModal from "./components/AttackModal/AttackModal";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
 import AttackDataTable from "./components/DEV/attackData/AttackData";
 import Header from "./components/Header/Header";
+import RandomNumber from "./components/Header/rolltest";
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
@@ -45,6 +46,7 @@ export default function App() {
   return (
     <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md relative">
       <Header clientPlayer={clientPlayer} gameState={gameState} />
+      <RandomNumber min={1} max={10} duration={3000} />
 
       <div className="flex  items-center">
         <PlayersTable

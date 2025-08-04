@@ -159,18 +159,9 @@ export interface Skills {
 
 export interface ArmorPiece {
   /**
-   *Reductions tell you if armor piece reduces damage by 50%
-   *. By default they are all set to 0
+   *Reductions tell you if armor piece reduces given type of damage by 50%
    */
-  reductions: {
-    slashing: 0;
-    piercing: 0;
-    bludgeoning: 0;
-    elemental: 0;
-    silver: 0;
-    monster: 0;
-    fire: 0;
-  };
+  reductions: TypesOfDamage[];
   /**
    *Stopping Power describes how much damage armor stops when struck by a weapon or attack.
    */

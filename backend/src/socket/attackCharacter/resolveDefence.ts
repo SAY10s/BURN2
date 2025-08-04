@@ -24,6 +24,6 @@ export function resolveDefence(
         targetCharacter.skills.dexteritySkills.athletics;
       break;
     default:
-      gameState.debugMessage = "Błąd przy określaniu obrony.";
+    // gameState.debugMessage = "Błąd przy określaniu obrony.";
   }
 }
