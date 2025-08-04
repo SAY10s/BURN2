@@ -3,6 +3,7 @@ import ValueBar from "./ValueBar";
 import SkillsTable from "./SkillsTable";
 import StatsTable from "./StatsTable";
 import ArmorPiece from "./ArmorPiece";
+import { TypesOfStatus } from "../../shared/types/typesOfStatus";
 
 interface CharacterTableProps {
   characters: Character[];
@@ -62,17 +63,17 @@ export default function CharacterTable({
               {/* Status Indicators */}
               <div>
                 <div className="flex space-x-2 justify-center text-lg">
-                  {character.status.isBleeding && (
+                  {character.status.includes(TypesOfStatus.BLEEDING) && (
                     <span className="text-red-500" title="Bleeding">
                       🩸
                     </span>
                   )}
-                  {character.status.isBurning && (
+                  {character.status.includes(TypesOfStatus.BURN) && (
                     <span className="text-orange-500" title="Burning">
                       🔥
                     </span>
                   )}
-                  {character.status.isPoisoned && (
+                  {character.status.includes(TypesOfStatus.POISON) && (
                     <span className="text-green-500" title="Poisoned">
                       🧪
                     </span>

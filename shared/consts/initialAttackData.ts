@@ -19,6 +19,7 @@ export const INITIAL_ATTACK_DATA: AttackData = {
   typeOfDamage: TypesOfDamage.SLASHING,
   typeOfDefence: TypesOfDefence.DODGE,
   typeOfAttack: TypesOfAttack.FAST_STRIKE,
+  appliedStatuses: [],
 
   defensiveStat: 0,
   defensiveSkill: 0,

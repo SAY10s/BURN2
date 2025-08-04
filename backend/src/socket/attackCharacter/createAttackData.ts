@@ -9,6 +9,16 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
     GameStateSingleton.getInstance().characters
   );
 
+  const appliedStatuses = Object.entries(attackDataProp.weapon.statusChances)
+    .filter(([status, chance]) => {
+      if (typeof chance !== "number" || chance <= 0) return false;
+      return Math.random() * 100 < chance;
+    })
+    .map(
+      ([status]) =>
+        status as (typeof attackDataProp.weapon.typesOfDamage)[number]
+    );
+
   return {
     ...attackDataProp,
     offensiveStat: actorCharacter.skills.reflexSkills.swordsmanship,
@@ -23,6 +33,8 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
 
     damageRoll: new DiceRoll(attackDataProp.weapon.damage),
     locationRoll: new DiceRoll("1d10"),
+    appliedStatuses:
+      appliedStatuses as unknown as typeof attackDataProp.appliedStatuses,
 
     isTargetHit: false,
   };

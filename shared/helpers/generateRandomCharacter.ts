@@ -125,12 +125,7 @@ export const generateRandomCharacter = (
         spellCasting: getRandomSkillValue(),
       },
     },
-    status: {
-      isBurning: false,
-      isChoking: false,
-      isBleeding: false,
-      isPoisoned: false,
-    },
+    status: [],
     characterArmor: {
       head: getRandomArmorPiece(),
       torso: getRandomArmorPiece(),

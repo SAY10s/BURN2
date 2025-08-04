@@ -147,11 +147,15 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     }
     GameStateSingleton.getInstance().debugMessage += ` Obrażenia: ${damage}. Trafienie krytyczne: ${levelOfCriticalHit}.`;
 
+    GameStateSingleton.getInstance().debugMessage += ` Nałożono efekty: ${attackDataProp.appliedStatuses.join(
+      ", "
+    )}.`;
     gameState.characters = gameState.characters.map((character) =>
       character.id === targetCharacter.id
         ? {
             ...character,
             currentHP: character.currentHP - damage,
+            status: [...character.status, ...attackDataProp.appliedStatuses],
           }
         : character
     );

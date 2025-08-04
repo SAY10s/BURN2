@@ -3,6 +3,7 @@ import { TypesOfAttack } from "./TypesOfAttack";
 import { TypesOfDamage } from "./typesOfDamage";
 import { TypesOfDefence } from "./typesOfDefence";
 import type { Weapon } from "./weapon";
+import { TypesOfStatus } from "./typesOfStatus";
 
 export interface AttackData {
   actorCharacterID: string;
@@ -18,6 +19,7 @@ export interface AttackData {
   typeOfDamage: TypesOfDamage;
   typeOfAttack: TypesOfAttack;
   typeOfDefence: TypesOfDefence;
+  appliedStatuses: TypesOfStatus[];
 
   defensiveStat: number;
   defensiveSkill: number;

@@ -1,6 +1,7 @@
 import type { AttackData } from "../../shared/types/attackData";
 import type { Socket } from "socket.io-client";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
+import { TypesOfStatus } from "../../shared/types/typesOfStatus";
 
 type Props = {
   socket: typeof Socket;
@@ -218,6 +219,34 @@ export default function AttackApprovalModal({
             <label htmlFor="isTargetHit" className="ml-2 text-gray-700">
               Cel został trafiony
             </label>
+          </div>
+          <div className="col-span-2 mt-4">
+            <label className="block text-gray-700 font-medium mb-1">
+              Statusy do nałożenia
+            </label>
+            <div className="flex flex-wrap gap-4">
+              {Object.values(TypesOfStatus).map((status) => (
+                <label key={status} className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    checked={attackData.appliedStatuses.includes(status)}
+                    onChange={(e) => {
+                      const newStatuses = e.target.checked
+                        ? [...attackData.appliedStatuses, status]
+                        : attackData.appliedStatuses.filter(
+                            (s) => s !== status
+                          );
+                      setAttackData({
+                        ...attackData,
+                        appliedStatuses: newStatuses,
+                      });
+                    }}
+                    className="w-4 h-4 text-gray-800 border-gray-300 rounded"
+                  />
+                  <span>{status}</span>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
 

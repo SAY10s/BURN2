@@ -1,5 +1,6 @@
 import type { Skills } from "../../frontend/src/shared/types/character";
 import type { TypesOfDamage } from "./typesOfDamage";
+import type { TypesOfStatus } from "./typesOfStatus";
 
 /**
  * Chances for a status to be aplied upon attack, given in %.
@@ -7,12 +8,9 @@ import type { TypesOfDamage } from "./typesOfDamage";
  * @max 100
  * @default 0
  */
-export interface StatusChances {
-  burn: number;
-  bleed: number;
-  poison: number;
-  choke: number;
-}
+export type StatusChances = {
+  [key in TypesOfStatus]: number;
+};
 
 export interface Weapon {
   /**

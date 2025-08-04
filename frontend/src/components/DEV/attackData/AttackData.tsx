@@ -15,6 +15,7 @@ const fieldLabels: Record<keyof AttackData, string> = {
   typeOfDamage: "Type of Damage",
   typeOfAttack: "Type of Attack",
   typeOfDefence: "Type of Defence",
+  appliedStatuses: "Applied Statuses",
   defensiveStat: "Defensive Stat",
   defensiveSkill: "Defensive Skill",
   defensiveRoll: "Defensive Roll",
@@ -23,11 +24,32 @@ const fieldLabels: Record<keyof AttackData, string> = {
   locationRoll: "Location Roll",
   isTargetHit: "Is Target Hit",
 };
+import { TypesOfStatus } from "../../../shared/types/typesOfStatus";
+import type { DiceRoll } from "@dice-roller/rpg-dice-roller";
+import type { Weapon } from "../../../shared/types/weapon";
+import type { TypesOfAttack } from "../../../shared/types/TypesOfAttack";
+import type { TypesOfDamage } from "../../../shared/types/typesOfDamage";
+import type { TypesOfDefence } from "../../../shared/types/typesOfDefence";
 
-function renderValue(key: keyof AttackData, value: any) {
+function renderValue(
+  key: keyof AttackData,
+  value:
+    | string
+    | number
+    | boolean
+    | DiceRoll
+    | Weapon
+    | TypesOfAttack
+    | TypesOfDamage
+    | TypesOfDefence
+    | TypesOfStatus[]
+    | undefined
+) {
   if (key === "weapon" && value) {
     // Show weapon name or id if available
-    return value.name || value.id || JSON.stringify(value);
+    return (
+      (value as Weapon).name || (value as Weapon).id || JSON.stringify(value)
+    );
   }
   if (
     key === "typeOfAttack" ||
@@ -36,14 +58,17 @@ function renderValue(key: keyof AttackData, value: any) {
   ) {
     return typeof value === "string" ? value : JSON.stringify(value);
   }
+  if (key === "appliedStatuses" && Array.isArray(value)) {
+    return value.length > 0 ? value.join(", ") : "None";
+  }
   if (typeof value === "boolean") {
     return value ? "Yes" : "No";
   }
-  if (value instanceof Object && "notation" in value) {
+  if (value && typeof value === "object" && "notation" in value) {
     // Handle DiceRoll objects
-    return value.output;
+    return (value as DiceRoll).output;
   }
-  return value;
+  return value as string | number | undefined;
 }
 
 export default function AttackDataTable({ attackData }: AttackDataTableProps) {

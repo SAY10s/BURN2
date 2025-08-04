@@ -1,4 +1,5 @@
 import type { TypesOfDamage } from "./typesOfDamage";
+import type { TypesOfStatus } from "./typesOfStatus";
 import type { Weapon } from "./weapon";
 export const STATS_TRANSLATION = {
   speed: "Tempo",
@@ -187,13 +188,6 @@ interface CharacterArmor {
   leftLeg: ArmorPiece;
 }
 
-export interface CharacterStatus {
-  isBurning: false;
-  isChoking: false;
-  isBleeding: false;
-  isPoisoned: false;
-}
-
 export interface Character {
   /**
    * States if given Character is playable by player. If it is, then it's value is `true`, if not, then it's NPC controlled by GameMaster, and therefore it's value is `false`.
@@ -217,7 +211,7 @@ export interface Character {
   currentHP: number;
   stats: Stats;
   skills: Skills;
-  status: CharacterStatus;
+  status: TypesOfStatus[];
   characterArmor: CharacterArmor;
   weapons: Weapon[];
   /**

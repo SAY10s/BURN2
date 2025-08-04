@@ -130,19 +130,19 @@ export default function AttackModal({
             <div className="text-gray-700">
               <p>
                 <strong>Podpalenie:</strong>{" "}
-                {attackData.weapon.statusChances.burn}%
+                {attackData.weapon.statusChances.BURN}%
               </p>
               <p>
                 <strong>Krwawienie:</strong>{" "}
-                {attackData.weapon.statusChances.bleed}%
+                {attackData.weapon.statusChances.BLEEDING}%
               </p>
               <p>
                 <strong>Zatrucie:</strong>{" "}
-                {attackData.weapon.statusChances.poison}%
+                {attackData.weapon.statusChances.POISON}%
               </p>
               <p>
                 <strong>Duszenie:</strong>{" "}
-                {attackData.weapon.statusChances.choke}%
+                {attackData.weapon.statusChances.CHOKE}%
               </p>
             </div>
           ) : (
