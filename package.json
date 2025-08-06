@@ -5,5 +5,9 @@
   },
   "scripts": {
     "sync-types": "copyfiles -u 2 shared/types/*.* backend/src/shared/types && copyfiles -u 2 shared/types/*.* frontend/src/shared/types && copyfiles -u 2 shared/consts/*.* backend/src/shared/consts && copyfiles -u 2 shared/consts/*.* frontend/src/shared/consts && copyfiles -u 2 shared/helpers/*.* backend/src/shared/helpers && copyfiles -u 2 shared/helpers/*.* frontend/src/shared/helpers"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14"
   }
 }
