@@ -52,8 +52,8 @@ export default function App() {
   };
 
   return (
-    <main className="font-primary min-h-screen bg-[url('/smokebg.png')] bg-cover bg-center p-8 text-white">
-      <div className="relative grid grid-cols-2 gap-4">
+    <main className="font-primary flex min-h-screen flex-col items-center bg-[url('/smokebg.png')] bg-cover bg-center py-4 text-white">
+      <div className="relative grid w-8/10 grid-cols-2 gap-4">
         {/* <Header clientPlayer={clientPlayer} gameState={gameState} /> */}
         {/* <RandomNumber min={1} max={10} duration={3000} /> */}
 
@@ -62,21 +62,22 @@ export default function App() {
           changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
         />
         <AttackDataTable attackData={attackData} />
-
-        <CharacterTable
-          characters={gameState.characters}
-          clientsCharacterId={clientsCharacterID}
-          gameMasterView={clientPlayer.isGameMaster}
-          chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
-          attackCharacter={(id) => {
-            if (!clientsCharacterID || clientsCharacterID === "none") {
-              alert("You need to choose a character first!");
-              return;
-            }
-            setShowAttackModal(true);
-            setAttackData({ ...attackData, targetCharacterID: id });
-          }}
-        />
+        <div className="col-span-2">
+          <CharacterTable
+            characters={gameState.characters}
+            clientsCharacterId={clientsCharacterID}
+            gameMasterView={clientPlayer.isGameMaster}
+            chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
+            attackCharacter={(id) => {
+              if (!clientsCharacterID || clientsCharacterID === "none") {
+                alert("You need to choose a character first!");
+                return;
+              }
+              setShowAttackModal(true);
+              setAttackData({ ...attackData, targetCharacterID: id });
+            }}
+          />
+        </div>
 
         {showDefenceModal && (
           <DefenceModal onDefend={defendSelf} attackData={attackData} />

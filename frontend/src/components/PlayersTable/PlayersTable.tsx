@@ -11,7 +11,7 @@ export default function PlayersTable({
   return (
     <details className="">
       <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">
-        Players
+        GRACZE
       </summary>
       <div className="border-border w-full border-4 border-double">
         <div className="border-border grid grid-cols-3 border-b-4 border-double px-4 py-3 pl-6">

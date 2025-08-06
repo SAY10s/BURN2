@@ -21,144 +21,134 @@ export default function CharacterTable({
   gameMasterView,
 }: CharacterTableProps) {
   return (
-    <div className="mt-6 grid grid-cols-2 gap-6">
-      {characters.map((character: Character) => (
-        <div
-          key={character.id}
-          className="grid-rows-auto grid gap-4 rounded-lg bg-white p-4 shadow-md transition-colors hover:bg-gray-50"
-        >
-          {/* Character Info and Bars */}
-          <div
-            className="grid grid-cols-2"
-            style={{ gridTemplateColumns: "30% 70%" }}
-          >
+    <details className="">
+      <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">
+        POSTACIE
+      </summary>
+      <div className="border-border w-full border-4 border-double">
+        <div className="border-border grid grid-cols-4 border-b-4 border-double px-4 py-3 pl-6">
+          <div className="text-left font-bold">Imię</div>
+          <div className="text-center font-bold">Status</div>
+          <div className="text-center font-bold">HP/Stamina/Stun</div>
+          <div className="text-center font-bold"></div>
+        </div>
+        {characters.map((character: Character) => {
+          let color = "";
+          if (character.isPlayer) {
+            color = "from-witcher-yellow";
+          }
+          if (clientsCharacterId === character.id) {
+            color = "from-witcher-red";
+          }
+          return (
             <div
-              className="flex cursor-pointer flex-col items-center justify-center"
-              onClick={() => {
-                chooseCharacter(character.id);
-              }}
+              key={character.id}
+              className={`to-transparent-special ${color} m-2 grid grid-cols-4 bg-gradient-to-r to-50% px-4 py-3`}
             >
-              <div className={`text-lg font-medium`}>
-                {clientsCharacterId === character.id ? (
-                  <span className="font-black">→{character.name}</span>
-                ) : (
-                  character.name
-                )}
-                <span
-                  className={`ml-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                    character.isPlayer
-                      ? "bg-blue-100 text-blue-800"
-                      : "bg-purple-100 text-purple-800"
-                  }`}
-                >
-                  {character.isPlayer ? "Player" : "NPC"}
-                </span>
+              {/* Name & Type */}
+              <div
+                className="flex cursor-pointer flex-col items-start justify-center"
+                onClick={() => chooseCharacter(character.id)}
+              >
+                <div className="text-lg font-medium">{character.name}</div>
+                <div className="mt-1 font-mono text-xs text-gray-500">
+                  ID: {character.id}
+                </div>
               </div>
-              <div className="mt-1 font-mono text-xs text-gray-500">
-                ID: {character.id}
-              </div>
-            </div>
-
-            <div className="flex flex-col space-y-2">
-              {/* Status Indicators */}
-              <div>
+              {/* Status */}
+              <div className="flex flex-col items-center justify-center">
                 <div className="flex justify-center space-x-2 text-lg">
                   {character.status.includes(TypesOfStatus.BLEEDING) && (
-                    <span className="text-red-500" title="Bleeding">
+                    <span className="text-red-500" title="Krwawienie">
                       🩸
                     </span>
                   )}
                   {character.status.includes(TypesOfStatus.BURN) && (
-                    <span className="text-orange-500" title="Burning">
+                    <span className="text-orange-500" title="Podpalenie">
                       🔥
                     </span>
                   )}
                   {character.status.includes(TypesOfStatus.POISON) && (
-                    <span className="text-green-500" title="Poisoned">
+                    <span className="text-green-500" title="Zatrucie">
                       🧪
                     </span>
                   )}
                 </div>
               </div>
-              {/* Health */}
-              <ValueBar
-                current={character.currentHP}
-                max={character.maxHP}
-                gamemasterView={gameMasterView}
-                isPlayer={character.isPlayer}
-              />
-              {/* Stamina */}
-              <ValueBar
-                current={character.currentStamina}
-                max={character.maxStamina}
-                gamemasterView={gameMasterView}
-                isPlayer={character.isPlayer}
-              />
-              {/* Stun Score*/}
-              <ValueBar
-                current={character.currentStunScore}
-                max={character.maxStunScore}
-                gamemasterView={gameMasterView}
-                isPlayer={character.isPlayer}
-              />
-            </div>
-          </div>
-
-          {/* Collapsible Section */}
-          <details className="mt-4">
-            <summary className="cursor-pointer text-center font-medium">
-              More Details
-            </summary>
-            {/* Armor */}
-            {(gameMasterView || character.isPlayer) && (
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                {Object.entries(character.characterArmor).map(
-                  ([armorPart, armorPiece]) => (
-                    <div key={armorPart}>
-                      <ArmorPiece
-                        armorPiece={armorPiece}
-                        armorPart={armorPart}
+              {/* Bars */}
+              <div className="flex flex-col items-center justify-center space-y-2">
+                <ValueBar
+                  current={character.currentHP}
+                  max={character.maxHP}
+                  height="h-3"
+                  gamemasterView={gameMasterView}
+                  isPlayer={character.isPlayer}
+                />
+                <div className="grid w-full grid-cols-2 gap-2">
+                  <ValueBar
+                    current={character.currentStamina}
+                    max={character.maxStamina}
+                    bgColor="bg-bar-stamina"
+                    gamemasterView={gameMasterView}
+                    isPlayer={character.isPlayer}
+                  />
+                  <ValueBar
+                    current={character.currentStunScore}
+                    max={character.maxStunScore}
+                    bgColor="bg-bar-stun"
+                    gamemasterView={gameMasterView}
+                    isPlayer={character.isPlayer}
+                  />
+                </div>
+              </div>
+              {/* Actions */}
+              <div className="flex flex-col items-center justify-center">
+                {/* <details className="mb-2 w-full">
+                  <summary className="cursor-pointer text-center font-medium">
+                    More Details
+                  </summary>
+                  {(gameMasterView || character.isPlayer) && (
+                    <div className="mt-4 grid grid-cols-2 gap-4">
+                      {Object.entries(character.characterArmor).map(
+                        ([armorPart, armorPiece]) => (
+                          <div key={armorPart}>
+                            <ArmorPiece
+                              armorPiece={armorPiece}
+                              armorPart={armorPart}
+                            />
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  )}
+                  <div className="mt-4 grid grid-cols-2 gap-4">
+                    <div>
+                      <StatsTable
+                        stats={character.stats}
+                        gamemasterView={gameMasterView}
+                        isPlayer={character.isPlayer}
                       />
                     </div>
-                  ),
-                )}
-              </div>
-            )}
-
-            {/* Stats and Skills */}
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              <div>
-                <StatsTable
-                  stats={character.stats}
-                  gamemasterView={gameMasterView}
-                  isPlayer={character.isPlayer}
-                />
-              </div>
-              <div>
-                <SkillsTable
-                  skills={character.skills}
-                  gamemasterView={gameMasterView}
-                  isPlayer={character.isPlayer}
-                />
+                    <div>
+                      <SkillsTable
+                        skills={character.skills}
+                        gamemasterView={gameMasterView}
+                        isPlayer={character.isPlayer}
+                      />
+                    </div>
+                  </div>
+                </details> */}
+                <button
+                  className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
+                  onClick={() => attackCharacter(character.id)}
+                >
+                  ATTACK
+                </button>
               </div>
             </div>
-
-            {/* Attack Button */}
-          </details>
-          <div>
-            <div className="mt-4 flex justify-center">
-              <button
-                className="flex cursor-pointer items-center justify-center rounded-full bg-red-500 p-2 text-white hover:bg-red-600"
-                onClick={() => {
-                  attackCharacter(character.id);
-                }}
-              >
-                ATTACK{" "}
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+          );
+        })}
+      </div>
+    </details>
   );
 }
