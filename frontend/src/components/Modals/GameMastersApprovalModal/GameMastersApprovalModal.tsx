@@ -1,7 +1,7 @@
-import type { AttackData } from "../../shared/types/attackData";
+import type { AttackData } from "../../../shared/types/attackData";
 import type { Socket } from "socket.io-client";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
-import { TypesOfStatus } from "../../shared/types/typesOfStatus";
+import { TypesOfStatus } from "../../../shared/types/typesOfStatus";
 
 type Props = {
   socket: typeof Socket;
@@ -10,7 +10,7 @@ type Props = {
   setShowGameMastersApprovalModal: (showModal: boolean) => void;
 };
 
-export default function AttackApprovalModal({
+export default function GamesMasterApproval({
   socket,
   attackData,
   setAttackData,

@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { useSocketHandlers, socket } from "./hooks/useSocketHandlers";
+
+//  CONSTANTS
 import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
+import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
+
+// COMPONENTS
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
+import AttackDataTable from "./components/DEV/attackData/AttackData";
+// import Header from "./components/Header/Header";
+// import RandomNumber from "./components/Header/rolltest";
+
+//Modals
+import AttackModal from "./components/Modals/AttackModal/AttackModal";
+import DefenceModal from "./components/Modals/DefenceModal/DefenceModal";
+import AttackApprovalModal from "./components/Modals/GameMastersApprovalModal/GameMastersApprovalModal";
+
+// types
 import type { GameState } from "./shared/types/gameState";
 import type { AttackData } from "./shared/types/attackData";
-import AttackApprovalModal from "./components/AttackApprovalModal/AttackApprovalModal";
-import DefenceModal from "./components/DefenceModal/DefenceModal";
-import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
 import type { Player } from "./shared/types/player";
-import AttackModal from "./components/AttackModal/AttackModal";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
-import AttackDataTable from "./components/DEV/attackData/AttackData";
-import Header from "./components/Header/Header";
-import RandomNumber from "./components/Header/rolltest";
 
 export default function App() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
@@ -44,11 +52,11 @@ export default function App() {
   };
 
   return (
-    <div className="p-4 mx-auto bg-gray-100 rounded-lg shadow-md relative">
-      <Header clientPlayer={clientPlayer} gameState={gameState} />
-      <RandomNumber min={1} max={10} duration={3000} />
+    <div className="relative">
+      {/* <Header clientPlayer={clientPlayer} gameState={gameState} /> */}
+      {/* <RandomNumber min={1} max={10} duration={3000} /> */}
 
-      <div className="flex  items-center">
+      <div className="flex items-center">
         <PlayersTable
           players={gameState.players}
           changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
