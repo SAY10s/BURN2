@@ -73,30 +73,27 @@ function renderValue(
 
 export default function AttackDataTable({ attackData }: AttackDataTableProps) {
   return (
-    <details className="mx-auto mt-6 w-full max-w-2xl overflow-hidden rounded-lg bg-white shadow-md">
-      <summary className="cursor-pointer rounded-t-lg bg-gray-800 px-4 py-3 text-white select-none">
+    <details className="">
+      <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">
         Attack Data
       </summary>
-      <table className="w-full">
-        <thead className="bg-gray-800 text-white">
-          <tr>
-            <th className="px-4 py-3 text-left">Field</th>
-            <th className="px-4 py-3 text-left">Value</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {(Object.keys(fieldLabels) as (keyof AttackData)[]).map((key) => (
-            <tr key={key} className="transition-colors hover:bg-gray-50">
-              <td className="px-4 py-3 text-sm font-medium text-gray-700">
-                {fieldLabels[key]}
-              </td>
-              <td className="px-4 py-3 font-mono text-sm break-all text-gray-700">
-                {renderValue(key, attackData[key])}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="border-border w-full border-4 border-double">
+        <div className="border-border grid grid-cols-2 border-b-4 border-double px-4 py-3 pl-6">
+          <div className="text-left font-bold">Field</div>
+          <div className="text-center font-bold">Value</div>
+        </div>
+        {(Object.keys(fieldLabels) as (keyof AttackData)[]).map((key) => (
+          <div
+            key={key}
+            className={`${key.toLowerCase().includes("defensive") || key.toLowerCase().includes("target") || key.toLowerCase().includes("defence") ? "from-witcher-green" : "from-witcher-orange"} to-transparent-special m-2 grid grid-cols-2 bg-gradient-to-r to-50% px-4 py-3`}
+          >
+            <div>{fieldLabels[key]}</div>
+            <div className="text-center font-mono break-all">
+              {renderValue(key, attackData[key])}
+            </div>
+          </div>
+        ))}
+      </div>
     </details>
   );
 }
