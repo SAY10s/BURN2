@@ -1,7 +1,7 @@
-import { getCharacterByCharactersId } from "../../shared/helpers/characterGetters";
-import type { AttackData } from "../../shared/types/attackData";
-import type { Character } from "../../shared/types/character";
-import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
+import { getCharacterByCharactersId } from "../../../shared/helpers/characterGetters";
+import type { AttackData } from "../../../shared/types/attackData";
+import type { Character } from "../../../shared/types/character";
+import { TypesOfAttack } from "../../../shared/types/TypesOfAttack";
 
 type Props = {
   attackData: AttackData;

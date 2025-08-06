@@ -9,7 +9,7 @@ import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
 import AttackDataTable from "./components/DEV/attackData/AttackData";
-// import Header from "./components/Header/Header";
+import Header from "./components/Header/Header";
 // import RandomNumber from "./components/Header/rolltest";
 
 //Modals
@@ -53,7 +53,7 @@ export default function App() {
 
   return (
     <div className="relative">
-      {/* <Header clientPlayer={clientPlayer} gameState={gameState} /> */}
+      <Header clientPlayer={clientPlayer} gameState={gameState} />
       {/* <RandomNumber min={1} max={10} duration={3000} /> */}
 
       <div className="flex items-center">

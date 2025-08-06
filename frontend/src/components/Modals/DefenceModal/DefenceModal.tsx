@@ -1,5 +1,5 @@
-import type { AttackData } from "../../shared/types/attackData";
-import { TypesOfDefence } from "../../shared/types/typesOfDefence";
+import type { AttackData } from "../../../shared/types/attackData";
+import { TypesOfDefence } from "../../../shared/types/typesOfDefence";
 
 type DefenceModalProps = {
   onDefend: (type: TypesOfDefence) => void;
