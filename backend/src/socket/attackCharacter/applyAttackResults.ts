@@ -1,34 +1,60 @@
-import { Socket } from "socket.io/dist/socket";
-import { AttackData } from "../../shared/types/attackData";
-import { GameStateSingleton } from "../../singletons/GameStateSingleton";
-import { getActorAndTarget } from "./getActorAndTarget";
-import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
-import { getMeleeBonus } from "../utils/getBonusMeleeDamage";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { LevelsOfCriticalHit } from "../../shared/types/levelsOfCriticalHit";
+import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
+import { GameStateSingleton } from "../../singletons/GameStateSingleton";
+import { getMeleeBonus } from "../utils/getBonusMeleeDamage";
+import { getActorAndTarget } from "./getActorAndTarget";
+import { Socket } from "socket.io";
+import { AttackData } from "../../shared/types/attackData";
+
+function addDebugMessage(message: string) {
+  GameStateSingleton.getInstance().debugMessage += " " + message;
+}
 
 export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
-  const gameState = GameStateSingleton.getInstance();
-  if (attackDataProp.isTargetHit) {
-    GameStateSingleton.getInstance().debugMessage += ` Atak trafił.`;
-    const { actorPlayer, actorCharacter, targetPlayer, targetCharacter } =
-      getActorAndTarget(socket, attackDataProp.targetCharacterID);
+  const {
+    isTargetHit,
+    targetCharacterID,
+    damageRoll,
+    typeOfAttack,
+    locationRoll,
+    weapon,
+    typeOfDamage,
+    offensiveRoll,
+    offensiveSkill,
+    offensiveStat,
+    offensiveModifier,
+    defensiveRoll,
+    defensiveSkill,
+    defensiveStat,
+    defensiveModifier,
+    appliedStatuses,
+  } = attackDataProp;
 
-    let actorBonusMeleeDamage = 0;
+  const gameState = GameStateSingleton.getInstance();
+  if (isTargetHit) {
+    addDebugMessage(`Atak trafił.`);
+
+    const { actorPlayer, actorCharacter, targetPlayer, targetCharacter } =
+      getActorAndTarget(socket, targetCharacterID);
+
+    let damage = damageRoll.total;
+
     if (
-      attackDataProp.typeOfAttack !== TypesOfAttack.SPELL &&
-      attackDataProp.typeOfAttack !== TypesOfAttack.REGULAR_STRIKE
+      typeOfAttack !== TypesOfAttack.SPELL &&
+      typeOfAttack !== TypesOfAttack.REGULAR_STRIKE
     ) {
-      actorBonusMeleeDamage = getMeleeBonus(actorCharacter.stats.body);
+      damage += getMeleeBonus(actorCharacter.stats.body);
     }
-    let damage = attackDataProp.damageRoll.total + actorBonusMeleeDamage;
+
     if (
-      attackDataProp.typeOfAttack === TypesOfAttack.STRONG_STRIKE ||
-      attackDataProp.typeOfAttack === TypesOfAttack.CHARGE
+      typeOfAttack === TypesOfAttack.STRONG_STRIKE ||
+      typeOfAttack === TypesOfAttack.CHARGE
     ) {
       damage = damage * 2;
     }
-    const location = attackDataProp.locationRoll.total;
+
+    const location = locationRoll.total;
     const locationToArmorPieceKey: Record<
       number,
       keyof typeof targetCharacter.characterArmor
@@ -45,61 +71,51 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
       10: "leftLeg",
     };
     const armorPieceKey = locationToArmorPieceKey[location];
-    if (!armorPieceKey) {
-      throw new Error("Invalid location roll: " + location);
-    }
-    GameStateSingleton.getInstance().debugMessage += ` Trafienie w ${armorPieceKey}.`;
+    if (!armorPieceKey) throw new Error("Invalid location roll: " + location);
+    addDebugMessage(`Trafienie w ${armorPieceKey}.`);
 
     const armorPiece = targetCharacter.characterArmor[armorPieceKey];
     const armorSP = armorPiece?.currentSP ?? 0;
 
-    if (attackDataProp.weapon.improvedArmorPiercing) {
-      damage = damage - Math.floor(armorSP / 2);
+    damage = weapon.improvedArmorPiercing
+      ? damage - Math.floor(armorSP / 2)
+      : damage - armorSP;
+
+    if (damage < 0) {
+      damage = 0;
+      addDebugMessage(`Pancerz całkowicie zablokował obrażenia.`);
     } else {
-      damage = damage - armorSP;
-    }
-    if (damage < 0) damage = 0;
-    if (damage > 0) {
-      GameStateSingleton.getInstance().debugMessage += ` Przebito pancerz.`;
+      addDebugMessage(`Przebito pancerz.`);
       if (armorPiece && armorPiece.currentSP > 0) {
-        if (attackDataProp.weapon.armorShreding) {
+        if (weapon.armorShreding) {
           const armorShredingRoll = new DiceRoll("1d6");
           armorPiece.currentSP -= Math.floor(armorShredingRoll.total / 2);
         }
         armorPiece.currentSP -= 1;
       }
-    } else {
-      GameStateSingleton.getInstance().debugMessage += ` Pancerz zatrzymał atak.`;
     }
 
-    let isDamageReduced = armorPiece.reductions.includes(
-      attackDataProp.typeOfDamage
-    );
-    if (
-      attackDataProp.weapon.armorPiercing ||
-      attackDataProp.weapon.improvedArmorPiercing
-    ) {
-      isDamageReduced = false;
-    }
+    let isDamageReduced =
+      armorPiece.reductions.includes(typeOfDamage) &&
+      !weapon.armorPiercing &&
+      !weapon.improvedArmorPiercing;
+
     if (isDamageReduced) {
       damage = Math.floor(damage / 2);
-      GameStateSingleton.getInstance().debugMessage += ` Pancerz zredukował obrażenia.`;
+      addDebugMessage(`Pancerz zredukował obrażenia.`);
     }
 
-    let isTargetImmune = targetCharacter.immunities.includes(
-      attackDataProp.typeOfDamage
-    );
+    let isTargetImmune = targetCharacter.immunities.includes(typeOfDamage);
     if (isTargetImmune) {
       damage = 0;
-      GameStateSingleton.getInstance().debugMessage += ` Cel jest odporny na obrażenia.`;
+      addDebugMessage(`Cel jest odporny na obrażenia.`);
     }
 
-    let isTargetSusceptible = targetCharacter.susceptibilities.includes(
-      attackDataProp.typeOfDamage
-    );
+    let isTargetSusceptible =
+      targetCharacter.susceptibilities.includes(typeOfDamage);
     if (isTargetSusceptible) {
       damage = Math.floor(damage * 2);
-      GameStateSingleton.getInstance().debugMessage += ` Cel jest podatny na obrażenia.`;
+      addDebugMessage(`Cel jest podatny na obrażenia.`);
     }
 
     const locationMultipliers: Record<
@@ -118,16 +134,10 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     damage = Math.floor(damage * locationMultiplier);
 
     const fullOffensiveValue =
-      attackDataProp.offensiveRoll.total +
-      attackDataProp.offensiveSkill +
-      attackDataProp.offensiveStat +
-      attackDataProp.offensiveModifier;
+      offensiveRoll.total + offensiveSkill + offensiveStat + offensiveModifier;
 
     const fullDefensiveValue =
-      attackDataProp.defensiveRoll.total +
-      attackDataProp.defensiveSkill +
-      attackDataProp.defensiveStat +
-      attackDataProp.defensiveModifier;
+      defensiveRoll.total + defensiveSkill + defensiveStat + defensiveModifier;
 
     const offensiveSubtractDefensive = fullOffensiveValue - fullDefensiveValue;
 
@@ -145,21 +155,21 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
       levelOfCriticalHit = LevelsOfCriticalHit.SIMPLE;
       damage += 3;
     }
-    GameStateSingleton.getInstance().debugMessage += ` Obrażenia: ${damage}. Trafienie krytyczne: ${levelOfCriticalHit}.`;
+    addDebugMessage(
+      ` Obrażenia: ${damage}. Trafienie krytyczne: ${levelOfCriticalHit}.`
+    );
 
-    GameStateSingleton.getInstance().debugMessage += ` Nałożono efekty: ${attackDataProp.appliedStatuses.join(
-      ", "
-    )}.`;
+    addDebugMessage(`Nałożono efekty: ${appliedStatuses.join(", ")}.`);
     gameState.characters = gameState.characters.map((character) =>
       character.id === targetCharacter.id
         ? {
             ...character,
             currentHP: character.currentHP - damage,
-            status: [...character.status, ...attackDataProp.appliedStatuses],
+            status: [...character.status, ...appliedStatuses],
           }
         : character
     );
   } else {
-    GameStateSingleton.getInstance().debugMessage += ` Atak nie trafił.`;
+    addDebugMessage(`Atak nie trafił.`);
   }
 }
