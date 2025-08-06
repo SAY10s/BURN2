@@ -9,7 +9,7 @@ import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
 import AttackDataTable from "./components/DEV/attackData/AttackData";
-import Header from "./components/Header/Header";
+// import Header from "./components/Header/Header";
 // import RandomNumber from "./components/Header/rolltest";
 
 //Modals
@@ -43,7 +43,7 @@ export default function App() {
     setShowDefenceModal,
     setShowGameMastersApprovalModal,
     setAttackData,
-    setClientPlayer
+    setClientPlayer,
   );
 
   const defendSelf = (type: TypesOfDefence) => {
@@ -52,57 +52,57 @@ export default function App() {
   };
 
   return (
-    <div className="relative">
-      <Header clientPlayer={clientPlayer} gameState={gameState} />
-      {/* <RandomNumber min={1} max={10} duration={3000} /> */}
+    <main className="font-primary min-h-screen bg-[url('/smokebg.png')] bg-cover bg-center p-8 text-white">
+      <div className="relative grid grid-cols-2 gap-4">
+        {/* <Header clientPlayer={clientPlayer} gameState={gameState} /> */}
+        {/* <RandomNumber min={1} max={10} duration={3000} /> */}
 
-      <div className="flex items-center">
         <PlayersTable
           players={gameState.players}
           changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
         />
         <AttackDataTable attackData={attackData} />
-      </div>
 
-      <CharacterTable
-        characters={gameState.characters}
-        clientsCharacterId={clientsCharacterID}
-        gameMasterView={clientPlayer.isGameMaster}
-        chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
-        attackCharacter={(id) => {
-          if (!clientsCharacterID || clientsCharacterID === "none") {
-            alert("You need to choose a character first!");
-            return;
-          }
-          setShowAttackModal(true);
-          setAttackData({ ...attackData, targetCharacterID: id });
-        }}
-      />
-
-      {showDefenceModal && (
-        <DefenceModal onDefend={defendSelf} attackData={attackData} />
-      )}
-      {showGameMastersApprovalModal && (
-        <AttackApprovalModal
-          attackData={attackData}
-          setAttackData={setAttackData}
-          socket={socket}
-          setShowGameMastersApprovalModal={setShowGameMastersApprovalModal}
-        />
-      )}
-      {showAttackModal && (
-        <AttackModal
-          attackData={attackData}
-          setAttackData={setAttackData}
-          setShowAttackModal={setShowAttackModal}
+        <CharacterTable
           characters={gameState.characters}
-          actorCharacterID={clientsCharacterID}
-          onConfirmAttack={(attackData: AttackData) => {
-            socket.emit("attackCharacter", attackData);
-            setShowAttackModal(false);
+          clientsCharacterId={clientsCharacterID}
+          gameMasterView={clientPlayer.isGameMaster}
+          chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
+          attackCharacter={(id) => {
+            if (!clientsCharacterID || clientsCharacterID === "none") {
+              alert("You need to choose a character first!");
+              return;
+            }
+            setShowAttackModal(true);
+            setAttackData({ ...attackData, targetCharacterID: id });
           }}
         />
-      )}
-    </div>
+
+        {showDefenceModal && (
+          <DefenceModal onDefend={defendSelf} attackData={attackData} />
+        )}
+        {showGameMastersApprovalModal && (
+          <AttackApprovalModal
+            attackData={attackData}
+            setAttackData={setAttackData}
+            socket={socket}
+            setShowGameMastersApprovalModal={setShowGameMastersApprovalModal}
+          />
+        )}
+        {showAttackModal && (
+          <AttackModal
+            attackData={attackData}
+            setAttackData={setAttackData}
+            setShowAttackModal={setShowAttackModal}
+            characters={gameState.characters}
+            actorCharacterID={clientsCharacterID}
+            onConfirmAttack={(attackData: AttackData) => {
+              socket.emit("attackCharacter", attackData);
+              setShowAttackModal(false);
+            }}
+          />
+        )}
+      </div>
+    </main>
   );
 }

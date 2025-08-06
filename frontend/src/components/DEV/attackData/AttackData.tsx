@@ -43,7 +43,7 @@ function renderValue(
     | TypesOfDamage
     | TypesOfDefence
     | TypesOfStatus[]
-    | undefined
+    | undefined,
 ) {
   if (key === "weapon" && value) {
     // Show weapon name or id if available
@@ -73,8 +73,8 @@ function renderValue(
 
 export default function AttackDataTable({ attackData }: AttackDataTableProps) {
   return (
-    <details className="w-full max-w-2xl mx-auto mt-6 bg-white rounded-lg shadow-md overflow-hidden">
-      <summary className="cursor-pointer px-4 py-3 bg-gray-800 text-white rounded-t-lg select-none">
+    <details className="mx-auto mt-6 w-full max-w-2xl overflow-hidden rounded-lg bg-white shadow-md">
+      <summary className="cursor-pointer rounded-t-lg bg-gray-800 px-4 py-3 text-white select-none">
         Attack Data
       </summary>
       <table className="w-full">
@@ -86,11 +86,11 @@ export default function AttackDataTable({ attackData }: AttackDataTableProps) {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {(Object.keys(fieldLabels) as (keyof AttackData)[]).map((key) => (
-            <tr key={key} className="hover:bg-gray-50 transition-colors">
+            <tr key={key} className="transition-colors hover:bg-gray-50">
               <td className="px-4 py-3 text-sm font-medium text-gray-700">
                 {fieldLabels[key]}
               </td>
-              <td className="px-4 py-3 text-sm font-mono text-gray-700 break-all">
+              <td className="px-4 py-3 font-mono text-sm break-all text-gray-700">
                 {renderValue(key, attackData[key])}
               </td>
             </tr>

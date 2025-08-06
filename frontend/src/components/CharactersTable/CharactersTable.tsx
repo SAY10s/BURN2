@@ -21,11 +21,11 @@ export default function CharacterTable({
   gameMasterView,
 }: CharacterTableProps) {
   return (
-    <div className="grid grid-cols-2 gap-6 mt-6">
+    <div className="mt-6 grid grid-cols-2 gap-6">
       {characters.map((character: Character) => (
         <div
           key={character.id}
-          className="bg-white rounded-lg shadow-md p-4 hover:bg-gray-50 transition-colors grid grid-rows-auto gap-4"
+          className="grid-rows-auto grid gap-4 rounded-lg bg-white p-4 shadow-md transition-colors hover:bg-gray-50"
         >
           {/* Character Info and Bars */}
           <div
@@ -33,19 +33,19 @@ export default function CharacterTable({
             style={{ gridTemplateColumns: "30% 70%" }}
           >
             <div
-              className="cursor-pointer flex flex-col items-center justify-center"
+              className="flex cursor-pointer flex-col items-center justify-center"
               onClick={() => {
                 chooseCharacter(character.id);
               }}
             >
-              <div className={`font-medium text-lg`}>
+              <div className={`text-lg font-medium`}>
                 {clientsCharacterId === character.id ? (
                   <span className="font-black">→{character.name}</span>
                 ) : (
                   character.name
                 )}
                 <span
-                  className={`ml-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  className={`ml-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     character.isPlayer
                       ? "bg-blue-100 text-blue-800"
                       : "bg-purple-100 text-purple-800"
@@ -54,7 +54,7 @@ export default function CharacterTable({
                   {character.isPlayer ? "Player" : "NPC"}
                 </span>
               </div>
-              <div className="text-xs text-gray-500 font-mono mt-1">
+              <div className="mt-1 font-mono text-xs text-gray-500">
                 ID: {character.id}
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function CharacterTable({
             <div className="flex flex-col space-y-2">
               {/* Status Indicators */}
               <div>
-                <div className="flex space-x-2 justify-center text-lg">
+                <div className="flex justify-center space-x-2 text-lg">
                   {character.status.includes(TypesOfStatus.BLEEDING) && (
                     <span className="text-red-500" title="Bleeding">
                       🩸
@@ -111,7 +111,7 @@ export default function CharacterTable({
             </summary>
             {/* Armor */}
             {(gameMasterView || character.isPlayer) && (
-              <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="mt-4 grid grid-cols-2 gap-4">
                 {Object.entries(character.characterArmor).map(
                   ([armorPart, armorPiece]) => (
                     <div key={armorPart}>
@@ -120,13 +120,13 @@ export default function CharacterTable({
                         armorPart={armorPart}
                       />
                     </div>
-                  )
+                  ),
                 )}
               </div>
             )}
 
             {/* Stats and Skills */}
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="mt-4 grid grid-cols-2 gap-4">
               <div>
                 <StatsTable
                   stats={character.stats}
@@ -146,9 +146,9 @@ export default function CharacterTable({
             {/* Attack Button */}
           </details>
           <div>
-            <div className="flex justify-center mt-4">
+            <div className="mt-4 flex justify-center">
               <button
-                className="flex items-center justify-center cursor-pointer bg-red-500 hover:bg-red-600 text-white rounded-full p-2"
+                className="flex cursor-pointer items-center justify-center rounded-full bg-red-500 p-2 text-white hover:bg-red-600"
                 onClick={() => {
                   attackCharacter(character.id);
                 }}
