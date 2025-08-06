@@ -202,6 +202,7 @@ export interface Character {
    */
   id: string;
   name: string;
+
   /**
    * @Formula Math.floor(Body + Will / 2 ) * 5
    * @min 10
@@ -209,8 +210,26 @@ export interface Character {
    */
   maxHP: number;
   currentHP: number;
+
+  /**
+   * @Formula Math.floor(Body + Will / 2 ) * 5 (equals maxHP)
+   * @min 10
+   * @max 65
+   */
+  maxStamina: number;
+  currentStamina: number;
+
+  /**
+   * @Formula Math.floor(Body + Will / 2 ) * 10 (equals 2 * maxHP)
+   * @min 10
+   * @max 65
+   */
+  maxStunScore: number;
+  currentStunScore: number;
+
   stats: Stats;
   skills: Skills;
+
   status: TypesOfStatus[];
   characterArmor: CharacterArmor;
   weapons: Weapon[];

@@ -106,6 +106,10 @@ export const generateRandomCharacter = (
     name: getRandomName(),
     maxHP,
     currentHP: maxHP,
+    maxStamina: maxHP,
+    currentStamina: maxHP,
+    maxStunScore: maxHP * 2,
+    currentStunScore: maxHP * 2,
     stats,
     skills: {
       reflexSkills: {

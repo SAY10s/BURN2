@@ -87,10 +87,17 @@ export default function CharacterTable({
                 gamemasterView={gameMasterView}
                 isPlayer={character.isPlayer}
               />
-              {/* Stamina (Mocked Data) */}
+              {/* Stamina */}
               <ValueBar
-                current={50} // Mocked current stamina
-                max={100} // Mocked max stamina
+                current={character.currentStamina}
+                max={character.maxStamina}
+                gamemasterView={gameMasterView}
+                isPlayer={character.isPlayer}
+              />
+              {/* Stun Score*/}
+              <ValueBar
+                current={character.currentStunScore}
+                max={character.maxStunScore}
                 gamemasterView={gameMasterView}
                 isPlayer={character.isPlayer}
               />
