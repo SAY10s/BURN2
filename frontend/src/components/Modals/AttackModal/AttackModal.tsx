@@ -22,25 +22,25 @@ export default function AttackModal({
 }: Props) {
   const actorCharacter = getCharacterByCharactersId(
     actorCharacterID,
-    characters
+    characters,
   );
   console.table(attackData.weapon.typesOfDamage);
   return (
-    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs backdrop-brightness-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
-        <h2 className="text-xl font-semibold text-gray-800 text-center mb-6">
+    <div className="bg-opacity-40 k fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+      <div className="border-border bg-smoke w-full max-w-xl rounded-lg border-4 border-double p-8 shadow-lg">
+        <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
           Wykonaj Atak
         </h2>
 
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="text-primary mb-1 block font-bold">
             Wybierz Broń
           </label>
           <select
             value={attackData.weapon.id}
             onChange={(e) => {
               const selectedWeapon = actorCharacter.weapons.find(
-                (weapon) => weapon.id === e.target.value
+                (weapon) => weapon.id === e.target.value,
               );
               if (selectedWeapon) {
                 setAttackData({
@@ -49,116 +49,114 @@ export default function AttackModal({
                 });
               }
             }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="border-witcher-yellow text-primary w-full rounded-md border-4 border-double bg-neutral-950 px-3 py-2 font-semibold focus:outline-none"
           >
             <option value="" disabled>
               -- Wybierz Broń --
             </option>
             {actorCharacter.weapons.map((weapon) => (
               <option key={weapon.id} value={weapon.id}>
-                {weapon.name}
+                {weapon.name} ({weapon.damage})
               </option>
             ))}
           </select>
         </div>
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">
-            Wybierz typ Ataku
-          </label>
-          <select
-            value={attackData.typeOfAttack}
-            onChange={(e) =>
-              setAttackData({
-                ...attackData,
-                typeOfAttack: e.target.value as AttackData["typeOfAttack"],
-              })
-            }
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          >
-            {Object.values(TypesOfAttack).map((type) => (
-              <option key={type} value={type}>
-                {type.replace(/_/g, " ")}
+        <div className="mb-4 flex flex-row gap-4">
+          <div className="w-1/2">
+            <label className="text-primary mb-1 block font-bold">
+              Wybierz typ Ataku
+            </label>
+            <select
+              value={attackData.typeOfAttack}
+              onChange={(e) =>
+                setAttackData({
+                  ...attackData,
+                  typeOfAttack: e.target.value as AttackData["typeOfAttack"],
+                })
+              }
+              className="border-witcher-yellow text-primary w-full rounded-md border-4 border-double bg-neutral-950 px-3 py-2 font-semibold focus:outline-none"
+            >
+              {Object.values(TypesOfAttack).map((type) => (
+                <option key={type} value={type}>
+                  {type.replace(/_/g, " ")}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="w-1/2">
+            <label className="text-primary mb-1 block font-bold">
+              Wybierz typ obrażeń
+            </label>
+            <select
+              value={attackData.typeOfDamage}
+              onChange={(e) =>
+                setAttackData({
+                  ...attackData,
+                  typeOfDamage: e.target.value as AttackData["typeOfDamage"],
+                })
+              }
+              className="border-witcher-yellow text-primary w-full rounded-md border-4 border-double bg-neutral-950 px-3 py-2 font-semibold focus:outline-none"
+            >
+              <option value="" disabled>
+                -- Wybierz typ obrażeń --
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="mt-4">
-          <label className="block text-gray-700 font-medium mb-1">
-            Wybierz typ obrażeń
-          </label>
-          <select
-            value={attackData.typeOfDamage}
-            onChange={(e) =>
-              setAttackData({
-                ...attackData,
-                typeOfDamage: e.target.value as AttackData["typeOfDamage"],
-              })
-            }
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          >
-            <option value="" disabled>
-              -- Wybierz typ obrażeń --
-            </option>
-            {attackData.weapon.typesOfDamage.map((damageType) => (
-              <option key={damageType} value={damageType}>
-                {damageType.replace(/_/g, " ")}
-              </option>
-            ))}
-          </select>
+              {attackData.weapon.typesOfDamage.map((damageType) => (
+                <option key={damageType} value={damageType}>
+                  {damageType.replace(/_/g, " ")}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">
-          Szczegóły Broni
-        </h3>
-        {attackData.weapon.id ? (
-          <div className="text-gray-700">
-            <p>
-              <strong>Nazwa:</strong> {attackData.weapon.name}
-            </p>
-            <p>
-              <strong>Obrażenia:</strong> {attackData.weapon.damage}
-            </p>
-          </div>
-        ) : (
-          <p className="text-gray-500">Brak wybranej broni.</p>
-        )}
         <div className="mt-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            Szczegóły efektów
-          </h3>
           {attackData.weapon.statusChances ? (
-            <div className="text-gray-700">
-              <p>
-                <strong>Podpalenie:</strong>{" "}
-                {attackData.weapon.statusChances.BURN}%
-              </p>
-              <p>
-                <strong>Krwawienie:</strong>{" "}
-                {attackData.weapon.statusChances.BLEEDING}%
-              </p>
-              <p>
-                <strong>Zatrucie:</strong>{" "}
-                {attackData.weapon.statusChances.POISON}%
-              </p>
-              <p>
-                <strong>Duszenie:</strong>{" "}
-                {attackData.weapon.statusChances.CHOKE}%
-              </p>
+            <div className="flex flex-row justify-center gap-6 p-3">
+              <div className="flex flex-col items-center">
+                <span className="text-2xl text-orange-500" title="Podpalenie">
+                  🔥
+                </span>
+                <span className="font-bold">
+                  {attackData.weapon.statusChances.BURN}%
+                </span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-2xl text-red-500" title="Krwawienie">
+                  🩸
+                </span>
+                <span className="font-bold">
+                  {attackData.weapon.statusChances.BLEEDING}%
+                </span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-2xl text-green-500" title="Zatrucie">
+                  🧪
+                </span>
+                <span className="font-bold">
+                  {attackData.weapon.statusChances.POISON}%
+                </span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-2xl text-blue-500" title="Duszenie">
+                  🫁
+                </span>
+                <span className="font-bold">
+                  {attackData.weapon.statusChances.CHOKE}%
+                </span>
+              </div>
             </div>
           ) : (
             <p className="text-gray-500">Brak statusów dla tej broni.</p>
           )}
         </div>
 
-        {/* Buttons */}
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="mt-8 flex justify-end gap-3">
           <button
             onClick={() => {
-              // attackData.targetCharacterID = get
               onConfirmAttack(attackData);
               setShowAttackModal(false);
             }}
-            className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-sm font-medium"
+            className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
           >
             Potwierdź Atak
           </button>

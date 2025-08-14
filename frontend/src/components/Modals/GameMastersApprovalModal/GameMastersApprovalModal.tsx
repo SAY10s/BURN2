@@ -38,7 +38,7 @@ export default function GamesMasterApproval({
      * If not provided, defaults to "1d10".
      * @default "1d10"
      */
-    diceNotation: string = "1d10"
+    diceNotation: string = "1d10",
   ) => {
     const newRoll = new DiceRoll({
       notation: diceNotation,
@@ -56,16 +56,16 @@ export default function GamesMasterApproval({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs backdrop-brightness-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
-        <h2 className="text-xl font-semibold text-gray-800 text-center mb-6">
+    <div className="bg-opacity-40 k fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+      <div className="border-border bg-smoke w-full max-w-xl rounded-lg border-4 border-double p-8 shadow-lg">
+        <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
           Potwierdź Atak
         </h2>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm text-gray-700">
+        <div className="text-primary grid grid-cols-2 gap-x-6 gap-y-4 text-base">
           <div className="col-span-2">
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">Atak</h2>
-            <label className="block text-gray-700 font-medium mb-1">
+            <h2 className="text-primary mb-2 text-lg font-semibold">Atak</h2>
+            <label className="text-primary mb-1 block font-bold">
               Rzut Ataku
             </label>
             <div className="flex items-center gap-2">
@@ -75,13 +75,13 @@ export default function GamesMasterApproval({
                 onChange={(e) =>
                   handleRollChange("offensiveRoll", Number(e.target.value))
                 }
-                className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+                className="border-witcher-yellow text-primary w-16 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"
               />
-              <span className="text-gray-600">
+              <span className="text-secondary">
                 + ({attackData.offensiveStat} cecha +{" "}
                 {attackData.offensiveSkill} zdol. +{" "}
                 {attackData.offensiveModifier} mod.) ={" "}
-                <span className="font-semibold text-gray-800">
+                <span className="text-primary font-semibold">
                   {attackData.offensiveRoll.total +
                     attackData.offensiveStat +
                     attackData.offensiveSkill +
@@ -89,8 +89,10 @@ export default function GamesMasterApproval({
                 </span>
               </span>
             </div>
-            <div className="flex items-center gap-2 mt-2">
-              <label className="text-gray-700">Modyfikator ataku:</label>
+            <div className="mt-2 flex items-center gap-2">
+              <label className="text-primary font-bold">
+                Modyfikator ataku:
+              </label>
               <input
                 type="number"
                 value={attackData.offensiveModifier}
@@ -104,14 +106,14 @@ export default function GamesMasterApproval({
                     }),
                   })
                 }
-                className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+                className="border-witcher-yellow text-primary w-16 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="col-span-2 border-t border-gray-200 mt-4 pt-4">
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">Obrona</h2>
-            <label className="block text-gray-700 font-medium mb-1">
+          <div className="border-witcher-yellow col-span-2 mt-4 border-t pt-4">
+            <h2 className="text-primary mb-2 text-lg font-semibold">Obrona</h2>
+            <label className="text-primary mb-1 block font-bold">
               Rzut Obrony
             </label>
             <div className="flex items-center gap-2">
@@ -121,12 +123,12 @@ export default function GamesMasterApproval({
                 onChange={(e) =>
                   handleRollChange("defensiveRoll", Number(e.target.value))
                 }
-                className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+                className="border-witcher-yellow text-primary w-16 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"
               />
-              <span className="text-gray-600">
+              <span className="text-secondary">
                 + ({attackData.defensiveStat} stat + {attackData.defensiveSkill}{" "}
                 skill + {attackData.defensiveModifier} mod.) ={" "}
-                <span className="font-semibold text-gray-800">
+                <span className="text-primary font-semibold">
                   {attackData.defensiveRoll.total +
                     attackData.defensiveStat +
                     attackData.defensiveSkill +
@@ -134,8 +136,10 @@ export default function GamesMasterApproval({
                 </span>
               </span>
             </div>
-            <div className="flex items-center gap-2 mt-2">
-              <label className="text-gray-700">Modyfikator obrony:</label>
+            <div className="mt-2 flex items-center gap-2">
+              <label className="text-primary font-bold">
+                Modyfikator obrony:
+              </label>
               <input
                 type="number"
                 value={attackData.defensiveModifier}
@@ -149,14 +153,14 @@ export default function GamesMasterApproval({
                     }),
                   })
                 }
-                className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+                className="border-witcher-yellow text-primary w-16 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="col-span-2 border-t border-gray-200 mt-4 pt-4 grid grid-cols-2 gap-x-6 gap-y-4">
+          <div className="border-witcher-yellow col-span-2 mt-4 grid grid-cols-2 gap-x-6 gap-y-4 border-t pt-4">
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
+              <label className="text-primary mb-1 block font-bold">
                 Obrażenia ({attackData.weapon.damage})
               </label>
               <input
@@ -166,14 +170,14 @@ export default function GamesMasterApproval({
                   handleRollChange(
                     "damageRoll",
                     Number(e.target.value),
-                    attackData.weapon.damage
+                    attackData.weapon.damage,
                   )
                 }
-                className="w-24 px-2 py-1 border border-gray-300 rounded-md"
+                className="border-witcher-yellow text-primary w-24 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
+              <label className="text-primary mb-1 block font-bold">
                 Lokacja trafienia (rzut)
               </label>
               <select
@@ -187,7 +191,7 @@ export default function GamesMasterApproval({
                     }),
                   })
                 }
-                className="w-36 px-2 py-1 border border-gray-300 rounded-md"
+                className="border-witcher-yellow text-primary w-36 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"
               >
                 <option value={1}>Głowa (x3)</option>
                 <option value={2}>Tułów (x1)</option>
@@ -203,7 +207,7 @@ export default function GamesMasterApproval({
             </div>
           </div>
 
-          <div className="col-span-2 flex items-center mt-2">
+          <div className="col-span-2 mt-2 flex items-center">
             <input
               id="isTargetHit"
               type="checkbox"
@@ -214,19 +218,25 @@ export default function GamesMasterApproval({
                   isTargetHit: e.target.checked,
                 })
               }
-              className="w-4 h-4 text-gray-800 border-gray-300 rounded"
+              className="border-witcher-yellow text-primary h-4 w-4 rounded bg-neutral-950"
             />
-            <label htmlFor="isTargetHit" className="ml-2 text-gray-700">
+            <label
+              htmlFor="isTargetHit"
+              className="text-primary ml-2 font-bold"
+            >
               Cel został trafiony
             </label>
           </div>
           <div className="col-span-2 mt-4">
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="text-primary mb-1 block font-bold">
               Statusy do nałożenia
             </label>
             <div className="flex flex-wrap gap-4">
               {Object.values(TypesOfStatus).map((status) => (
-                <label key={status} className="flex items-center gap-1">
+                <label
+                  key={status}
+                  className="text-secondary flex items-center gap-1"
+                >
                   <input
                     type="checkbox"
                     checked={attackData.appliedStatuses.includes(status)}
@@ -234,14 +244,14 @@ export default function GamesMasterApproval({
                       const newStatuses = e.target.checked
                         ? [...attackData.appliedStatuses, status]
                         : attackData.appliedStatuses.filter(
-                            (s) => s !== status
+                            (s) => s !== status,
                           );
                       setAttackData({
                         ...attackData,
                         appliedStatuses: newStatuses,
                       });
                     }}
-                    className="w-4 h-4 text-gray-800 border-gray-300 rounded"
+                    className="border-witcher-yellow text-primary h-4 w-4 rounded bg-neutral-950"
                   />
                   <span>{status}</span>
                 </label>
@@ -250,14 +260,13 @@ export default function GamesMasterApproval({
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="mt-8 flex justify-end gap-3">
           <button
             onClick={() => {
               socket.emit("executeAttack", attackData);
               setShowGameMastersApprovalModal(false);
             }}
-            className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 text-sm font-medium"
+            className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
           >
             Wykonaj Atak
           </button>

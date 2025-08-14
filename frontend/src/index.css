@@ -19,3 +19,9 @@
   --color-bar-stamina: #97842f;
   --color-bar-stun: #bab9b2;
 }
+
+.bg-smoke {
+  background-image: url("/smokebg.png");
+  background-size: cover;
+  background-position: center;
+}

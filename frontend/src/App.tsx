@@ -80,7 +80,11 @@ export default function App() {
         </div>
 
         {showDefenceModal && (
-          <DefenceModal onDefend={defendSelf} attackData={attackData} />
+          <DefenceModal
+            onDefend={defendSelf}
+            attackData={attackData}
+            characters={gameState.characters}
+          />
         )}
         {showGameMastersApprovalModal && (
           <AttackApprovalModal
