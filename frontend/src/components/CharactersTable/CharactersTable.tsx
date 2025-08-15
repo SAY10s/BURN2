@@ -53,11 +53,23 @@ export default function CharacterTable({
           if (clientsCharacterId === character.id) {
             color = "from-witcher-red";
           }
+
+          let wrapperClass = visibleDetails[character.id] ? "border-2" : "";
+          if (visibleDetails[character.id]) {
+            wrapperClass = ` to-transparent-special ${color} border-4 border-border border-double grid grid-cols-4 bg-gradient-to-r to-50% px-3 py-2`;
+          } else
+            wrapperClass = ` to-transparent-special ${color} m-2 grid grid-cols-4 bg-gradient-to-r to-50% px-4 py-3`;
+
+          let conditionalClass2 = visibleDetails[character.id]
+            ? "border-2"
+            : "";
+          if (visibleDetails[character.id]) {
+            conditionalClass2 = ` m-2`;
+          } else conditionalClass2 = ` m-0`;
+
           return (
-            <div key={character.id}>
-              <div
-                className={`to-transparent-special ${color} m-2 grid grid-cols-4 bg-gradient-to-r to-50% px-4 py-3`}
-              >
+            <div key={character.id} className={conditionalClass2}>
+              <div className={`${wrapperClass}`}>
                 {/* Name & Type */}
                 <div
                   className="flex cursor-pointer flex-col items-start justify-center"
@@ -132,24 +144,24 @@ export default function CharacterTable({
               </div>
               {visibleDetails[character.id] && (
                 <>
-                  <div className="grid grid-cols-3">
+                  <div className="grid grid-cols-4">
                     <StatsTable
                       stats={character.stats}
                       gameMasterView={gameMasterView}
                       isPlayer={character.isPlayer}
                     />
+                    <ArmorTable
+                      characterArmor={character.characterArmor}
+                      isPlayer={character.isPlayer}
+                      gameMasterView={gameMasterView}
+                      className="col-span-2"
+                    />
                     <SkillsTable
                       skills={character.skills}
                       gameMasterView={gameMasterView}
                       isPlayer={character.isPlayer}
-                      className="col-span-2"
                     />
                   </div>
-                  <ArmorTable
-                    characterArmor={character.characterArmor}
-                    isPlayer={character.isPlayer}
-                    gameMasterView={gameMasterView}
-                  />
                 </>
               )}
             </div>

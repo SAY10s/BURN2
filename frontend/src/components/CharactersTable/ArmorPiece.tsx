@@ -33,7 +33,7 @@ export default function ArmorPiece({ armorPiece, armorPart }: ArmorPieceProps) {
           <img
             src={armorIcons[armorPart] || ""}
             alt={armorPart}
-            className="mb-1 h-10 w-10"
+            className="mb-1 h-14 w-14"
           />
 
           <div className="bg-smoke border-border text-secondary pointer-events-none absolute top-full left-1/2 z-10 mt-2 flex w-max -translate-x-1/2 flex-col gap-1 border p-2 text-xs opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
@@ -54,7 +54,7 @@ export default function ArmorPiece({ armorPiece, armorPart }: ArmorPieceProps) {
         </div>
       </div>
       <div className="flex w-full flex-col items-center">
-        <div className={`w-14 ${armorPiece.maxSP ? "" : "opacity-0"}`}>
+        <div className={`w-18 ${armorPiece.maxSP ? "" : "opacity-0"}`}>
           <ValueBar
             current={armorPiece.currentSP}
             max={armorPiece.maxSP}

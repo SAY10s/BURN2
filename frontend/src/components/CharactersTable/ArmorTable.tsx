@@ -20,7 +20,7 @@ export default function ArmorTable({
 
   return (
     <div
-      className={`border-border m-2 flex flex-col items-center border-4 border-double p-4 ${className}`}
+      className={`border-border flex flex-col items-center justify-center border-4 border-double ${className} h-full`}
     >
       <div className="mb-1 flex justify-center">
         <ArmorPiece armorPiece={characterArmor.head} armorPart={"head"} />

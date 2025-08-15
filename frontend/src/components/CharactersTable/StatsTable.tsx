@@ -18,19 +18,27 @@ export default function StatsTable({
   }
 
   return (
-    <div
-      className={`border-border m-2 grid grid-cols-3 gap-x-16 gap-y-2 border-4 border-double p-4 ${className} `}
-    >
-      {Object.entries(stats).map(([key, value]) => (
-        <div key={key} className="flex items-center justify-between">
-          <div className="text-primary uppercase">
-            {STATS_TRANSLATION[key as keyof Stats] || key}
+    <div className={`${className} grid grid-cols-1`}>
+      <div className="border-border border-4 border-double">
+        <div className="border-border flex border-b-2">
+          <div className="text-primary w-2/3 px-4 py-2 text-left font-semibold uppercase">
+            Statystyka
           </div>
-          <div className="text-secondary text-right font-mono text-xl font-semibold">
-            {value}
+          <div className="text-secondary w-1/3 px-4 py-2 text-right font-semibold uppercase">
+            Wartość
           </div>
         </div>
-      ))}
+        {Object.entries(stats).map(([key, value]) => (
+          <div key={key} className={`border-border flex border-b`}>
+            <div className="text-primary w-2/3 px-4 py-2">
+              {STATS_TRANSLATION[key as keyof Stats] || key}
+            </div>
+            <div className="text-secondary w-1/3 px-4 py-2 text-right font-mono text-xl font-semibold">
+              {value}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
