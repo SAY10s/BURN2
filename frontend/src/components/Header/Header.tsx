@@ -1,13 +1,10 @@
+import { useGameStore } from "../../hooks/useGameStore";
 import { socket } from "../../hooks/useSocketHandlers";
-import type { Player } from "../../shared/types/player";
-import type { GameState } from "../../shared/types/gameState";
 
-type HeaderProps = {
-  clientPlayer: Player;
-  gameState: GameState;
-};
+export default function Header() {
+  const clientPlayer = useGameStore((state) => state.clientPlayer);
+  const gameState = useGameStore((state) => state.gameState);
 
-export default function Header({ clientPlayer, gameState }: HeaderProps) {
   return (
     <header>
       <h1 className="text-primary mb-4 text-center text-3xl font-bold">

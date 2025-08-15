@@ -1,19 +1,22 @@
 import type { Character } from "../../../../shared/types/character";
+import { useGameStore } from "../../hooks/useGameStore";
 import ArmorPiece from "./ArmorPiece";
 
 interface ArmorTableProps {
   characterArmor: Character["characterArmor"];
   className?: string;
   isPlayer: boolean;
-  gameMasterView: boolean;
 }
 
 export default function ArmorTable({
   characterArmor,
   className = "",
   isPlayer,
-  gameMasterView,
 }: ArmorTableProps) {
+  const gameMasterView = useGameStore(
+    (state) => state.clientPlayer.isGameMaster,
+  );
+
   if (!gameMasterView && !isPlayer) {
     return null;
   }

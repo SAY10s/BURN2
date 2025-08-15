@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useSocketHandlers, socket } from "./hooks/useSocketHandlers";
-
-//  CONSTANTS
-import { INITIAL_GAME_STATE } from "./shared/consts/initialGameState";
-import { INITIAL_ATTACK_DATA } from "./shared/consts/initialAttackData";
+import { useGameStore } from "./hooks/useGameStore";
 
 // COMPONENTS
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
 import AttackDataTable from "./components/DEV/attackData/AttackData";
-// import Header from "./components/Header/Header";
+import Header from "./components/Header/Header";
 // import RandomNumber from "./components/Header/rolltest";
 
 //Modals
@@ -18,33 +15,22 @@ import DefenceModal from "./components/Modals/DefenceModal/DefenceModal";
 import AttackApprovalModal from "./components/Modals/GameMastersApprovalModal/GameMastersApprovalModal";
 
 // types
-import type { GameState } from "./shared/types/gameState";
 import type { AttackData } from "./shared/types/attackData";
-import type { Player } from "./shared/types/player";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
-
 export default function App() {
-  const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
-  const [clientsCharacterID, setClientsCharacterID] = useState("");
   const [showDefenceModal, setShowDefenceModal] = useState(false);
   const [showAttackModal, setShowAttackModal] = useState(false);
   const [showGameMastersApprovalModal, setShowGameMastersApprovalModal] =
     useState(false);
-  const [attackData, setAttackData] = useState<AttackData>(INITIAL_ATTACK_DATA);
-  const [clientPlayer, setClientPlayer] = useState<Player>({
-    controlledCharacterID: "",
-    isGameMaster: false,
-    socketID: "",
-  });
 
-  useSocketHandlers(
-    setGameState,
-    setClientsCharacterID,
-    setShowDefenceModal,
-    setShowGameMastersApprovalModal,
-    setAttackData,
-    setClientPlayer,
+  const attackData = useGameStore((state) => state.attackData);
+  const setAttackData = useGameStore((state) => state.setAttackData);
+  const clientsCharacterID = useGameStore(
+    (state) => state.clientPlayer.controlledCharacterID,
   );
+  const gameState = useGameStore((state) => state.gameState);
+
+  useSocketHandlers(setShowDefenceModal, setShowGameMastersApprovalModal);
 
   const defendSelf = (type: TypesOfDefence) => {
     socket.emit("defend", type);
@@ -53,20 +39,17 @@ export default function App() {
 
   return (
     <main className="font-primary flex min-h-screen flex-col items-center bg-[url('/smokebg.png')] bg-cover bg-center py-4 text-white">
+      <Header />
+
       <div className="relative grid w-8/10 grid-cols-2 gap-4">
-        {/* <Header clientPlayer={clientPlayer} gameState={gameState} /> */}
         {/* <RandomNumber min={1} max={10} duration={3000} /> */}
 
         <PlayersTable
-          players={gameState.players}
           changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
         />
-        <AttackDataTable attackData={attackData} />
+        <AttackDataTable />
         <div className="col-span-2">
           <CharacterTable
-            characters={gameState.characters}
-            clientsCharacterId={clientsCharacterID}
-            gameMasterView={clientPlayer.isGameMaster}
             chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
             attackCharacter={(id) => {
               if (!clientsCharacterID || clientsCharacterID === "none") {

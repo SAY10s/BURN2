@@ -1,18 +1,21 @@
+import { useGameStore } from "../../hooks/useGameStore";
 import { STATS_TRANSLATION, type Stats } from "../../shared/types/character";
 
 interface StatsTableProps {
   stats: Stats;
   className?: string;
   isPlayer: boolean;
-  gameMasterView: boolean;
 }
 
 export default function StatsTable({
   stats,
   className = "",
   isPlayer,
-  gameMasterView,
 }: StatsTableProps) {
+  const gameMasterView = useGameStore(
+    (state) => state.clientPlayer.isGameMaster,
+  );
+
   if (!gameMasterView && !isPlayer) {
     return <></>;
   }
