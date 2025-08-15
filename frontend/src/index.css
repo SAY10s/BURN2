@@ -1,4 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import "tailwindcss";
-body {
-  background-color: rgb(124, 124, 124);
+
+@theme {
+  --color-primary: #fff;
+  --color-secondary: #ceccca;
+  --color-highlight: #cbaf7c;
+  --color-border: #504239;
+  --font-primary: "PT Sans", sans-serif;
+  --color-transparent-special: #00000000;
+
+  --color-witcher-blue: #024393bb;
+  --color-witcher-yellow: #483a0bbb;
+  --color-witcher-orange: #43270ebb;
+  --color-witcher-green: #194715bb;
+  --color-witcher-red: #5c0c0bbb;
+
+  --color-bar-health: #c62f2b;
+  --color-bar-stamina: #97842f;
+  --color-bar-stun: #bab9b2;
+}
+
+.bg-smoke {
+  background-image: url("/smokebg.png");
+  background-size: cover;
+  background-position: center;
 }

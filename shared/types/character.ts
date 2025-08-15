@@ -12,6 +12,17 @@ export const STATS_TRANSLATION = {
   body: "Ciało",
   will: "Wola",
 };
+export const SKILLS_TRANSLATION = {
+  brawling: "Bójka",
+  smallBlades: "Broń krótka",
+  staffSpear: "Broń drzewcowa",
+  swordsmanship: "Szermierka",
+  melee: "Broń Bitewna",
+  spellCasting: "Rzucanie Zaklęć",
+  athletics: "Atletyka",
+  archery: "Łucznictwo",
+  crossbow: "Kusznictwo",
+};
 
 export interface Stats {
   /**

@@ -4,31 +4,41 @@ interface StatsTableProps {
   stats: Stats;
   className?: string;
   isPlayer: boolean;
-  gamemasterView: boolean;
+  gameMasterView: boolean;
 }
 
 export default function StatsTable({
   stats,
   className = "",
   isPlayer,
-  gamemasterView,
+  gameMasterView,
 }: StatsTableProps) {
-  if (!gamemasterView && !isPlayer) {
+  if (!gameMasterView && !isPlayer) {
     return <></>;
   }
 
   return (
-    <div
-      className={`space-y-1 grid grid-cols-2 max-w-3xs gap-x-12 ${className}`}
-    >
-      {Object.entries(stats).map(([key, value]) => (
-        <div key={key} className="grid grid-cols-2 gap-x-2">
-          <span className="text-gray-600 uppercase">
-            {STATS_TRANSLATION[key as keyof Stats] || key}
-          </span>
-          <span className="font-mono text-right">{value}</span>
+    <div className={`${className} grid grid-cols-1`}>
+      <div className="border-border border-4 border-double">
+        <div className="border-border flex border-b-2">
+          <div className="text-primary w-2/3 px-4 py-2 text-left font-semibold uppercase">
+            Statystyka
+          </div>
+          <div className="text-secondary w-1/3 px-4 py-2 text-right font-semibold uppercase">
+            Wartość
+          </div>
         </div>
-      ))}
+        {Object.entries(stats).map(([key, value]) => (
+          <div key={key} className={`border-border flex border-b`}>
+            <div className="text-primary w-2/3 px-4 py-2">
+              {STATS_TRANSLATION[key as keyof Stats] || key}
+            </div>
+            <div className="text-secondary w-1/3 px-4 py-2 text-right font-mono text-xl font-semibold">
+              {value}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

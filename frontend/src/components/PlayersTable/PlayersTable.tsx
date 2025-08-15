@@ -9,50 +9,40 @@ export default function PlayersTable({
   changeGameMaster,
 }: PlayersTableProps) {
   return (
-    <details className="w-full max-w-2xl mx-auto mt-6 bg-white rounded-lg shadow-md overflow-hidden">
-      <summary className="cursor-pointer px-4 py-3 bg-gray-800 text-white rounded-t-lg select-none">
-        Players
+    <details className="">
+      <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">
+        GRACZE
       </summary>
-      <table className="w-full">
-        <thead className="bg-gray-800 text-white">
-          <tr>
-            <th className="px-4 py-3 text-left">Socket ID</th>
-            <th className="px-4 py-3 text-left">Character ID</th>
-            <th className="px-4 py-3 text-left">Role</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {players.map((player) => (
-            <tr
-              key={player.socketID}
-              className="hover:bg-gray-50 transition-colors"
+      <div className="border-border w-full border-4 border-double">
+        <div className="border-border grid grid-cols-3 border-b-4 border-double px-4 py-3 pl-6">
+          <div className="text-left font-bold">Socket ID</div>
+          <div className="text-center font-bold">Character ID</div>
+          <div className="text-center font-bold">Role</div>
+        </div>
+        {players.map((player) => (
+          <div
+            key={player.socketID}
+            className={`to-transparent-special ${player.isGameMaster ? "from-witcher-blue" : "from-witcher-yellow"} m-2 grid grid-cols-3 bg-gradient-to-r to-50% px-4 py-3`}
+          >
+            <div>{player.socketID}</div>
+            <div className="text-center">{player.controlledCharacterID}</div>
+            <div
+              onClick={() => changeGameMaster(player.socketID)}
+              className="flex cursor-pointer items-center justify-center"
             >
-              <td className="px-4 py-3 text-sm font-mono text-gray-700 truncate max-w-[120px]">
-                {player.socketID}
-              </td>
-              <td className="px-4 py-3 text-sm font-mono text-gray-700 truncate max-w-[120px]">
-                {player.controlledCharacterID}
-              </td>
-              <td
-                className="px-4 py-3 text-sm font-medium cursor-pointer"
-                onClick={() => {
-                  changeGameMaster(player.socketID);
-                }}
-              >
-                {(player.isGameMaster && (
-                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
-                    GM
-                  </span>
-                )) || (
-                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
-                    Player
-                  </span>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              {player.isGameMaster ? (
+                <div className="bg-witcher-blue text-secondary ml-4 w-16 rounded-full px-2 py-1 pr-4 pl-4 text-center text-xs">
+                  GM
+                </div>
+              ) : (
+                <div className="bg-witcher-yellow text-secondary ml-4 w-16 rounded-full px-2 py-1 pr-4 pl-4 text-center text-xs">
+                  Player
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </details>
   );
 }

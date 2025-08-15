@@ -1,40 +1,67 @@
 import type { ArmorPiece as ArmorPieceType } from "../../../../shared/types/character";
 import ValueBar from "./ValueBar";
+import { TYPES_OF_DAMAGE_TRANSLATION } from "../../shared/types/typesOfDamage";
+
+import armLeft from "../../assets/armor/arm-left.svg";
+import armRight from "../../assets/armor/arm-right.svg";
+import head from "../../assets/armor/head.svg";
+import legLeft from "../../assets/armor/leg-left.svg";
+import legRight from "../../assets/armor/leg-right.svg";
+import torso from "../../assets/armor/torso.svg";
 
 interface ArmorPieceProps {
   armorPiece: ArmorPieceType;
   armorPart: string;
 }
 
+const armorIcons: Record<string, string> = {
+  head,
+  leftArm: armLeft,
+  rightArm: armRight,
+  torso,
+  leftLeg: legLeft,
+  rightLeg: legRight,
+};
+
 export default function ArmorPiece({ armorPiece, armorPart }: ArmorPieceProps) {
   return (
-    <div className="bg-gray-50 rounded-lg shadow-md p-4">
-      <h3 className="text-lg font-medium text-gray-800">
-        {armorPart}
-        {Object.entries(armorPiece.reductions).map(
-          ([damageType, reduction]) => {
-            if (reduction) {
-              return (
-                <span key={damageType} className="text-sm text-gray-600 px-4">
-                  <span className="text-gray-800">{damageType}:</span>{" "}
-                  <span>{reduction}%</span>
+    <div className="border-border flex flex-col items-center border-4 border-double p-3">
+      <div
+        className={`mb-2 flex flex-col items-center ${armorPiece.maxSP ? "" : "opacity-30"}`}
+      >
+        <div className="group relative">
+          <img
+            src={armorIcons[armorPart] || ""}
+            alt={armorPart}
+            className="mb-1 h-14 w-14"
+          />
+
+          <div className="bg-smoke border-border text-secondary pointer-events-none absolute top-full left-1/2 z-10 mt-2 flex w-max -translate-x-1/2 flex-col gap-1 border p-2 text-xs opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+            <span className="font-medium">Redukcje obrażeń:</span>
+            {armorPiece.reductions.length > 0 ? (
+              armorPiece.reductions.map((damageType) => (
+                <span
+                  key={damageType}
+                  title={`Redukcja obrażeń typu ${TYPES_OF_DAMAGE_TRANSLATION[damageType] || damageType} o 50%`}
+                >
+                  {TYPES_OF_DAMAGE_TRANSLATION[damageType] || damageType}
                 </span>
-              );
-            }
-          }
-        )}
-      </h3>
-      <div className="mt-2 space-y-1">
-        <ValueBar
-          current={armorPiece.currentSP}
-          max={armorPiece.maxSP}
-          gamemasterView={true}
-          isPlayer={true}
-        />
-        {/* <p className="text-sm text-gray-600">
-          <strong className="text-gray-800">Encumbrance Value:</strong>{" "}
-          {armorPiece.encumbranceValue}
-        </p> */}
+              ))
+            ) : (
+              <span>Brak</span>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="flex w-full flex-col items-center">
+        <div className={`w-18 ${armorPiece.maxSP ? "" : "opacity-0"}`}>
+          <ValueBar
+            current={armorPiece.currentSP}
+            max={armorPiece.maxSP}
+            gamemasterView={true}
+            isPlayer={true}
+          />
+        </div>
       </div>
     </div>
   );

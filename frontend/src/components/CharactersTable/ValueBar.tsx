@@ -1,28 +1,33 @@
 export const ValueBar = ({
   current,
   max,
+  bgColor = "bg-bar-health",
   gamemasterView = false,
+  height = "h-1",
   isPlayer = false,
 }: {
   current: number;
   max: number;
-  gamemasterView: boolean;
-  isPlayer: boolean;
+  bgColor?: string;
+  gamemasterView?: boolean;
+  height?: string;
+  isPlayer?: boolean;
 }) => {
-  const percentage = (current / max) * 100;
-  let colorClass = "bg-green-500";
-  if (percentage <= 50) colorClass = "bg-yellow-500";
-  if (percentage <= 25) colorClass = "bg-red-500";
+  let percentage = (current / max) * 100;
+  if (percentage <= 0) percentage = 0;
+  if (percentage >= 100) percentage = 100;
 
   return (
-    <div className="flex items-center flex-col w-full">
-      <div className="w-full bg-gray-600 rounded-full overflow-hidden shadow-inner relative">
+    <div className="flex w-full">
+      <div className="border-border group relative w-full border-2 border-double">
         <div
-          className={`h-4 transition-all duration-300 ${colorClass}`}
-          style={{ width: `${percentage}%` }}
+          className={`${bgColor} m-0.5 ${height} transition-all duration-1000`}
+          style={{
+            width: percentage >= 100 ? "calc(100% - 4px)" : `${percentage}%`,
+          }}
         ></div>
         {(isPlayer || gamemasterView) && (
-          <div className="absolute inset-0 flex items-center justify-center text-sm font-mono text-white">
+          <div className="pointer-events-none absolute top-full left-1/2 z-10 -translate-x-1/2 rounded bg-black px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
             {current}/{max}
           </div>
         )}

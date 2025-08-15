@@ -10,25 +10,25 @@ type HeaderProps = {
 export default function Header({ clientPlayer, gameState }: HeaderProps) {
   return (
     <header>
-      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
+      <h1 className="text-primary mb-4 text-center text-3xl font-bold">
         Walka Wiedźmina {clientPlayer.socketID}{" "}
         {clientPlayer.isGameMaster ? "(GM)" : ""}
       </h1>
-      <div className="flex justify-center gap-4 mb-4">
+      <div className="mb-4 flex justify-center gap-4">
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           onClick={() => socket.emit("createRandomCharacter")}
         >
           New character
         </button>
         <button
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
           onClick={() => socket.emit("deleteAllCharacters")}
         >
           DELETE ALL CHARACTERS
         </button>
       </div>
-      <div className="text-center text-lg text-gray-700">
+      <div className="text-secondary text-center text-lg">
         {gameState.debugMessage}
       </div>
     </header>

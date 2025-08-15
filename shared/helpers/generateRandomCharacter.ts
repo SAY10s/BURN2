@@ -68,7 +68,15 @@ const getRandomSkillValue = (): number => {
  * Generates a random ArmorPiece with default values
  * @returns {ArmorPiece} A randomly generated armor piece
  */
-const getRandomArmorPiece = (): ArmorPiece => {
+const getRandomArmorPiece = (isEmpty: boolean = false): ArmorPiece => {
+  if (isEmpty) {
+    return {
+      reductions: [],
+      maxSP: 0,
+      currentSP: 0,
+      encumbranceValue: 0,
+    };
+  }
   const maxSP = Math.floor(Math.random() * 5) + 1;
   return {
     reductions: [TypesOfDamage.BLUDGEONING],
@@ -131,12 +139,12 @@ export const generateRandomCharacter = (
     },
     status: [],
     characterArmor: {
-      head: getRandomArmorPiece(),
+      head: getRandomArmorPiece(true),
       torso: getRandomArmorPiece(),
       rightArm: getRandomArmorPiece(),
       leftArm: getRandomArmorPiece(),
-      rightLeg: getRandomArmorPiece(),
-      leftLeg: getRandomArmorPiece(),
+      rightLeg: getRandomArmorPiece(true),
+      leftLeg: getRandomArmorPiece(true),
     },
     weapons: [WEAPON_1, WEAPON_2],
     susceptibilities: [TypesOfDamage.SLASHING],
