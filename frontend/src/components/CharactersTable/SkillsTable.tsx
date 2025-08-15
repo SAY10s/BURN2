@@ -1,4 +1,4 @@
-import type { Skills } from "../../shared/types/character";
+import { SKILLS_TRANSLATION, type Skills } from "../../shared/types/character";
 
 interface SkillsTableProps {
   skills: Skills;
@@ -11,30 +11,34 @@ interface SkillsTableProps {
 export default function SkillsTable({
   skills,
   className = "",
-  showCategory = false,
   gameMasterView,
   isPlayer,
 }: SkillsTableProps) {
   return (
-    <div className={`space-y-2 ${className} grid grid-cols-2 gap-x-12`}>
-      {Object.entries(skills).flatMap(([category, skillGroup]) =>
-        Object.entries(skillGroup).map(([skill, value]) => (
-          <div
-            key={`${category}-${skill}`}
-            className="grid grid-cols-2 gap-x-2"
-          >
-            {gameMasterView || isPlayer ? (
-              <>
-                <span className="text-gray-600 capitalize">
-                  {showCategory && `${category} - `}
-                  {skill.replace(/([A-Z])/g, " $1").trim()}:
-                </span>
-                <span className="text-right font-mono">{String(value)}</span>
-              </>
-            ) : null}
-          </div>
-        )),
+    <>
+      {(gameMasterView || isPlayer) && (
+        <div
+          className={`border-border m-2 grid grid-cols-3 gap-x-16 gap-y-2 border-4 border-double p-4 ${className}`}
+        >
+          {Object.entries(skills).flatMap(([category, skillGroup]) =>
+            Object.entries(skillGroup).map(([skill, value]) => (
+              <div
+                key={`${category}-${skill}`}
+                className="flex items-center justify-between"
+              >
+                <div className="text-primary uppercase">
+                  {SKILLS_TRANSLATION?.[
+                    skill as keyof typeof SKILLS_TRANSLATION
+                  ] || skill}
+                </div>
+                <div className="text-secondary text-right font-mono text-xl font-semibold">
+                  {String(value)}
+                </div>
+              </div>
+            )),
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
