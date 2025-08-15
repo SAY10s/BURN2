@@ -1,3 +1,4 @@
+import { useGameStore } from "../../hooks/useGameStore";
 import { SKILLS_TRANSLATION, type Skills } from "../../shared/types/character";
 import { STATS_TRANSLATION } from "../../shared/types/character";
 
@@ -5,16 +6,18 @@ interface SkillsTableProps {
   skills: Skills;
   className?: string;
   showCategory?: boolean;
-  gameMasterView: boolean;
   isPlayer: boolean;
 }
 
 export default function SkillsTable({
   skills,
   className = "",
-  gameMasterView,
   isPlayer,
 }: SkillsTableProps) {
+  const gameMasterView = useGameStore(
+    (state) => state.clientPlayer.isGameMaster,
+  );
+
   return (
     <>
       {(gameMasterView || isPlayer) && (

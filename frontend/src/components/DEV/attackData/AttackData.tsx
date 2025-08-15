@@ -1,9 +1,5 @@
 import type { AttackData } from "../../../shared/types/attackData";
 
-interface AttackDataTableProps {
-  attackData: AttackData;
-}
-
 const fieldLabels: Record<keyof AttackData, string> = {
   actorCharacterID: "Actor Character ID",
   targetCharacterID: "Target Character ID",
@@ -30,6 +26,7 @@ import type { Weapon } from "../../../shared/types/weapon";
 import type { TypesOfAttack } from "../../../shared/types/TypesOfAttack";
 import type { TypesOfDamage } from "../../../shared/types/typesOfDamage";
 import type { TypesOfDefence } from "../../../shared/types/typesOfDefence";
+import { useGameStore } from "../../../hooks/useGameStore";
 
 function renderValue(
   key: keyof AttackData,
@@ -71,7 +68,8 @@ function renderValue(
   return value as string | number | undefined;
 }
 
-export default function AttackDataTable({ attackData }: AttackDataTableProps) {
+export default function AttackDataTable() {
+  const attackData = useGameStore((state) => state.attackData);
   return (
     <details className="">
       <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">

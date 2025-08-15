@@ -1,18 +1,22 @@
+import { useGameStore } from "../../hooks/useGameStore";
+
 export const ValueBar = ({
   current,
   max,
   bgColor = "bg-bar-health",
-  gamemasterView = false,
   height = "h-1",
   isPlayer = false,
 }: {
   current: number;
   max: number;
   bgColor?: string;
-  gamemasterView?: boolean;
   height?: string;
   isPlayer?: boolean;
 }) => {
+  const gamemasterView = useGameStore(
+    (state) => state.clientPlayer.isGameMaster,
+  );
+
   let percentage = (current / max) * 100;
   if (percentage <= 0) percentage = 0;
   if (percentage >= 100) percentage = 100;

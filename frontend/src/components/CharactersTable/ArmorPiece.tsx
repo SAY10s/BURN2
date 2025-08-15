@@ -36,7 +36,7 @@ export default function ArmorPiece({ armorPiece, armorPart }: ArmorPieceProps) {
             className="mb-1 h-14 w-14"
           />
 
-          <div className="bg-smoke border-border text-secondary pointer-events-none absolute top-full left-1/2 z-10 mt-2 flex w-max -translate-x-1/2 flex-col gap-1 border p-2 text-xs opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+          <div className="border-border text-secondary bg-smoke pointer-events-none absolute top-full left-1/2 z-10 mt-2 flex w-max -translate-x-1/2 flex-col gap-1 border p-2 text-xs opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
             <span className="font-medium">Redukcje obrażeń:</span>
             {armorPiece.reductions.length > 0 ? (
               armorPiece.reductions.map((damageType) => (

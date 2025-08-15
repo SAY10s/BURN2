@@ -1,13 +1,11 @@
-import type { Player } from "../../shared/types/player";
+import { useGameStore } from "../../hooks/useGameStore";
+
 interface PlayersTableProps {
-  players: Player[];
   changeGameMaster: (socketID: string) => void;
 }
 
-export default function PlayersTable({
-  players,
-  changeGameMaster,
-}: PlayersTableProps) {
+export default function PlayersTable({ changeGameMaster }: PlayersTableProps) {
+  const players = useGameStore((state) => state.gameState.players);
   return (
     <details className="">
       <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">

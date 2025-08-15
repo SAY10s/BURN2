@@ -5,23 +5,22 @@ import SkillsTable from "./SkillsTable";
 import StatsTable from "./StatsTable";
 import { TypesOfStatus } from "../../shared/types/typesOfStatus";
 import ArmorTable from "./ArmorTable";
+import { useGameStore } from "../../hooks/useGameStore";
 
 interface CharacterTableProps {
-  characters: Character[];
-  clientsCharacterId: string;
-  gameMasterView: boolean;
   chooseCharacter: (characterId: string) => void;
   attackCharacter: (targetID: string) => void;
 }
 
 export default function CharacterTable({
-  characters,
   chooseCharacter,
-  clientsCharacterId,
   attackCharacter,
-  gameMasterView,
 }: CharacterTableProps) {
-  // Track which "test" divs are visible by character id
+  const characters = useGameStore((state) => state.gameState.characters);
+  const clientsCharacterID = useGameStore(
+    (state) => state.clientPlayer.controlledCharacterID,
+  );
+
   const [visibleDetails, setVisibleDetails] = useState<Record<string, boolean>>(
     {},
   );
@@ -50,7 +49,7 @@ export default function CharacterTable({
           if (character.isPlayer) {
             color = "from-witcher-yellow";
           }
-          if (clientsCharacterId === character.id) {
+          if (clientsCharacterID === character.id) {
             color = "from-witcher-red";
           }
 
@@ -106,7 +105,6 @@ export default function CharacterTable({
                     current={character.currentHP}
                     max={character.maxHP}
                     height="h-3"
-                    gamemasterView={gameMasterView}
                     isPlayer={character.isPlayer}
                   />
                   <div className="grid w-full grid-cols-2 gap-2">
@@ -114,14 +112,12 @@ export default function CharacterTable({
                       current={character.currentStamina}
                       max={character.maxStamina}
                       bgColor="bg-bar-stamina"
-                      gamemasterView={gameMasterView}
                       isPlayer={character.isPlayer}
                     />
                     <ValueBar
                       current={character.currentStunScore}
                       max={character.maxStunScore}
                       bgColor="bg-bar-stun"
-                      gamemasterView={gameMasterView}
                       isPlayer={character.isPlayer}
                     />
                   </div>
@@ -147,18 +143,15 @@ export default function CharacterTable({
                   <div className="grid grid-cols-4">
                     <StatsTable
                       stats={character.stats}
-                      gameMasterView={gameMasterView}
                       isPlayer={character.isPlayer}
                     />
                     <ArmorTable
                       characterArmor={character.characterArmor}
                       isPlayer={character.isPlayer}
-                      gameMasterView={gameMasterView}
                       className="col-span-2"
                     />
                     <SkillsTable
                       skills={character.skills}
-                      gameMasterView={gameMasterView}
                       isPlayer={character.isPlayer}
                     />
                   </div>
