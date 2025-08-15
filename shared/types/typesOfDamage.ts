@@ -10,3 +10,15 @@ export enum TypesOfDamage {
   FIRE = "fire",
   TRUE_DAMAGE = "true_damage",
 }
+
+export const TYPES_OF_DAMAGE_TRANSLATION: Record<TypesOfDamage, string> = {
+  [TypesOfDamage.SLASHING]: "Cięte",
+  [TypesOfDamage.PIERCING]: "Kłute",
+  [TypesOfDamage.BLUDGEONING]: "Obuchowe",
+  [TypesOfDamage.ELEMENTAL]: "Nadprzyrodzone",
+  [TypesOfDamage.SILVER]: "Srebrne",
+  [TypesOfDamage.MONSTER]: "Potworne",
+  [TypesOfDamage.MAGIC]: "Magiczne",
+  [TypesOfDamage.FIRE]: "Ogniste",
+  [TypesOfDamage.TRUE_DAMAGE]: "Nieuchronne",
+};
