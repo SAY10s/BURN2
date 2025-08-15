@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { Character } from "../../shared/types/character";
 import ValueBar from "./ValueBar";
 import SkillsTable from "./SkillsTable";
 import StatsTable from "./StatsTable";
-import ArmorPiece from "./ArmorPiece";
 import { TypesOfStatus } from "../../shared/types/typesOfStatus";
+import ArmorTable from "./ArmorTable";
 
 interface CharacterTableProps {
   characters: Character[];
@@ -34,7 +34,7 @@ export default function CharacterTable({
   };
 
   return (
-    <details className="">
+    <details className="" open>
       <summary className="cursor-pointer px-4 py-3 text-center text-2xl uppercase">
         POSTACIE
       </summary>
@@ -131,18 +131,26 @@ export default function CharacterTable({
                 </div>
               </div>
               {visibleDetails[character.id] && (
-                <div>
-                  <SkillsTable
-                    skills={character.skills}
-                    gameMasterView={gameMasterView}
+                <>
+                  <div className="grid grid-cols-3">
+                    <StatsTable
+                      stats={character.stats}
+                      gameMasterView={gameMasterView}
+                      isPlayer={character.isPlayer}
+                    />
+                    <SkillsTable
+                      skills={character.skills}
+                      gameMasterView={gameMasterView}
+                      isPlayer={character.isPlayer}
+                      className="col-span-2"
+                    />
+                  </div>
+                  <ArmorTable
+                    characterArmor={character.characterArmor}
                     isPlayer={character.isPlayer}
-                  />
-                  <StatsTable
-                    stats={character.stats}
                     gameMasterView={gameMasterView}
-                    isPlayer={character.isPlayer}
                   />
-                </div>
+                </>
               )}
             </div>
           );
