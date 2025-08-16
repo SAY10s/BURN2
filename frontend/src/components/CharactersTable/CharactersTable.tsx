@@ -137,7 +137,7 @@ export default function CharacterTable({
                     className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange w-12 cursor-pointer border-4 border-double font-bold transition-colors"
                     onClick={() => toggleDetailsDiv(character.id)}
                   >
-                    a
+                    {visibleDetails[character.id] ? "▲" : "▼"}
                   </button>
                 </div>
               </div>
