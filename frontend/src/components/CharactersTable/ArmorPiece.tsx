@@ -58,8 +58,8 @@ export default function ArmorPiece({ armorPiece, armorPart }: ArmorPieceProps) {
           <ValueBar
             current={armorPiece.currentSP}
             max={armorPiece.maxSP}
-            gamemasterView={true}
-            isPlayer={true}
+            isPlayer={false}
+            title="Wytrzymałość pancerza"
           />
         </div>
       </div>

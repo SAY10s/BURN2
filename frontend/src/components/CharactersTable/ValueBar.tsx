@@ -6,12 +6,14 @@ export const ValueBar = ({
   bgColor = "bg-bar-health",
   height = "h-1",
   isPlayer = false,
+  title = "",
 }: {
   current: number;
   max: number;
   bgColor?: string;
   height?: string;
   isPlayer?: boolean;
+  title?: string;
 }) => {
   const gamemasterView = useGameStore(
     (state) => state.clientPlayer.isGameMaster,
@@ -32,7 +34,7 @@ export const ValueBar = ({
         ></div>
         {(isPlayer || gamemasterView) && (
           <div className="pointer-events-none absolute top-full left-1/2 z-10 -translate-x-1/2 rounded bg-black px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
-            {current}/{max}
+            {title ? `${title}: ${current}/${max}` : `${current}/${max}`}
           </div>
         )}
       </div>

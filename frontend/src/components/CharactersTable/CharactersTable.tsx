@@ -106,6 +106,7 @@ export default function CharacterTable({
                     max={character.maxHP}
                     height="h-3"
                     isPlayer={character.isPlayer}
+                    title="HP"
                   />
                   <div className="grid w-full grid-cols-2 gap-2">
                     <ValueBar
@@ -113,11 +114,13 @@ export default function CharacterTable({
                       max={character.maxStamina}
                       bgColor="bg-bar-stamina"
                       isPlayer={character.isPlayer}
+                      title="Stamina"
                     />
                     <ValueBar
                       current={character.currentStunScore}
                       max={character.maxStunScore}
                       bgColor="bg-bar-stun"
+                      title="Przytomność"
                       isPlayer={character.isPlayer}
                     />
                   </div>
