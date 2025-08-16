@@ -10,7 +10,7 @@ type Props = {
   setShowGMsApprovalModal: (showModal: boolean) => void;
 };
 
-export default function GamesMasterApproval({
+export default function GameMastersApprovalModal({
   socket,
   attackData,
   setAttackData,
