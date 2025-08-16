@@ -7,14 +7,14 @@ type Props = {
   socket: typeof Socket;
   attackData: AttackData;
   setAttackData: (attackData: AttackData) => void;
-  setShowGameMastersApprovalModal: (showModal: boolean) => void;
+  setShowGMsApprovalModal: (showModal: boolean) => void;
 };
 
 export default function GamesMasterApproval({
   socket,
   attackData,
   setAttackData,
-  setShowGameMastersApprovalModal,
+  setShowGMsApprovalModal,
 }: Props) {
   function checkHit(attackData: AttackData): boolean {
     const attackTotal =
@@ -264,7 +264,7 @@ export default function GamesMasterApproval({
           <button
             onClick={() => {
               socket.emit("executeAttack", attackData);
-              setShowGameMastersApprovalModal(false);
+              setShowGMsApprovalModal(false);
             }}
             className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
           >

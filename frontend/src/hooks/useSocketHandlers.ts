@@ -10,7 +10,7 @@ const socket = io("http://localhost:3001");
 
 export function useSocketHandlers(
   setShowDefenceModal: (show: boolean) => void,
-  setShowGameMastersApprovalModal: (show: boolean) => void,
+  setShowGMsApprovalModal: (show: boolean) => void,
 ) {
   const setGameState = useGameStore((state) => state.setGameState);
   const setAttackData = useGameStore((state) => state.setAttackData);
@@ -31,7 +31,7 @@ export function useSocketHandlers(
     });
 
     socket.on("requestGameMastersApproval", () => {
-      setShowGameMastersApprovalModal(true);
+      setShowGMsApprovalModal(true);
     });
   }, []);
 }

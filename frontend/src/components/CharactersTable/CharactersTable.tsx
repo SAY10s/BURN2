@@ -7,14 +7,19 @@ import { TypesOfStatus } from "../../shared/types/typesOfStatus";
 import ArmorTable from "./ArmorTable";
 import { useGameStore } from "../../hooks/useGameStore";
 
+import attackIcon from "../../assets/attack-icon.svg";
+import specialActionsIcon from "../../assets/character-special-actions.svg";
+
 interface CharacterTableProps {
   chooseCharacter: (characterId: string) => void;
   attackCharacter: (targetID: string) => void;
+  setShowSpecialGMsActionsModal: (show: boolean) => void;
 }
 
 export default function CharacterTable({
   chooseCharacter,
   attackCharacter,
+  setShowSpecialGMsActionsModal,
 }: CharacterTableProps) {
   const characters = useGameStore((state) => state.gameState.characters);
   const clientsCharacterID = useGameStore(
@@ -128,16 +133,26 @@ export default function CharacterTable({
                 {/* Actions */}
                 <div className="flex justify-center gap-2">
                   <button
-                    className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
+                    className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
                     onClick={() => attackCharacter(character.id)}
                   >
-                    ATTACK
+                    <img src={attackIcon} alt="Attack" className="h-6 w-6" />
                   </button>
                   <button
                     className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange w-12 cursor-pointer border-4 border-double font-bold transition-colors"
                     onClick={() => toggleDetailsDiv(character.id)}
                   >
                     {visibleDetails[character.id] ? "▲" : "▼"}
+                  </button>
+                  <button
+                    className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
+                    onClick={() => setShowSpecialGMsActionsModal(true)}
+                  >
+                    <img
+                      src={specialActionsIcon}
+                      alt="Special Actions"
+                      className="h-6 w-6"
+                    />
                   </button>
                 </div>
               </div>

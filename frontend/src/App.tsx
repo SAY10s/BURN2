@@ -17,10 +17,12 @@ import AttackApprovalModal from "./components/Modals/GameMastersApprovalModal/Ga
 // types
 import type { AttackData } from "./shared/types/attackData";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
+import SpecialGameMastersActionsModal from "./components/Modals/SpecialGameMastersActionsModal/SpecialGameMastersActionsModal";
 export default function App() {
   const [showDefenceModal, setShowDefenceModal] = useState(false);
   const [showAttackModal, setShowAttackModal] = useState(false);
-  const [showGameMastersApprovalModal, setShowGameMastersApprovalModal] =
+  const [showGMsApprovalModal, setShowGMsApprovalModal] = useState(false);
+  const [showSpecialGMsActionsModal, setShowSpecialGMsActionsModal] =
     useState(false);
 
   const attackData = useGameStore((state) => state.attackData);
@@ -30,7 +32,7 @@ export default function App() {
   );
   const gameState = useGameStore((state) => state.gameState);
 
-  useSocketHandlers(setShowDefenceModal, setShowGameMastersApprovalModal);
+  useSocketHandlers(setShowDefenceModal, setShowGMsApprovalModal);
 
   const defendSelf = (type: TypesOfDefence) => {
     socket.emit("defend", type);
@@ -59,6 +61,7 @@ export default function App() {
               setShowAttackModal(true);
               setAttackData({ ...attackData, targetCharacterID: id });
             }}
+            setShowSpecialGMsActionsModal={setShowSpecialGMsActionsModal}
           />
         </div>
 
@@ -69,12 +72,12 @@ export default function App() {
             characters={gameState.characters}
           />
         )}
-        {showGameMastersApprovalModal && (
+        {showGMsApprovalModal && (
           <AttackApprovalModal
             attackData={attackData}
             setAttackData={setAttackData}
             socket={socket}
-            setShowGameMastersApprovalModal={setShowGameMastersApprovalModal}
+            setShowGMsApprovalModal={setShowGMsApprovalModal}
           />
         )}
         {showAttackModal && (
@@ -88,6 +91,11 @@ export default function App() {
               socket.emit("attackCharacter", attackData);
               setShowAttackModal(false);
             }}
+          />
+        )}
+        {showSpecialGMsActionsModal && (
+          <SpecialGameMastersActionsModal
+            onClose={() => setShowSpecialGMsActionsModal(false)}
           />
         )}
       </div>
