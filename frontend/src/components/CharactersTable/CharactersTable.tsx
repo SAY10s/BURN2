@@ -13,13 +13,13 @@ import specialActionsIcon from "../../assets/character-special-actions.svg";
 interface CharacterTableProps {
   chooseCharacter: (characterId: string) => void;
   attackCharacter: (targetID: string) => void;
-  setShowSpecialGMsActionsModal: (show: boolean) => void;
+  startSpecialAction: (targetID: string) => void;
 }
 
 export default function CharacterTable({
   chooseCharacter,
   attackCharacter,
-  setShowSpecialGMsActionsModal,
+  startSpecialAction,
 }: CharacterTableProps) {
   const characters = useGameStore((state) => state.gameState.characters);
   const clientsCharacterID = useGameStore(
@@ -146,7 +146,7 @@ export default function CharacterTable({
                   </button>
                   <button
                     className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
-                    onClick={() => setShowSpecialGMsActionsModal(true)}
+                    onClick={() => startSpecialAction(character.id)}
                   >
                     <img
                       src={specialActionsIcon}

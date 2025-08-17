@@ -12,12 +12,13 @@ import Header from "./components/Header/Header";
 //Modals
 import AttackModal from "./components/Modals/AttackModal/AttackModal";
 import DefenceModal from "./components/Modals/DefenceModal/DefenceModal";
-import AttackApprovalModal from "./components/Modals/GameMastersApprovalModal/GameMastersApprovalModal";
+import GameMastersApprovalModal from "./components/Modals/GameMastersApprovalModal/GameMastersApprovalModal";
+import SpecialGameMastersActionsModal from "./components/Modals/SpecialGameMastersActionsModal/SpecialGameMastersActionsModal";
 
 // types
 import type { AttackData } from "./shared/types/attackData";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
-import SpecialGameMastersActionsModal from "./components/Modals/SpecialGameMastersActionsModal/SpecialGameMastersActionsModal";
+
 export default function App() {
   const [showDefenceModal, setShowDefenceModal] = useState(false);
   const [showAttackModal, setShowAttackModal] = useState(false);
@@ -25,12 +26,17 @@ export default function App() {
   const [showSpecialGMsActionsModal, setShowSpecialGMsActionsModal] =
     useState(false);
 
+  const [specialActionTargetCharacterID, setSpecialActionTargetCharacterID] =
+    useState<string>("");
+
   const attackData = useGameStore((state) => state.attackData);
+  const gameState = useGameStore((state) => state.gameState);
+
   const setAttackData = useGameStore((state) => state.setAttackData);
+
   const clientsCharacterID = useGameStore(
     (state) => state.clientPlayer.controlledCharacterID,
   );
-  const gameState = useGameStore((state) => state.gameState);
 
   useSocketHandlers(setShowDefenceModal, setShowGMsApprovalModal);
 
@@ -61,7 +67,10 @@ export default function App() {
               setShowAttackModal(true);
               setAttackData({ ...attackData, targetCharacterID: id });
             }}
-            setShowSpecialGMsActionsModal={setShowSpecialGMsActionsModal}
+            startSpecialAction={(id) => {
+              setShowSpecialGMsActionsModal(true);
+              setSpecialActionTargetCharacterID(id);
+            }}
           />
         </div>
 
@@ -73,7 +82,7 @@ export default function App() {
           />
         )}
         {showGMsApprovalModal && (
-          <AttackApprovalModal
+          <GameMastersApprovalModal
             attackData={attackData}
             setAttackData={setAttackData}
             socket={socket}
@@ -96,6 +105,7 @@ export default function App() {
         {showSpecialGMsActionsModal && (
           <SpecialGameMastersActionsModal
             onClose={() => setShowSpecialGMsActionsModal(false)}
+            targetCharacterID={specialActionTargetCharacterID}
           />
         )}
       </div>
