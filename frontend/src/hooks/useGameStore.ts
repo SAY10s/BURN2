@@ -24,6 +24,7 @@ interface GameStore {
     stat: "currentHP" | "currentStamina" | "currentStunScore",
     delta: number,
   ) => void;
+  switchIsAlive: (characterID: string) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -45,6 +46,15 @@ export const useGameStore = create<GameStore>((set) => ({
           char.id === characterID
             ? { ...char, [stat]: (char[stat] as number) + delta }
             : char,
+        ),
+      },
+    })),
+  switchIsAlive: (characterID) =>
+    set((state) => ({
+      gameState: {
+        ...state.gameState,
+        characters: state.gameState.characters.map((char) =>
+          char.id === characterID ? { ...char, isAlive: !char.isAlive } : char,
         ),
       },
     })),

@@ -19,6 +19,7 @@ export default function SpecialGameMastersActionsModal({
   const updateCharacterStat = useGameStore(
     (state) => state.updateCharacterStat,
   );
+  const switchIsAlive = useGameStore((state) => state.switchIsAlive);
   const targetCharacter = getCharacterByCharactersId(
     targetCharacterID,
     characters,
@@ -99,7 +100,14 @@ export default function SpecialGameMastersActionsModal({
         </div>
         <div className="mt-8 flex justify-end gap-3">
           <Button onClick={onClose}>X</Button>
-          <Button onClick={() => onConfirm()}>Potwierdź</Button>
+          <Button
+            onClick={() => {
+              switchIsAlive(targetCharacterID);
+            }}
+          >
+            {targetCharacter.isAlive ? "Zabij" : "Wskrześ"}
+          </Button>
+          <Button onClick={onConfirm}>Potwierdź</Button>
         </div>
       </div>
     </div>
