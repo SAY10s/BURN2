@@ -78,7 +78,7 @@ const DerrivedValue = ({
     return (
       <>
         <span className="text-red-700">{Math.floor(value / 3)}</span>{" "}
-        <span className="line-through">{value}</span>
+        <span className="line-through opacity-50">{value}</span>
       </>
     );
   }
@@ -87,7 +87,7 @@ const DerrivedValue = ({
       return (
         <>
           <span className="text-red-700">{Math.floor(value / 2)}</span>{" "}
-          <span className="line-through">{value}</span>
+          <span className="line-through opacity-50">{value}</span>
         </>
       );
     }
