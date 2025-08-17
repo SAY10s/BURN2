@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSocketHandlers, socket } from "./hooks/useSocketHandlers";
 import { useGameStore } from "./hooks/useGameStore";
 
@@ -35,9 +35,11 @@ export default function App() {
 
   const setAttackData = useGameStore((state) => state.setAttackData);
 
-  const clientsCharacterID = useGameStore(
-    (state) => state.clientPlayer.controlledCharacterID,
-  );
+  const clientPlayer = useGameStore((state) => state.clientPlayer);
+
+  useEffect(() => {
+    document.title = `BURN2 - ${clientPlayer.controlledCharacterID} ${clientPlayer.isGameMaster ? "GM" : ""}`;
+  }, [clientPlayer.controlledCharacterID, clientPlayer.isGameMaster]);
 
   useSocketHandlers(setShowDefenceModal, setShowGMsApprovalModal);
 
@@ -61,7 +63,10 @@ export default function App() {
           <CharacterTable
             chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
             attackCharacter={(id) => {
-              if (!clientsCharacterID || clientsCharacterID === "none") {
+              if (
+                !clientPlayer.controlledCharacterID ||
+                clientPlayer.controlledCharacterID === "none"
+              ) {
                 alert("You need to choose a character first!");
                 return;
               }
@@ -96,7 +101,7 @@ export default function App() {
             setAttackData={setAttackData}
             setShowAttackModal={setShowAttackModal}
             characters={gameState.characters}
-            actorCharacterID={clientsCharacterID}
+            actorCharacterID={clientPlayer.controlledCharacterID}
             onConfirmAttack={(attackData: AttackData) => {
               socket.emit("attackCharacter", attackData);
               setShowAttackModal(false);
