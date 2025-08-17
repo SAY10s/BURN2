@@ -162,6 +162,8 @@ export default function CharacterTable({
                     <StatsTable
                       stats={character.stats}
                       isPlayer={character.isPlayer}
+                      currentHP={character.currentHP}
+                      maxHP={character.maxHP}
                     />
                     <ArmorTable
                       characterArmor={character.characterArmor}
