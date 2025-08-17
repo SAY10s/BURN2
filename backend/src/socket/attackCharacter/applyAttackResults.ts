@@ -3,13 +3,10 @@ import { LevelsOfCriticalHit } from "../../shared/types/levelsOfCriticalHit";
 import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 import { getMeleeBonus } from "../utils/getBonusMeleeDamage";
-import { getActorAndTarget } from "./getActorAndTarget";
+import { getActorAndTarget } from "./utils/getActorAndTarget";
 import { Socket } from "socket.io";
 import { AttackData } from "../../shared/types/attackData";
-
-function addDebugMessage(message: string) {
-  GameStateSingleton.getInstance().debugMessage += " " + message;
-}
+import { addDebugMessage } from "../utils/addDebugMessage";
 
 export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
   const {

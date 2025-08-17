@@ -2,6 +2,7 @@ import { Character } from "../../shared/types/character";
 import { TypesOfDefence } from "../../shared/types/typesOfDefence";
 import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
+import { addDebugMessage } from "../utils/addDebugMessage";
 
 export function resolveDefence(
   defenceType: TypesOfDefence,
@@ -12,18 +13,18 @@ export function resolveDefence(
 
   switch (defenceType) {
     case TypesOfDefence.DODGE:
-      gameState.debugMessage += ` ${targetCharacter.name} próbuje uniknąć.`;
+      addDebugMessage(` ${targetCharacter.name} próbuje uniknąć.`);
       attackData.defensiveStat = targetCharacter.stats.reflex;
       attackData.defensiveSkill =
         targetCharacter.skills.reflexSkills.dodgeEscape;
       break;
     case TypesOfDefence.REPOSITION:
-      gameState.debugMessage += ` ${targetCharacter.name} próbuje zejść z linii.`;
+      addDebugMessage(` ${targetCharacter.name} próbuje zejść z linii.`);
       attackData.defensiveStat = targetCharacter.stats.dexterity;
       attackData.defensiveSkill =
         targetCharacter.skills.dexteritySkills.athletics;
       break;
     default:
-      gameState.debugMessage += "Błąd przy określaniu obrony.";
+      addDebugMessage("Błąd przy określaniu obrony.");
   }
 }

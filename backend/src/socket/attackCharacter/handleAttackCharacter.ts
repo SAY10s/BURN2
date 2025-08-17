@@ -5,10 +5,11 @@ import { resolveDefence } from "./resolveDefence";
 import { checkHit } from "./checkHit";
 import { applyAttackResults } from "./applyAttackResults";
 import { Socket, Server } from "socket.io";
-import { getActorAndTarget } from "./getActorAndTarget";
+import { getActorAndTarget } from "./utils/getActorAndTarget";
 import { getSocketFromIObySocketID } from "../utils/getSocketFromIObySocketID";
 import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
+import { addDebugMessage } from "../utils/addDebugMessage";
 
 export async function handleAttackCharacter(
   socket: Socket,
@@ -31,7 +32,9 @@ export async function handleAttackCharacter(
     createAttackData(attackDataProp)
   );
 
-  GameStateSingleton.getInstance().debugMessage = `${actorCharacter.name} zaatakował ${targetCharacter.name}.`;
+  addDebugMessage(
+    ` ${actorCharacter.name} zaatakował ${targetCharacter.name}.`
+  );
   updateGameState();
   updateAttackData();
 

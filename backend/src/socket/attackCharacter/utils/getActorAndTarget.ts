@@ -4,8 +4,8 @@ import {
   getGameMasterPlayer,
   getPlayerByCharactersId,
   getPlayerByPlayersSocketId,
-} from "../../shared/helpers/characterGetters";
-import { GameStateSingleton } from "../../singletons/GameStateSingleton";
+} from "../../../shared/helpers/characterGetters";
+import { GameStateSingleton } from "../../../singletons/GameStateSingleton";
 
 export function getActorAndTarget(socket: Socket, targetCharacterID: string) {
   const gameState = GameStateSingleton.getInstance();
