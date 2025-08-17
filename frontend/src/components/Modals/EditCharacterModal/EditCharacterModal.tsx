@@ -4,17 +4,17 @@ import { getCharacterByCharactersId } from "../../../shared/helpers/characterGet
 import { ValueBar } from "../../CharactersTable/ValueBar";
 import Button from "../../UI/Button";
 
-type SpecialGameMastersActionsModalProps = {
+type EditCharacterModalProps = {
   onConfirm: () => void;
   onClose: () => void;
   targetCharacterID: string;
 };
 
-export default function SpecialGameMastersActionsModal({
+export default function EditCharacterModal({
   onConfirm,
   onClose,
   targetCharacterID,
-}: SpecialGameMastersActionsModalProps) {
+}: EditCharacterModalProps) {
   const characters = useGameStore((state) => state.gameState.characters);
   const updateCharacterStat = useGameStore(
     (state) => state.updateCharacterStat,

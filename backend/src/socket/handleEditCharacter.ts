@@ -8,7 +8,7 @@ import { GameStateSingleton } from "../singletons/GameStateSingleton";
  * @param updatedCharacter - The full character object sent from the client
  * @param updateGameState - Callback to emit the updated game state
  */
-export function handleSpecialAction(
+export function handleEditCharacter(
   socket: Socket,
   updatedCharacter: any,
   updateGameState: () => void

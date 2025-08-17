@@ -13,7 +13,7 @@ import Header from "./components/Header/Header";
 import AttackModal from "./components/Modals/AttackModal/AttackModal";
 import DefenceModal from "./components/Modals/DefenceModal/DefenceModal";
 import GameMastersApprovalModal from "./components/Modals/GameMastersApprovalModal/GameMastersApprovalModal";
-import SpecialGameMastersActionsModal from "./components/Modals/SpecialGameMastersActionsModal/SpecialGameMastersActionsModal";
+import EditCharacterModal from "./components/Modals/EditCharacterModal/EditCharacterModal";
 
 // types
 import type { AttackData } from "./shared/types/attackData";
@@ -27,7 +27,7 @@ export default function App() {
   const [showSpecialGMsActionsModal, setShowSpecialGMsActionsModal] =
     useState(false);
 
-  const [specialActionTargetCharacterID, setSpecialActionTargetCharacterID] =
+  const [editCharacterTargetCharacterID, setEditCharacterTargetCharacterID] =
     useState<string>("");
 
   const attackData = useGameStore((state) => state.attackData);
@@ -68,9 +68,9 @@ export default function App() {
               setShowAttackModal(true);
               setAttackData({ ...attackData, targetCharacterID: id });
             }}
-            startSpecialAction={(id) => {
+            startEditCharacter={(id) => {
               setShowSpecialGMsActionsModal(true);
-              setSpecialActionTargetCharacterID(id);
+              setEditCharacterTargetCharacterID(id);
             }}
           />
         </div>
@@ -104,15 +104,15 @@ export default function App() {
           />
         )}
         {showSpecialGMsActionsModal && (
-          <SpecialGameMastersActionsModal
+          <EditCharacterModal
             onClose={() => setShowSpecialGMsActionsModal(false)}
-            targetCharacterID={specialActionTargetCharacterID}
+            targetCharacterID={editCharacterTargetCharacterID}
             onConfirm={() => {
               setShowSpecialGMsActionsModal(false);
               socket.emit(
-                "specialAction",
+                "editCharacter",
                 getCharacterByCharactersId(
-                  specialActionTargetCharacterID,
+                  editCharacterTargetCharacterID,
                   gameState.characters,
                 ),
               );

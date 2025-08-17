@@ -8,19 +8,19 @@ import ArmorTable from "./ArmorTable";
 import { useGameStore } from "../../hooks/useGameStore";
 
 import attackIcon from "../../assets/attack-icon.svg";
-import specialActionsIcon from "../../assets/character-special-actions.svg";
+import editCharactersIcon from "../../assets/character-special-actions.svg";
 import Button from "../UI/Button";
 
 interface CharacterTableProps {
   chooseCharacter: (characterId: string) => void;
   attackCharacter: (targetID: string) => void;
-  startSpecialAction: (targetID: string) => void;
+  startEditCharacter: (targetID: string) => void;
 }
 
 export default function CharacterTable({
   chooseCharacter,
   attackCharacter,
-  startSpecialAction,
+  startEditCharacter,
 }: CharacterTableProps) {
   const characters = useGameStore((state) => state.gameState.characters);
   const clientsCharacterID = useGameStore(
@@ -146,9 +146,9 @@ export default function CharacterTable({
                     {visibleDetails[character.id] ? "▲" : "▼"}
                   </Button>
                   {gameMastersView && (
-                    <Button onClick={() => startSpecialAction(character.id)}>
+                    <Button onClick={() => startEditCharacter(character.id)}>
                       <img
-                        src={specialActionsIcon}
+                        src={editCharactersIcon}
                         alt="Special Actions"
                         className="h-6 w-6"
                       />
