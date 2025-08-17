@@ -2,6 +2,7 @@ import { getCharacterByCharactersId } from "../../../shared/helpers/characterGet
 import type { AttackData } from "../../../shared/types/attackData";
 import type { Character } from "../../../shared/types/character";
 import { TypesOfAttack } from "../../../shared/types/TypesOfAttack";
+import Button from "../../UI/Button";
 
 type Props = {
   attackData: AttackData;
@@ -151,15 +152,14 @@ export default function AttackModal({
         </div>
 
         <div className="mt-8 flex justify-end gap-3">
-          <button
+          <Button
             onClick={() => {
               onConfirmAttack(attackData);
               setShowAttackModal(false);
             }}
-            className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
           >
             Potwierdź Atak
-          </button>
+          </Button>
         </div>
       </div>
     </div>

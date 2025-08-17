@@ -2,6 +2,7 @@ import { getCharacterByCharactersId } from "../../../shared/helpers/characterGet
 import type { AttackData } from "../../../shared/types/attackData";
 import type { Character } from "../../../shared/types/character";
 import { TypesOfDefence } from "../../../shared/types/typesOfDefence";
+import Button from "../../UI/Button";
 
 type DefenceModalProps = {
   onDefend: (type: TypesOfDefence) => void;
@@ -30,13 +31,12 @@ export default function DefenceModal({
         </p>
         <div className="flex justify-center gap-4">
           {Object.values(TypesOfDefence).map((value) => (
-            <button
+            <Button
               key={value}
               onClick={() => onDefend(value as TypesOfDefence)}
-              className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
             >
               {value.replace(/_/g, " ")}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

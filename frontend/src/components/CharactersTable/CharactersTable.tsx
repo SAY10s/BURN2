@@ -9,6 +9,7 @@ import { useGameStore } from "../../hooks/useGameStore";
 
 import attackIcon from "../../assets/attack-icon.svg";
 import specialActionsIcon from "../../assets/character-special-actions.svg";
+import Button from "../UI/Button";
 
 interface CharacterTableProps {
   chooseCharacter: (characterId: string) => void;
@@ -75,7 +76,9 @@ export default function CharacterTable({
 
           return (
             <div key={character.id} className={conditionalClass2}>
-              <div className={`${wrapperClass}`}>
+              <div
+                className={`${wrapperClass} ${character.isAlive ? "" : "opacity-30"}`}
+              >
                 {/* Name & Type */}
                 <div
                   className="flex cursor-pointer flex-col items-start justify-center"
@@ -134,30 +137,22 @@ export default function CharacterTable({
                 </div>
                 {/* Actions */}
                 <div className="flex justify-center gap-2">
-                  <button
-                    className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
-                    onClick={() => attackCharacter(character.id)}
-                  >
-                    <img src={attackIcon} alt="Attack" className="h-6 w-6" />
-                  </button>
-                  <button
-                    className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange w-12 cursor-pointer border-4 border-double font-bold transition-colors"
-                    onClick={() => toggleDetailsDiv(character.id)}
-                  >
+                  {character.isAlive && (
+                    <Button onClick={() => attackCharacter(character.id)}>
+                      <img src={attackIcon} alt="Attack" className="h-6 w-6" />
+                    </Button>
+                  )}
+                  <Button onClick={() => toggleDetailsDiv(character.id)}>
                     {visibleDetails[character.id] ? "▲" : "▼"}
-                  </button>
-
+                  </Button>
                   {gameMastersView && (
-                    <button
-                      className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
-                      onClick={() => startSpecialAction(character.id)}
-                    >
+                    <Button onClick={() => startSpecialAction(character.id)}>
                       <img
                         src={specialActionsIcon}
                         alt="Special Actions"
                         className="h-6 w-6"
                       />
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>

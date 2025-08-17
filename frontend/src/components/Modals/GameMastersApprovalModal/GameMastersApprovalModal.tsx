@@ -2,6 +2,7 @@ import type { AttackData } from "../../../shared/types/attackData";
 import type { Socket } from "socket.io-client";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { TypesOfStatus } from "../../../shared/types/typesOfStatus";
+import Button from "../../UI/Button";
 
 type Props = {
   socket: typeof Socket;
@@ -261,15 +262,14 @@ export default function GameMastersApprovalModal({
         </div>
 
         <div className="mt-8 flex justify-end gap-3">
-          <button
+          <Button
             onClick={() => {
               socket.emit("executeAttack", attackData);
               setShowGMsApprovalModal(false);
             }}
-            className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
           >
             Wykonaj Atak
-          </button>
+          </Button>
         </div>
       </div>
     </div>

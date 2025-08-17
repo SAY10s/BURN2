@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { useGameStore } from "../../../hooks/useGameStore";
 import { getCharacterByCharactersId } from "../../../shared/helpers/characterGetters";
 import { ValueBar } from "../../CharactersTable/ValueBar";
+import Button from "../../UI/Button";
 
 type SpecialGameMastersActionsModalProps = {
   onConfirm: () => void;
@@ -32,12 +33,7 @@ export default function SpecialGameMastersActionsModal({
           </h2>
           Wystąpił błąd podczas ładowania danych postaci.
           <div className="mt-8 flex justify-end gap-3">
-            <button
-              onClick={onClose}
-              className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
-            >
-              Zamknij
-            </button>
+            <Button onClick={onClose}>Zamknij</Button>
           </div>
         </div>
       </div>
@@ -102,18 +98,8 @@ export default function SpecialGameMastersActionsModal({
           </div>
         </div>
         <div className="mt-8 flex justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
-          >
-            X
-          </button>
-          <button
-            onClick={() => onConfirm()}
-            className="border-witcher-yellow k bg-witcher-yellow text-secondary hover:bg-witcher-orange cursor-pointer border-4 border-double px-8 py-2 font-bold transition-colors"
-          >
-            Potwierdź
-          </button>
+          <Button onClick={onClose}>X</Button>
+          <Button onClick={() => onConfirm()}>Potwierdź</Button>
         </div>
       </div>
     </div>
@@ -137,19 +123,9 @@ const ValueBarWrapper = ({
     <div className="mb-8 w-full text-center">
       {title}:
       <div className="flex items-center justify-center space-x-2">
-        <button
-          className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double text-xl font-bold"
-          onClick={onMinus}
-        >
-          -
-        </button>
+        <Button onClick={onMinus}>-</Button>
         {children}
-        <button
-          className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double text-xl font-bold"
-          onClick={onPlus}
-        >
-          +
-        </button>
+        <Button onClick={onPlus}>+</Button>
       </div>
     </div>
   );

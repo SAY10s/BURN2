@@ -1,5 +1,6 @@
 import { useGameStore } from "../../hooks/useGameStore";
 import { socket } from "../../hooks/useSocketHandlers";
+import Button from "../UI/Button";
 
 export default function Header() {
   const clientPlayer = useGameStore((state) => state.clientPlayer);
@@ -12,18 +13,12 @@ export default function Header() {
         {clientPlayer.isGameMaster ? "(GM)" : ""}
       </h1>
       <div className="mb-4 flex justify-center gap-4">
-        <button
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          onClick={() => socket.emit("createRandomCharacter")}
-        >
+        <Button onClick={() => socket.emit("createRandomCharacter")}>
           New character
-        </button>
-        <button
-          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-          onClick={() => socket.emit("deleteAllCharacters")}
-        >
+        </Button>
+        <Button onClick={() => socket.emit("deleteAllCharacters")}>
           DELETE ALL CHARACTERS
-        </button>
+        </Button>
       </div>
       <div className="text-secondary text-center text-lg">
         {gameState.debugMessage}
