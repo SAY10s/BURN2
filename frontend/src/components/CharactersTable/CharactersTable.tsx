@@ -25,6 +25,8 @@ export default function CharacterTable({
   const clientsCharacterID = useGameStore(
     (state) => state.clientPlayer.controlledCharacterID,
   );
+  const clientPlayer = useGameStore((state) => state.clientPlayer);
+  const gameMastersView = clientPlayer.isGameMaster;
 
   const [visibleDetails, setVisibleDetails] = useState<Record<string, boolean>>(
     {},
@@ -144,16 +146,19 @@ export default function CharacterTable({
                   >
                     {visibleDetails[character.id] ? "▲" : "▼"}
                   </button>
-                  <button
-                    className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
-                    onClick={() => startSpecialAction(character.id)}
-                  >
-                    <img
-                      src={specialActionsIcon}
-                      alt="Special Actions"
-                      className="h-6 w-6"
-                    />
-                  </button>
+
+                  {gameMastersView && (
+                    <button
+                      className="border-witcher-yellow bg-witcher-yellow text-secondary hover:bg-witcher-orange flex w-12 cursor-pointer items-center justify-center border-4 border-double font-bold transition-colors"
+                      onClick={() => startSpecialAction(character.id)}
+                    >
+                      <img
+                        src={specialActionsIcon}
+                        alt="Special Actions"
+                        className="h-6 w-6"
+                      />
+                    </button>
+                  )}
                 </div>
               </div>
               {visibleDetails[character.id] && (

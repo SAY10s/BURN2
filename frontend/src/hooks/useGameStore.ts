@@ -19,6 +19,11 @@ interface GameStore {
     isGameMaster: boolean;
     socketID: string;
   }) => void;
+  updateCharacterStat: (
+    characterID: string,
+    stat: "currentHP" | "currentStamina" | "currentStunScore",
+    delta: number,
+  ) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -32,4 +37,15 @@ export const useGameStore = create<GameStore>((set) => ({
     socketID: "",
   },
   setClientPlayer: (player) => set({ clientPlayer: player }),
+  updateCharacterStat: (characterID, stat, delta) =>
+    set((state) => ({
+      gameState: {
+        ...state.gameState,
+        characters: state.gameState.characters.map((char) =>
+          char.id === characterID
+            ? { ...char, [stat]: (char[stat] as number) + delta }
+            : char,
+        ),
+      },
+    })),
 }));

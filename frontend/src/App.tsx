@@ -18,6 +18,7 @@ import SpecialGameMastersActionsModal from "./components/Modals/SpecialGameMaste
 // types
 import type { AttackData } from "./shared/types/attackData";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
+import { getCharacterByCharactersId } from "./shared/helpers/characterGetters";
 
 export default function App() {
   const [showDefenceModal, setShowDefenceModal] = useState(false);
@@ -106,6 +107,16 @@ export default function App() {
           <SpecialGameMastersActionsModal
             onClose={() => setShowSpecialGMsActionsModal(false)}
             targetCharacterID={specialActionTargetCharacterID}
+            onConfirm={() => {
+              setShowSpecialGMsActionsModal(false);
+              socket.emit(
+                "specialAction",
+                getCharacterByCharactersId(
+                  specialActionTargetCharacterID,
+                  gameState.characters,
+                ),
+              );
+            }}
           />
         )}
       </div>

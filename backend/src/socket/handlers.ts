@@ -9,6 +9,7 @@ import { handleAttackCharacter } from "./attackCharacter/handleAttackCharacter";
 import { handleDeleteAllCharacters } from "./handleDeleteAllCharacters";
 import { GameStateSingleton } from "../singletons/GameStateSingleton";
 import { AttackDataSingleton } from "../singletons/AttackDataSingleton";
+import { handleSpecialAction } from "./handleSpecialAction";
 
 export function registerSocketHandlers(io: Server) {
   io.on("connection", (socket: Socket) => {
@@ -43,6 +44,10 @@ export function registerSocketHandlers(io: Server) {
 
     socket.on("createRandomCharacter", async () => {
       handleCreateRandomCharacter(updateGameState);
+    });
+
+    socket.on("specialAction", async (characterID: string) => {
+      handleSpecialAction(socket, characterID, updateGameState);
     });
 
     socket.on("attackCharacter", async (attackDataProp: AttackData) => {

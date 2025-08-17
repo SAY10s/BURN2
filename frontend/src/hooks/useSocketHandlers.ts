@@ -14,7 +14,7 @@ export function useSocketHandlers(
 ) {
   const setGameState = useGameStore((state) => state.setGameState);
   const setAttackData = useGameStore((state) => state.setAttackData);
-  const setClientPlayer = useGameStore((state) => state.setClientPlayer); // jeśli masz taki setter w store
+  const setClientPlayer = useGameStore((state) => state.setClientPlayer);
 
   useEffect(() => {
     socket.on("updateGameState", (gameState: GameState) => {
