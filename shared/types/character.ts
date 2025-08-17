@@ -214,6 +214,9 @@ export interface Character {
   id: string;
   name: string;
 
+  isAlive: boolean;
+  deathRollAdditionalDC: number;
+
   /**
    * @Formula Math.floor(Body + Will / 2 ) * 5
    * @min 10

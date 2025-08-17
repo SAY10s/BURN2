@@ -112,12 +112,17 @@ export const generateRandomCharacter = (
     isPlayer,
     id: Math.random().toString(36).substring(2, 9),
     name: getRandomName(),
+
     maxHP,
     currentHP: maxHP,
     maxStamina: maxHP,
     currentStamina: maxHP,
     maxStunScore: maxHP * 2,
     currentStunScore: maxHP * 2,
+
+    isAlive: true,
+    deathRollAdditionalDC: 0,
+
     stats,
     skills: {
       reflexSkills: {
