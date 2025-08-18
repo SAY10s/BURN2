@@ -99,7 +99,7 @@ describe("applyAttackResults", () => {
     ];
   });
 
-  it("should not deal ANY damage if type of damage is fire and character is immune to fire", () => {
+  it("should not deal damage if character is immune to the attack's damage type", () => {
     GameStateSingleton.getInstance().characters[0].immunities = [
       TypesOfDamage.FIRE,
     ];
