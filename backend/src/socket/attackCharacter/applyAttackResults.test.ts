@@ -9,12 +9,13 @@ import { MOCK_WEAPON } from "../../shared/consts/mockWeapon";
 import { MOCK_ATTACK_DATA } from "../../shared/consts/mockAttackData";
 import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
 import { TypesOfDefence } from "../../shared/types/typesOfDefence";
+import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 
 const mockSocket = { id: "actor-socket" } as unknown as Socket;
 let mockAttackData = MOCK_ATTACK_DATA;
 
-const modifyMockAttackData = (newData: Partial<AttackData>) => {
-  mockAttackData = { ...mockAttackData, ...newData };
+const total = (totalValue: number) => {
+  return { total: totalValue } as unknown as DiceRoll;
 };
 
 describe("applyAttackResults", () => {
