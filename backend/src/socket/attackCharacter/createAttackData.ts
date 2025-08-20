@@ -3,12 +3,36 @@ import { getCharacterByCharactersId } from "../../shared/helpers/characterGetter
 import { AttackData } from "../../shared/types/attackData";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 
+/**
+ * Generates a new `AttackData` object based on the provided attack properties.
+ *
+ * This function calculates the offensive stat and skill for the actor character
+ * based on the weapon's associated skill, determines which statuses are applied
+ * based on their chances, and initializes various roll and modifier fields for
+ * the attack process.
+ *
+ * @param attackDataProp - The base attack data containing information about the actor,
+ *   weapon, and initial attack parameters. SEE REMARKS.
+ *
+ * @remarks
+ * The `attackDataProp` received from the client contains only the following fields:
+ * - `targetCharacterID`: ID of the target character (string)
+ * - `weapon`: selected weapon object (Weapon)
+ * - `typeOfAttack`: selected type of attack (TypesOfAttack)
+ * - `typeOfDamage`: selected type of damage (TypesOfDamage)
+ * - Additionally this param HAS TO ALREADY INCLUDE `actorCharacterID` (string) that is derived from the socket.
+ * @returns A new `AttackData` object with calculated offensive/defensive stats,
+ *   rolls, modifiers, and applied statuses. SEE REMARKS.
+ * @remarks
+ * The returned `AttackData` object doesn't include the defensive stats.
+ */
 export function createAttackData(attackDataProp: AttackData): AttackData {
   const actorCharacter = getCharacterByCharactersId(
     attackDataProp.actorCharacterID,
     GameStateSingleton.getInstance().characters
   );
 
+  console.log(attackDataProp.actorCharacterID);
   let offensiveStat = 0;
   let offensiveSkill = 0;
 
