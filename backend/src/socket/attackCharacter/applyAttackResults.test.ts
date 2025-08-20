@@ -13,11 +13,17 @@ import { TypesOfDefence } from "../../shared/types/typesOfDefence";
 const mockSocket = { id: "actor-socket" } as unknown as Socket;
 let mockAttackData = MOCK_ATTACK_DATA;
 
+const modifyMockAttackData = (newData: Partial<AttackData>) => {
+  mockAttackData = { ...mockAttackData, ...newData };
+};
+
 describe("applyAttackResults", () => {
   beforeEach(() => {
     GameStateSingleton.reset();
     /**
      * By default every character has 30 HP, has no armor, no immunities etc., 6 in every Stat, 3 in every Skill
+     * MOCK_CHARACTERS[0] is an actor
+     * MOCK_CHARACTERS[1] is a target
      */
     GameStateSingleton.getInstance().characters = MOCK_CHARACTERS;
     GameStateSingleton.getInstance().players = [
