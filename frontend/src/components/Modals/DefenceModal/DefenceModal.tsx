@@ -27,7 +27,7 @@ export default function DefenceModal({
         </h2>
         <p className="text-secondary mb-6 text-center text-lg">
           <span className="text-primary font-bold">{actorCharacter.name}</span>{" "}
-          atakuje Cię przy użyciu {attackData.weapon.name}.
+          atakuje Cię przy użyciu {attackData.actorWeapon.name}.
         </p>
         <div className="flex justify-center gap-4">
           {Object.values(TypesOfDefence).map((value) => (

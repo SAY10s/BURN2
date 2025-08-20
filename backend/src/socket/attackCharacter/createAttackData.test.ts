@@ -1,8 +1,8 @@
 import { createAttackData } from "./createAttackData";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 import { TypesOfDamage } from "../../shared/types/typesOfDamage";
-import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { MOCK_CHARACTERS } from "../../shared/consts/mockCharacters";
+import { MOCK_WEAPON } from "../../shared/consts/mockWeapon";
 
 beforeEach(() => {
   GameStateSingleton.reset();
@@ -13,20 +13,9 @@ describe("createAttackData", () => {
     const attackDataProp = {
       actorCharacterID: "actor",
       targetCharacterID: "target",
-      weapon: {
-        improvedArmorPiercing: false,
-        armorShreding: false,
-        armorPiercing: false,
-        damage: "1d10",
-        id: "w1",
-        name: "Test Sword",
-        weaponAccuracy: 3,
-        typesOfDamage: [TypesOfDamage.FIRE],
-        statusChances: { BURN: 100, BLEEDING: 0, POISON: 0, CHOKE: 0, STUN: 0 },
-        associatedSkill: "swordsmanship",
-      },
+      actorWeapon: MOCK_WEAPON,
       typeOfAttack: "REGULAR_STRIKE",
-      typeOfDamage: TypesOfDamage.FIRE,
+      typeOfDamage: TypesOfDamage.SLASHING,
     } as any;
 
     const attackData = createAttackData(attackDataProp);
@@ -35,7 +24,7 @@ describe("createAttackData", () => {
       MOCK_CHARACTERS[0].skills.reflexSkills.swordsmanship
     );
     expect(attackData.offensiveStat).toBe(MOCK_CHARACTERS[0].stats.reflex);
-    expect(attackData.weapon.name).toBe("Test Sword");
+    expect(attackData.actorWeapon.name).toBe("Test Sword");
     expect(attackData.damageRoll.total).toBeGreaterThan(0);
     expect(attackData.damageRoll.total).toBeLessThanOrEqual(10);
   });
@@ -43,20 +32,13 @@ describe("createAttackData", () => {
     const attackDataProp = {
       actorCharacterID: "actor",
       targetCharacterID: "target",
-      weapon: {
-        improvedArmorPiercing: false,
-        armorShreding: false,
-        armorPiercing: false,
-        damage: "1d10",
-        id: "w3",
-        name: "Test Halabard",
-        weaponAccuracy: 5,
-        typesOfDamage: [TypesOfDamage.FIRE],
-        statusChances: { BURN: 100, BLEEDING: 0, POISON: 0, CHOKE: 0, STUN: 0 },
+      actorWeapon: {
+        ...MOCK_WEAPON,
         associatedSkill: "staffSpear",
+        name: "Test Halabard",
       },
       typeOfAttack: "REGULAR_STRIKE",
-      typeOfDamage: TypesOfDamage.FIRE,
+      typeOfDamage: TypesOfDamage.SLASHING,
     } as any;
 
     const attackData = createAttackData(attackDataProp);
@@ -65,9 +47,25 @@ describe("createAttackData", () => {
       MOCK_CHARACTERS[0].skills.reflexSkills.staffSpear
     );
     expect(attackData.offensiveStat).toBe(MOCK_CHARACTERS[0].stats.reflex);
-    expect(attackData.weapon.associatedSkill).toBe("staffSpear");
-    expect(attackData.weapon.name).toBe("Test Halabard");
+    expect(attackData.actorWeapon.associatedSkill).toBe("staffSpear");
+    expect(attackData.actorWeapon.name).toBe("Test Halabard");
     expect(attackData.damageRoll.total).toBeGreaterThan(0);
     expect(attackData.damageRoll.total).toBeLessThanOrEqual(10);
+  });
+  it("should apply burning status when there's 100% burning chance", () => {
+    const attackDataProp = {
+      actorCharacterID: "actor",
+      targetCharacterID: "target",
+      actorWeapon: {
+        ...MOCK_WEAPON,
+        statusChances: { BURN: 100, BLEEDING: 0, POISON: 0, CHOKE: 0, STUN: 0 },
+      },
+      typeOfAttack: "REGULAR_STRIKE",
+      typeOfDamage: TypesOfDamage.SLASHING,
+    } as any;
+
+    const attackData = createAttackData(attackDataProp);
+
+    expect(attackData.appliedStatuses).toContain("BURN");
   });
 });

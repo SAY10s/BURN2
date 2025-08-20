@@ -1,5 +1,4 @@
 import { AttackData } from "../../shared/types/attackData";
-import { GameState } from "../../shared/types/gameState";
 import { createAttackData } from "./createAttackData";
 import { resolveDefence } from "./resolveDefence";
 import { checkHit } from "./checkHit";

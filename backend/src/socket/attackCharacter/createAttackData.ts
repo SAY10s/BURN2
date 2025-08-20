@@ -36,7 +36,7 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
   let offensiveStat = 0;
   let offensiveSkill = 0;
 
-  const skillKey = attackDataProp.weapon.associatedSkill;
+  const skillKey = attackDataProp.actorWeapon.associatedSkill;
 
   if (skillKey in actorCharacter.skills.reflexSkills) {
     offensiveSkill =
@@ -58,7 +58,9 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
     offensiveStat = actorCharacter.stats.will;
   }
 
-  const appliedStatuses = Object.entries(attackDataProp.weapon.statusChances)
+  const appliedStatuses = Object.entries(
+    attackDataProp.actorWeapon.statusChances
+  )
     .filter(([status, chance]) => {
       if (typeof chance !== "number" || chance <= 0) return false;
       return Math.random() * 100 < chance;
@@ -72,14 +74,14 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
     offensiveStat,
     offensiveSkill,
     offensiveRoll: new DiceRoll("1d10!"),
-    offensiveModifier: attackDataProp.weapon.weaponAccuracy,
+    offensiveModifier: attackDataProp.actorWeapon.weaponAccuracy,
 
     defensiveStat: 0,
     defensiveSkill: 0,
     defensiveRoll: new DiceRoll("1d10!"),
     defensiveModifier: 0,
 
-    damageRoll: new DiceRoll(attackDataProp.weapon.damage),
+    damageRoll: new DiceRoll(attackDataProp.actorWeapon.damage),
     locationRoll: new DiceRoll("1d10"),
     appliedStatuses: appliedStatuses,
 
