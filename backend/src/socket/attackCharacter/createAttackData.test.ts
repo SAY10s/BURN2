@@ -6,9 +6,28 @@ import { MOCK_WEAPON } from "../../shared/consts/mockWeapon";
 
 beforeEach(() => {
   GameStateSingleton.reset();
-  GameStateSingleton.getInstance().characters = MOCK_CHARACTERS;
+  GameStateSingleton.getInstance().characters = JSON.parse(
+    JSON.stringify(MOCK_CHARACTERS)
+  );
 });
 describe("createAttackData", () => {
+  it("should use affected by deep wound status values (if hp<50 divide reflex, will, dexterity and inteligence by 2) swordsmanship skill for offensiveSkill and reflex for offensiveStat", () => {
+    const attackDataProp = {
+      actorCharacterID: "actor",
+      targetCharacterID: "target",
+      actorWeapon: MOCK_WEAPON,
+      typeOfAttack: "REGULAR_STRIKE",
+      typeOfDamage: TypesOfDamage.SLASHING,
+    } as any;
+
+    const attackData = createAttackData(attackDataProp);
+
+    expect(attackData.offensiveSkill).toBe(1);
+    expect(attackData.offensiveStat).toBe(3);
+    expect(attackData.actorWeapon.name).toBe("Test Sword");
+    expect(attackData.damageRoll.total).toBeGreaterThan(0);
+    expect(attackData.damageRoll.total).toBeLessThanOrEqual(10);
+  });
   it("should use swordsmanship skill for offensiveSkill and reflex for offensiveStat", () => {
     const attackDataProp = {
       actorCharacterID: "actor",
@@ -20,10 +39,8 @@ describe("createAttackData", () => {
 
     const attackData = createAttackData(attackDataProp);
 
-    expect(attackData.offensiveSkill).toBe(
-      MOCK_CHARACTERS[0].skills.reflexSkills.swordsmanship
-    );
-    expect(attackData.offensiveStat).toBe(MOCK_CHARACTERS[0].stats.reflex);
+    expect(attackData.offensiveSkill).toBe(3);
+    expect(attackData.offensiveStat).toBe(6);
     expect(attackData.actorWeapon.name).toBe("Test Sword");
     expect(attackData.damageRoll.total).toBeGreaterThan(0);
     expect(attackData.damageRoll.total).toBeLessThanOrEqual(10);
