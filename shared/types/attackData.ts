@@ -9,7 +9,8 @@ export interface AttackData {
   actorCharacterID: string;
   targetCharacterID: string;
 
-  weapon: Weapon;
+  actorWeapon: Weapon;
+  targetWeapon: Weapon;
 
   offensiveStat: number;
   offensiveSkill: number;

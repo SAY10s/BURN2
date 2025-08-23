@@ -162,7 +162,7 @@ export default function GameMastersApprovalModal({
           <div className="border-witcher-yellow col-span-2 mt-4 grid grid-cols-2 gap-x-6 gap-y-4 border-t pt-4">
             <div>
               <label className="text-primary mb-1 block font-bold">
-                Obrażenia ({attackData.weapon.damage})
+                Obrażenia ({attackData.actorWeapon.damage})
               </label>
               <input
                 type="number"
@@ -171,7 +171,7 @@ export default function GameMastersApprovalModal({
                   handleRollChange(
                     "damageRoll",
                     Number(e.target.value),
-                    attackData.weapon.damage,
+                    attackData.actorWeapon.damage,
                   )
                 }
                 className="border-witcher-yellow text-primary w-24 rounded-md border-4 border-double bg-neutral-950 px-2 py-1 font-semibold focus:outline-none"

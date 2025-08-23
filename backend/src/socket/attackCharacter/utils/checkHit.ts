@@ -1,4 +1,4 @@
-import { AttackData } from "../../shared/types/attackData";
+import { AttackData } from "../../../shared/types/attackData";
 
 export function checkHit(attackData: AttackData): boolean {
   const attackTotal =

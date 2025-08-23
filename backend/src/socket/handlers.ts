@@ -1,5 +1,4 @@
 import { Server, Socket } from "socket.io";
-import { GameState } from "../shared/types/gameState";
 import { AttackData } from "../shared/types/attackData";
 import { handleChooseCharacter } from "./handleChooseCharacter";
 import { handleChangeGameMaster } from "./handleChangeGameMaster";
@@ -50,6 +49,21 @@ export function registerSocketHandlers(io: Server) {
       handleEditCharacter(socket, characterID, updateGameState);
     });
 
+    /**
+     * Handles the "attackCharacter" event.
+     *
+     * @param attackDataProp - The partial AttackData object sent from the client.
+     *
+     * @remarks
+     * The `attackDataProp` received from the client contains only the following fields:
+     * - `targetCharacterID`: ID of the target character (string)
+     * - `weapon`: selected weapon object (Weapon)
+     * - `typeOfAttack`: selected type of attack (TypesOfAttack)
+     * - `typeOfDamage`: selected type of damage (TypesOfDamage)
+     *
+     * The remaining fields of `AttackData` (such as dice rolls, stats, modifiers, statuses, etc.)
+     * are populated on the backend (e.g., by `createAttackData`, `resolveDefence`).
+     */
     socket.on("attackCharacter", async (attackDataProp: AttackData) => {
       handleAttackCharacter(
         socket,

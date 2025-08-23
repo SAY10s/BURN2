@@ -25,7 +25,7 @@ export default function AttackModal({
     actorCharacterID,
     characters,
   );
-  console.table(attackData.weapon.typesOfDamage);
+  console.table(attackData.actorWeapon.typesOfDamage);
   return (
     <div className="bg-opacity-40 k fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
       <div className="border-border bg-smoke w-full max-w-xl rounded-lg border-4 border-double p-8 shadow-lg">
@@ -38,7 +38,7 @@ export default function AttackModal({
             Wybierz Broń
           </label>
           <select
-            value={attackData.weapon.id}
+            value={attackData.actorWeapon.id}
             onChange={(e) => {
               const selectedWeapon = actorCharacter.weapons.find(
                 (weapon) => weapon.id === e.target.value,
@@ -101,7 +101,7 @@ export default function AttackModal({
               <option value="" disabled>
                 -- Wybierz typ obrażeń --
               </option>
-              {attackData.weapon.typesOfDamage.map((damageType) => (
+              {attackData.actorWeapon.typesOfDamage.map((damageType) => (
                 <option key={damageType} value={damageType}>
                   {damageType.replace(/_/g, " ")}
                 </option>
@@ -111,14 +111,14 @@ export default function AttackModal({
         </div>
 
         <div className="mt-4">
-          {attackData.weapon.statusChances ? (
+          {attackData.actorWeapon.statusChances ? (
             <div className="flex flex-row justify-center gap-6 p-3">
               <div className="flex flex-col items-center">
                 <span className="text-2xl text-orange-500" title="Podpalenie">
                   🔥
                 </span>
                 <span className="font-bold">
-                  {attackData.weapon.statusChances.BURN}%
+                  {attackData.actorWeapon.statusChances.BURN}%
                 </span>
               </div>
               <div className="flex flex-col items-center">
@@ -126,7 +126,7 @@ export default function AttackModal({
                   🩸
                 </span>
                 <span className="font-bold">
-                  {attackData.weapon.statusChances.BLEEDING}%
+                  {attackData.actorWeapon.statusChances.BLEEDING}%
                 </span>
               </div>
               <div className="flex flex-col items-center">
@@ -134,7 +134,7 @@ export default function AttackModal({
                   🧪
                 </span>
                 <span className="font-bold">
-                  {attackData.weapon.statusChances.POISON}%
+                  {attackData.actorWeapon.statusChances.POISON}%
                 </span>
               </div>
               <div className="flex flex-col items-center">
@@ -142,7 +142,7 @@ export default function AttackModal({
                   🫁
                 </span>
                 <span className="font-bold">
-                  {attackData.weapon.statusChances.CHOKE}%
+                  {attackData.actorWeapon.statusChances.CHOKE}%
                 </span>
               </div>
             </div>

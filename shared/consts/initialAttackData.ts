@@ -9,7 +9,8 @@ export const INITIAL_ATTACK_DATA: AttackData = {
   actorCharacterID: "",
   targetCharacterID: "",
 
-  weapon: WEAPON_1,
+  targetWeapon: WEAPON_1,
+  actorWeapon: WEAPON_1,
 
   offensiveStat: 0,
   offensiveSkill: 0,

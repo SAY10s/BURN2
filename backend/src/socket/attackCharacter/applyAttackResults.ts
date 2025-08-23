@@ -15,7 +15,8 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     damageRoll,
     typeOfAttack,
     locationRoll,
-    weapon,
+    actorWeapon,
+    targetWeapon,
     typeOfDamage,
     offensiveRoll,
     offensiveSkill,
@@ -36,6 +37,13 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
       getActorAndTarget(socket, targetCharacterID);
 
     let damage = damageRoll.total;
+
+    let isTargetImmune = targetCharacter.immunities.includes(typeOfDamage);
+    if (isTargetImmune) {
+      damage = 0;
+      addDebugMessage(`Cel jest odporny na obrażenia.`);
+      return;
+    }
 
     if (
       typeOfAttack !== TypesOfAttack.SPELL &&
@@ -74,7 +82,7 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     const armorPiece = targetCharacter.characterArmor[armorPieceKey];
     const armorSP = armorPiece?.currentSP ?? 0;
 
-    damage = weapon.improvedArmorPiercing
+    damage = actorWeapon.improvedArmorPiercing
       ? damage - Math.floor(armorSP / 2)
       : damage - armorSP;
 
@@ -84,7 +92,7 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     } else {
       addDebugMessage(`Przebito pancerz.`);
       if (armorPiece && armorPiece.currentSP > 0) {
-        if (weapon.armorShreding) {
+        if (actorWeapon.armorShreding) {
           const armorShredingRoll = new DiceRoll("1d6");
           armorPiece.currentSP -= Math.floor(armorShredingRoll.total / 2);
         }
@@ -94,18 +102,12 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
 
     let isDamageReduced =
       armorPiece.reductions.includes(typeOfDamage) &&
-      !weapon.armorPiercing &&
-      !weapon.improvedArmorPiercing;
+      !actorWeapon.armorPiercing &&
+      !actorWeapon.improvedArmorPiercing;
 
     if (isDamageReduced) {
       damage = Math.floor(damage / 2);
       addDebugMessage(`Pancerz zredukował obrażenia.`);
-    }
-
-    let isTargetImmune = targetCharacter.immunities.includes(typeOfDamage);
-    if (isTargetImmune) {
-      damage = 0;
-      addDebugMessage(`Cel jest odporny na obrażenia.`);
     }
 
     let isTargetSusceptible =
