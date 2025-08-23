@@ -25,6 +25,8 @@ export function resolveDefence(
   const currentHPPercentage =
     (targetCharacter.currentHP / targetCharacter.maxHP) * 100;
 
+  attackDataProp.attackStage = "waiting_for_gms_approval";
+
   switch (defenceType) {
     case TypesOfDefence.DODGE:
       addDebugMessage(` ${targetCharacter.name} próbuje uniknąć.`);

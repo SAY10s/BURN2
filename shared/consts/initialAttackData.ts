@@ -6,6 +6,7 @@ import { TypesOfDefence } from "../types/typesOfDefence";
 import { WEAPON_1 } from "./initialWeapons";
 
 export const INITIAL_ATTACK_DATA: AttackData = {
+  attackStage: "none",
   actorCharacterID: "",
   targetCharacterID: "",
 

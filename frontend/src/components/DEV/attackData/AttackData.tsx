@@ -1,6 +1,7 @@
 import type { AttackData } from "../../../shared/types/attackData";
 
 const fieldLabels: Record<keyof AttackData, string> = {
+  attackStage: "Attack Stage",
   actorCharacterID: "Actor Character ID",
   targetCharacterID: "Target Character ID",
   targetWeapon: "Target Weapon",

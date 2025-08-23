@@ -6,6 +6,12 @@ import type { Weapon } from "./weapon";
 import { TypesOfStatus } from "./typesOfStatus";
 
 export interface AttackData {
+  attackStage:
+    | "none"
+    | "waiting_for_defence"
+    | "waiting_for_gms_approval"
+    | "executed_attack";
+
   actorCharacterID: string;
   targetCharacterID: string;
 

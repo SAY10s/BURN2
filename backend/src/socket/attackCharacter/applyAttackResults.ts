@@ -7,6 +7,7 @@ import { getActorAndTarget } from "./utils/getActorAndTarget";
 import { Socket } from "socket.io";
 import { AttackData } from "../../shared/types/attackData";
 import { addDebugMessage } from "../utils/addDebugMessage";
+import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
 
 export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
   const {

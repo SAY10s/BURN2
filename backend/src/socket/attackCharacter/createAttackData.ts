@@ -87,6 +87,7 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
 
   return {
     ...attackDataProp,
+    attackStage: "waiting_for_defence",
     offensiveStat,
     offensiveSkill,
     offensiveRoll: new DiceRoll("1d10!"),

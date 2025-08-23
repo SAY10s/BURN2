@@ -5,6 +5,7 @@ import { TypesOfDefence } from "../types/typesOfDefence";
 import { MOCK_WEAPON } from "./mockWeapon";
 
 export const MOCK_ATTACK_DATA: AttackData = {
+  attackStage: "none",
   actorCharacterID: "actor",
   targetCharacterID: "target",
 

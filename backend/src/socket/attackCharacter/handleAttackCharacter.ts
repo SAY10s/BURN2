@@ -90,6 +90,8 @@ export async function handleAttackCharacter(
     gameMasterSocket.once("executeAttack", (finalAttackData: AttackData) => {
       applyAttackResults(socket, finalAttackData);
       Object.assign(AttackDataSingleton.getInstance(), finalAttackData);
+      AttackDataSingleton.getInstance().attackStage = "executed_attack";
+
       updateGameState();
       updateAttackData();
     });
