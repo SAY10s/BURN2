@@ -46,7 +46,7 @@ export default function AttackModal({
               if (selectedWeapon) {
                 setAttackData({
                   ...attackData,
-                  weapon: selectedWeapon,
+                  actorWeapon: selectedWeapon,
                 });
               }
             }}
