@@ -3,15 +3,16 @@ import { GameStateSingleton } from "../../singletons/GameStateSingleton";
 import { TypesOfDamage } from "../../shared/types/typesOfDamage";
 import { MOCK_CHARACTERS } from "../../shared/consts/mockCharacters";
 import { MOCK_WEAPON } from "../../shared/consts/mockWeapon";
+import { deepCopy } from "../utils/deepCopy";
 
 beforeEach(() => {
   GameStateSingleton.reset();
-  GameStateSingleton.getInstance().characters = JSON.parse(
-    JSON.stringify(MOCK_CHARACTERS)
-  );
+  GameStateSingleton.getInstance().characters = deepCopy(MOCK_CHARACTERS);
 });
 describe("createAttackData", () => {
   it("should use affected by deep wound status values (if hp<50 divide reflex, will, dexterity and inteligence by 2) swordsmanship skill for offensiveSkill and reflex for offensiveStat", () => {
+    GameStateSingleton.getInstance().characters[0].maxHP = 10;
+    GameStateSingleton.getInstance().characters[0].currentHP = 3;
     const attackDataProp = {
       actorCharacterID: "actor",
       targetCharacterID: "target",
@@ -22,7 +23,7 @@ describe("createAttackData", () => {
 
     const attackData = createAttackData(attackDataProp);
 
-    expect(attackData.offensiveSkill).toBe(1);
+    expect(attackData.offensiveSkill).toBe(3);
     expect(attackData.offensiveStat).toBe(3);
     expect(attackData.actorWeapon.name).toBe("Test Sword");
     expect(attackData.damageRoll.total).toBeGreaterThan(0);

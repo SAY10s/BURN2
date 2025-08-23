@@ -2,6 +2,7 @@ import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { getCharacterByCharactersId } from "../../shared/helpers/characterGetters";
 import { AttackData } from "../../shared/types/attackData";
 import { GameStateSingleton } from "../../singletons/GameStateSingleton";
+import { getStatValue } from "./utils/getStatValue";
 
 /**
  * Generates a new `AttackData` object based on the provided attack properties.
@@ -32,6 +33,9 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
     GameStateSingleton.getInstance().characters
   );
 
+  const currentHPPercentage =
+    (actorCharacter.currentHP / actorCharacter.maxHP) * 100;
+
   console.log(attackDataProp.actorCharacterID);
   let offensiveStat = 0;
   let offensiveSkill = 0;
@@ -43,19 +47,31 @@ export function createAttackData(attackDataProp: AttackData): AttackData {
       actorCharacter.skills.reflexSkills[
         skillKey as keyof typeof actorCharacter.skills.reflexSkills
       ];
-    offensiveStat = actorCharacter.stats.reflex;
+    offensiveStat = getStatValue(
+      actorCharacter.stats.reflex,
+      currentHPPercentage,
+      "reflex"
+    );
   } else if (skillKey in actorCharacter.skills.dexteritySkills) {
     offensiveSkill =
       actorCharacter.skills.dexteritySkills[
         skillKey as keyof typeof actorCharacter.skills.dexteritySkills
       ];
-    offensiveStat = actorCharacter.stats.dexterity;
+    offensiveStat = getStatValue(
+      actorCharacter.stats.dexterity,
+      currentHPPercentage,
+      "dexterity"
+    );
   } else if (skillKey in actorCharacter.skills.willSkills) {
     offensiveSkill =
       actorCharacter.skills.willSkills[
         skillKey as keyof typeof actorCharacter.skills.willSkills
       ];
-    offensiveStat = actorCharacter.stats.will;
+    offensiveStat = getStatValue(
+      actorCharacter.stats.will,
+      currentHPPercentage,
+      "will"
+    );
   }
 
   const appliedStatuses = Object.entries(

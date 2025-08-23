@@ -38,6 +38,13 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
 
     let damage = damageRoll.total;
 
+    let isTargetImmune = targetCharacter.immunities.includes(typeOfDamage);
+    if (isTargetImmune) {
+      damage = 0;
+      addDebugMessage(`Cel jest odporny na obrażenia.`);
+      return;
+    }
+
     if (
       typeOfAttack !== TypesOfAttack.SPELL &&
       typeOfAttack !== TypesOfAttack.REGULAR_STRIKE
@@ -101,12 +108,6 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     if (isDamageReduced) {
       damage = Math.floor(damage / 2);
       addDebugMessage(`Pancerz zredukował obrażenia.`);
-    }
-
-    let isTargetImmune = targetCharacter.immunities.includes(typeOfDamage);
-    if (isTargetImmune) {
-      damage = 0;
-      addDebugMessage(`Cel jest odporny na obrażenia.`);
     }
 
     let isTargetSusceptible =

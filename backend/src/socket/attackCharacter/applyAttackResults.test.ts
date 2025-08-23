@@ -10,6 +10,7 @@ import { MOCK_ATTACK_DATA } from "../../shared/consts/mockAttackData";
 import { TypesOfAttack } from "../../shared/types/TypesOfAttack";
 import { TypesOfDefence } from "../../shared/types/typesOfDefence";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
+import { deepCopy } from "../utils/deepCopy";
 
 const mockSocket = { id: "actor-socket" } as unknown as Socket;
 let mockAttackData = MOCK_ATTACK_DATA;
@@ -26,9 +27,7 @@ describe("applyAttackResults", () => {
      * MOCK_CHARACTERS[0] is an actor
      * MOCK_CHARACTERS[1] is a target
      */
-    GameStateSingleton.getInstance().characters = JSON.parse(
-      JSON.stringify(MOCK_CHARACTERS)
-    );
+    GameStateSingleton.getInstance().characters = deepCopy(MOCK_CHARACTERS);
     GameStateSingleton.getInstance().players = [
       {
         socketID: "actor-socket",
@@ -252,9 +251,10 @@ describe("applyAttackResults", () => {
   });
 
   it("should not deal damage if character is immune to the attack's damage type", () => {
-    GameStateSingleton.getInstance().characters[0].immunities = [
+    GameStateSingleton.getInstance().characters[1].immunities = [
       TypesOfDamage.FIRE,
     ];
+    mockAttackData.typeOfDamage = TypesOfDamage.FIRE;
 
     applyAttackResults(mockSocket, mockAttackData);
 
