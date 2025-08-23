@@ -3,7 +3,8 @@ import type { AttackData } from "../../../shared/types/attackData";
 const fieldLabels: Record<keyof AttackData, string> = {
   actorCharacterID: "Actor Character ID",
   targetCharacterID: "Target Character ID",
-  weapon: "Weapon",
+  targetWeapon: "Target Weapon",
+  actorWeapon: "Actor Weapon",
   offensiveStat: "Offensive Stat",
   offensiveSkill: "Offensive Skill",
   offensiveRoll: "Offensive Roll",
@@ -42,7 +43,7 @@ function renderValue(
     | TypesOfStatus[]
     | undefined,
 ) {
-  if (key === "weapon" && value) {
+  if ((key === "targetWeapon" || key === "actorWeapon") && value) {
     // Show weapon name or id if available
     return (
       (value as Weapon).name || (value as Weapon).id || JSON.stringify(value)
