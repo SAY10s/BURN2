@@ -1,7 +1,7 @@
 import { AttackData } from "../../shared/types/attackData";
 import { createAttackData } from "./createAttackData";
 import { resolveDefence } from "./resolveDefence";
-import { checkHit } from "./checkHit";
+import { checkHit } from "./utils/checkHit";
 import { applyAttackResults } from "./applyAttackResults";
 import { Socket, Server } from "socket.io";
 import { getActorAndTarget } from "./utils/getActorAndTarget";
