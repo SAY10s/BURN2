@@ -4,6 +4,13 @@
 
 ## Setup
 
+> [!TIP]
+> After initial setup, you can use the following command in the main project directory to automatically run the backend, frontend, and watch shared files:
+>
+> ```bash
+> npm run dev
+> ```
+
 ### Shared files between front and back
 
 This project uses `copyfiles` to sync types, functions and constants between frontend and backend.

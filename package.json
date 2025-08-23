@@ -4,11 +4,13 @@
     "copyfiles": "^2.4.1"
   },
   "scripts": {
+    "dev": "concurrently \"npm start --prefix backend\" \"npm run dev --prefix frontend\" \"nodemon --watch shared --ext js,ts,json --exec \\\"npm run sync-types\\\"\"",
     "sync-types": "copyfiles -u 2 shared/types/*.* backend/src/shared/types && copyfiles -u 2 shared/types/*.* frontend/src/shared/types && copyfiles -u 2 shared/consts/*.* backend/src/shared/consts && copyfiles -u 2 shared/consts/*.* frontend/src/shared/consts && copyfiles -u 2 shared/helpers/*.* backend/src/shared/helpers && copyfiles -u 2 shared/helpers/*.* frontend/src/shared/helpers",
-    "dev": "concurrently \"npm start --prefix backend\" \"npm run dev --prefix frontend\""
+    "sync-types:watch": "nodemon --watch shared --ext js,ts,json --exec \"npm run sync-types\""
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14"
   }
