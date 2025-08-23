@@ -7,7 +7,7 @@ import { Socket, Server } from "socket.io";
 import { getActorAndTarget } from "./utils/getActorAndTarget";
 import { getSocketFromIObySocketID } from "../utils/getSocketFromIObySocketID";
 import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
-import { addDebugMessage } from "../utils/addDebugMessage";
+import { addDebugMessage, resetDebugMessages } from "../utils/addDebugMessage";
 
 /**
  * Handles the attack action initiated by a character against another character in the game.
@@ -49,7 +49,7 @@ export async function handleAttackCharacter(
     AttackDataSingleton.getInstance(),
     createAttackData(attackDataProp)
   );
-
+  resetDebugMessages();
   addDebugMessage(
     ` ${actorCharacter.name} zaatakował ${targetCharacter.name}.`
   );
