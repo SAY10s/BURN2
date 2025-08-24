@@ -17,11 +17,11 @@ This project uses `copyfiles` to sync types, functions and constants between fro
 
 ```bash
 npm i
-npm run sync-files
+npm run sync-types
 ```
 
-Command `npm run sync-files` copies all files from `shared/*` to `backend/src/shared/*` and to `frontend/src/shared/*`.  
-`npm run sync-files` must be run each time files in `shared` are changed.
+Command `npm run sync-types` copies all files from `shared/*` to `backend/src/shared/*` and to `frontend/src/shared/*`.  
+`npm run sync-types` must be run each time files in `shared` are changed.
 
 ### Backend and DB
 
