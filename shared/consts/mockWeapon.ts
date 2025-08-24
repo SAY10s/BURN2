@@ -1,4 +1,4 @@
-import { Weapon } from "../types/weapon";
+import type { Weapon } from "../types/weapon";
 
 export const MOCK_WEAPON: Weapon = {
   id: "w1",

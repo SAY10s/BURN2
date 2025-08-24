@@ -1,5 +1,5 @@
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
-import { AttackData } from "../types/attackData";
+import type { AttackData } from "../types/attackData";
 import { TypesOfAttack } from "../types/TypesOfAttack";
 import { TypesOfDamage } from "../types/typesOfDamage";
 import { TypesOfDefence } from "../types/typesOfDefence";

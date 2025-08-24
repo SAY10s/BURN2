@@ -1,4 +1,4 @@
-import type { Skills } from "../../frontend/src/shared/types/character";
+import type { Skills } from "./character";
 import type { TypesOfDamage } from "./typesOfDamage";
 import type { TypesOfStatus } from "./typesOfStatus";
 

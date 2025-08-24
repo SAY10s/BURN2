@@ -1,6 +1,6 @@
 import { TypesOfDamage } from "../types/typesOfDamage";
 import { TypesOfStatus } from "../types/typesOfStatus";
-import { Weapon } from "../types/weapon";
+import type { Weapon } from "../types/weapon";
 
 export const WEAPON_1: Weapon = {
   id: Math.random().toString(36).substring(2, 9),

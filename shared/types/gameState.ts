@@ -1,5 +1,5 @@
-import { Character } from "./character";
-import { Player } from "./player";
+import type { Character } from "./character";
+import type { Player } from "./player";
 export interface GameState {
   /**
    * Array of connected players.

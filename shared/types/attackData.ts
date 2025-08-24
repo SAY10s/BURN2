@@ -1,8 +1,8 @@
+import type { Weapon } from "./weapon";
 import { DiceRoll } from "@dice-roller/rpg-dice-roller";
 import { TypesOfAttack } from "./TypesOfAttack";
 import { TypesOfDamage } from "./typesOfDamage";
 import { TypesOfDefence } from "./typesOfDefence";
-import type { Weapon } from "./weapon";
 import { TypesOfStatus } from "./typesOfStatus";
 
 export interface AttackData {

@@ -1,7 +1,5 @@
-import { generateRandomCharacter } from "../helpers/generateRandomCharacter";
-//@ts-ignore
-import { Character } from "../types/character";
-import { GameState } from "../types/gameState";
+import type { Character } from "../types/character";
+import type { GameState } from "../types/gameState";
 
 const INITIAL_CHARACTERS: Character[] = [
   // generateRandomCharacter(true),

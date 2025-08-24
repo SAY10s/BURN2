@@ -1,5 +1,5 @@
+import type { ArmorPiece, Character } from "../types/character";
 import { WEAPON_1, WEAPON_2 } from "../consts/initialWeapons";
-import { ArmorPiece, Character } from "../types/character";
 import { TypesOfDamage } from "../types/typesOfDamage";
 
 /**
