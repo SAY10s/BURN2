@@ -6,6 +6,7 @@
     "start": "nodemon src/server.ts",
     "dev": "ts-node src/server.ts",
     "test": "jest",
+    "build": "tsc",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev"
   },

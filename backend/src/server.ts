@@ -18,7 +18,7 @@ async function startServer() {
   GameStateSingleton.getInstance().characters = charactersFromDB;
   registerSocketHandlers(io);
 
-  httpServer.listen(3001, () => {
+  httpServer.listen(3001, "0.0.0.0", () => {
     console.log("✅ Server is running on http://localhost:3001");
   });
 }
