@@ -1,8 +1,9 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useGameStore } from "../../../hooks/useGameStore";
 import { getCharacterByCharactersId } from "../../../shared/helpers/characterGetters";
 import { ValueBar } from "../../CharactersTable/ValueBar";
 import Button from "../../UI/Button";
+import Modal from "../../UI/Modal";
 
 type EditCharacterModalProps = {
   onConfirm: () => void;
@@ -27,17 +28,15 @@ export default function EditCharacterModal({
 
   if (!targetCharacter) {
     return (
-      <div className="bg-opacity-40 k fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
-        <div className="border-border bg-smoke w-full max-w-xl rounded-lg border-4 border-double p-8 shadow-lg">
-          <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
-            Specjalne Akcje Mistrza Gry
-          </h2>
-          Wystąpił błąd podczas ładowania danych postaci.
-          <div className="mt-8 flex justify-end gap-3">
-            <Button onClick={onClose}>Zamknij</Button>
-          </div>
+      <Modal>
+        <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
+          Specjalne Akcje Mistrza Gry
+        </h2>
+        Wystąpił błąd podczas ładowania danych postaci.
+        <div className="mt-8 flex justify-end gap-3">
+          <Button onClick={onClose}>Zamknij</Button>
         </div>
-      </div>
+      </Modal>
     );
   }
 
@@ -49,68 +48,66 @@ export default function EditCharacterModal({
   };
 
   return (
-    <div className="bg-opacity-40 k fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
-      <div className="border-border bg-smoke w-full max-w-xl rounded-lg border-4 border-double p-8 shadow-lg">
-        <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
-          Specjalne Akcje Mistrza Gry
-        </h2>
-        <div className="mt-4 text-center">
-          Wybrana postać: {targetCharacter.name}
-          <div className="flex flex-col items-center justify-center space-y-2">
-            <ValueBarWrapper
-              title={`HP: ${targetCharacter.currentHP}/${targetCharacter.maxHP}`}
-              onMinus={() => handleChange("currentHP", -1)}
-              onPlus={() => handleChange("currentHP", 1)}
-            >
-              <ValueBar
-                current={targetCharacter.currentHP}
-                max={targetCharacter.maxHP}
-                bgColor="bg-bar-health"
-                height="h-3"
-                title="HP"
-              />
-            </ValueBarWrapper>
-            <ValueBarWrapper
-              title={`Stamina: ${targetCharacter.currentStamina}/${targetCharacter.maxStamina}`}
-              onMinus={() => handleChange("currentStamina", -1)}
-              onPlus={() => handleChange("currentStamina", 1)}
-            >
-              <ValueBar
-                current={targetCharacter.currentStamina}
-                max={targetCharacter.maxStamina}
-                bgColor="bg-bar-stamina"
-                height="h-3"
-                title="Stamina"
-              />
-            </ValueBarWrapper>
-            <ValueBarWrapper
-              title={`Przytomność: ${targetCharacter.currentStunScore}/${targetCharacter.maxStunScore}`}
-              onMinus={() => handleChange("currentStunScore", -1)}
-              onPlus={() => handleChange("currentStunScore", 1)}
-            >
-              <ValueBar
-                current={targetCharacter.currentStunScore}
-                max={targetCharacter.maxStunScore}
-                bgColor="bg-bar-stun"
-                height="h-3"
-                title="Przytomność"
-              />
-            </ValueBarWrapper>
-          </div>
-        </div>
-        <div className="mt-8 flex justify-end gap-3">
-          <Button onClick={onClose}>X</Button>
-          <Button
-            onClick={() => {
-              switchIsAlive(targetCharacterID);
-            }}
+    <Modal>
+      <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
+        Specjalne Akcje Mistrza Gry
+      </h2>
+      <div className="mt-4 text-center">
+        Wybrana postać: {targetCharacter.name}
+        <div className="flex flex-col items-center justify-center space-y-2">
+          <ValueBarWrapper
+            title={`HP: ${targetCharacter.currentHP}/${targetCharacter.maxHP}`}
+            onMinus={() => handleChange("currentHP", -1)}
+            onPlus={() => handleChange("currentHP", 1)}
           >
-            {targetCharacter.isAlive ? "Zabij" : "Wskrześ"}
-          </Button>
-          <Button onClick={onConfirm}>Potwierdź</Button>
+            <ValueBar
+              current={targetCharacter.currentHP}
+              max={targetCharacter.maxHP}
+              bgColor="bg-bar-health"
+              height="h-3"
+              title="HP"
+            />
+          </ValueBarWrapper>
+          <ValueBarWrapper
+            title={`Stamina: ${targetCharacter.currentStamina}/${targetCharacter.maxStamina}`}
+            onMinus={() => handleChange("currentStamina", -1)}
+            onPlus={() => handleChange("currentStamina", 1)}
+          >
+            <ValueBar
+              current={targetCharacter.currentStamina}
+              max={targetCharacter.maxStamina}
+              bgColor="bg-bar-stamina"
+              height="h-3"
+              title="Stamina"
+            />
+          </ValueBarWrapper>
+          <ValueBarWrapper
+            title={`Przytomność: ${targetCharacter.currentStunScore}/${targetCharacter.maxStunScore}`}
+            onMinus={() => handleChange("currentStunScore", -1)}
+            onPlus={() => handleChange("currentStunScore", 1)}
+          >
+            <ValueBar
+              current={targetCharacter.currentStunScore}
+              max={targetCharacter.maxStunScore}
+              bgColor="bg-bar-stun"
+              height="h-3"
+              title="Przytomność"
+            />
+          </ValueBarWrapper>
         </div>
       </div>
-    </div>
+      <div className="mt-8 flex justify-end gap-3">
+        <Button onClick={onClose}>X</Button>
+        <Button
+          onClick={() => {
+            switchIsAlive(targetCharacterID);
+          }}
+        >
+          {targetCharacter.isAlive ? "Zabij" : "Wskrześ"}
+        </Button>
+        <Button onClick={onConfirm}>Potwierdź</Button>
+      </div>
+    </Modal>
   );
 }
 
