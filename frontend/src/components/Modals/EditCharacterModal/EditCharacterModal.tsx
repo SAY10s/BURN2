@@ -106,7 +106,14 @@ export default function EditCharacterModal({
         </div>
       </div>
       <div className="mt-8 flex justify-end gap-3">
-        <Button onClick={triggerDeathRoll}>DeathRoll</Button>
+        <Button
+          onClick={() => {
+            onConfirm();
+            triggerDeathRoll();
+          }}
+        >
+          DeathRoll
+        </Button>
         <Button
           onClick={() => {
             switchIsAlive(targetCharacterID);

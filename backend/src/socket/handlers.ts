@@ -9,6 +9,7 @@ import { handleDeleteAllCharacters } from "./handleDeleteAllCharacters";
 import { GameStateSingleton } from "../singletons/GameStateSingleton";
 import { AttackDataSingleton } from "../singletons/AttackDataSingleton";
 import { handleEditCharacter } from "./handleEditCharacter";
+import { handleDeathRoll } from "./handleDeathRoll";
 
 export function registerSocketHandlers(io: Server) {
   io.on("connection", (socket: Socket) => {
@@ -32,6 +33,13 @@ export function registerSocketHandlers(io: Server) {
     socket.on("deleteAllCharacters", () => {
       handleDeleteAllCharacters(updateGameState);
     });
+
+    socket.on(
+      "deathRoll",
+      ({ characterID, didDie }: { characterID: string; didDie: boolean }) => {
+        handleDeathRoll(characterID, didDie, updateGameState);
+      }
+    );
 
     socket.on("chooseCharacter", (characterID: string) => {
       handleChooseCharacter(socket, characterID, updateGameState);
