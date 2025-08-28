@@ -19,6 +19,7 @@ import EditCharacterModal from "./components/Modals/EditCharacterModal/EditChara
 import type { AttackData } from "./shared/types/attackData";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
 import { getCharacterByCharactersId } from "./shared/helpers/characterGetters";
+import DeathRollModal from "./components/Modals/DeathRollModal/DeathRollModal";
 
 export default function App() {
   const [showDefenceModal, setShowDefenceModal] = useState(false);
@@ -26,6 +27,7 @@ export default function App() {
   const [showGMsApprovalModal, setShowGMsApprovalModal] = useState(false);
   const [showSpecialGMsActionsModal, setShowSpecialGMsActionsModal] =
     useState(false);
+  const [showDeathRollModal, setShowDeathRollModal] = useState(false);
 
   const [editCharacterTargetCharacterID, setEditCharacterTargetCharacterID] =
     useState<string>("");
@@ -111,7 +113,6 @@ export default function App() {
         {showSpecialGMsActionsModal && (
           <EditCharacterModal
             onClose={() => setShowSpecialGMsActionsModal(false)}
-            targetCharacterID={editCharacterTargetCharacterID}
             onConfirm={() => {
               setShowSpecialGMsActionsModal(false);
               socket.emit(
@@ -121,6 +122,24 @@ export default function App() {
                   gameState.characters,
                 ),
               );
+            }}
+            triggerDeathRoll={() => {
+              setShowDeathRollModal(true);
+              setShowSpecialGMsActionsModal(false);
+            }}
+            targetCharacterID={editCharacterTargetCharacterID}
+          />
+        )}
+        {showDeathRollModal && (
+          <DeathRollModal
+            deathRollTargetID={editCharacterTargetCharacterID}
+            onClose={() => setShowDeathRollModal(false)}
+            onConfirm={(didDie: boolean) => {
+              socket.emit("deathRoll", {
+                characterID: editCharacterTargetCharacterID,
+                didDie,
+              });
+              setShowDeathRollModal(false);
             }}
           />
         )}

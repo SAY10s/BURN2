@@ -32,13 +32,13 @@ export default function AttackModal({
       <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
         Wykonaj Atak
       </h2>
-      <button
+      <Button
         onClick={() => setShowAttackModal(false)}
         className="text-primary absolute top-4 right-4 h-8 w-8 cursor-pointer font-bold"
         aria-label="Close Modal"
       >
         ✕
-      </button>
+      </Button>
       <div className="mb-4">
         <label className="text-primary mb-1 block font-bold">
           Wybierz Broń

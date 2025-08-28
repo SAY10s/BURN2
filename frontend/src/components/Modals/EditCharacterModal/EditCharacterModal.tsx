@@ -8,6 +8,7 @@ import Modal from "../../UI/Modal";
 type EditCharacterModalProps = {
   onConfirm: () => void;
   onClose: () => void;
+  triggerDeathRoll: () => void;
   targetCharacterID: string;
 };
 
@@ -15,6 +16,7 @@ export default function EditCharacterModal({
   onConfirm,
   onClose,
   targetCharacterID,
+  triggerDeathRoll,
 }: EditCharacterModalProps) {
   const characters = useGameStore((state) => state.gameState.characters);
   const updateCharacterStat = useGameStore(
@@ -49,6 +51,13 @@ export default function EditCharacterModal({
 
   return (
     <Modal>
+      <Button
+        onClick={onClose}
+        className="text-primary absolute top-4 right-4 h-8 w-8 cursor-pointer font-bold"
+        aria-label="Close Modal"
+      >
+        ✕
+      </Button>
       <h2 className="text-primary mb-6 text-center text-2xl font-bold uppercase">
         Specjalne Akcje Mistrza Gry
       </h2>
@@ -97,7 +106,7 @@ export default function EditCharacterModal({
         </div>
       </div>
       <div className="mt-8 flex justify-end gap-3">
-        <Button onClick={onClose}>X</Button>
+        <Button onClick={triggerDeathRoll}>DeathRoll</Button>
         <Button
           onClick={() => {
             switchIsAlive(targetCharacterID);
