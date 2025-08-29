@@ -17,12 +17,28 @@ export function useSocketHandlers(
   const setGameState = useGameStore((state) => state.setGameState);
   const setAttackData = useGameStore((state) => state.setAttackData);
   const setClientPlayer = useGameStore((state) => state.setClientPlayer);
+  const setAnimationData = useGameStore((state) => state.setAnimationData);
 
   useEffect(() => {
-    socket.on("updateGameState", (gameState: GameState) => {
-      setGameState(gameState);
-      setClientPlayer(getPlayerByPlayersSocketId(socket.id, gameState.players));
-    });
+    socket.on(
+      "updateGameState",
+      ({
+        gameState,
+        animationDelay,
+      }: {
+        gameState: GameState;
+        animationDelay: number;
+      }) => {
+        setAnimationData({ isAnimating: true, duration: animationDelay });
+        setTimeout(() => {
+          setGameState(gameState);
+          setClientPlayer(
+            getPlayerByPlayersSocketId(socket.id, gameState.players),
+          );
+          setAnimationData({ isAnimating: false, duration: 0 });
+        }, animationDelay);
+      },
+    );
 
     socket.on("updateAttackData", (attackData: AttackData) => {
       setAttackData(attackData);

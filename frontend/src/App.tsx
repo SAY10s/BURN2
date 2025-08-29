@@ -20,6 +20,7 @@ import type { AttackData } from "./shared/types/attackData";
 import type { TypesOfDefence } from "./shared/types/typesOfDefence";
 import { getCharacterByCharactersId } from "./shared/helpers/characterGetters";
 import DeathRollModal from "./components/Modals/DeathRollModal/DeathRollModal";
+import AttackDataBox from "./components/AttackDataBox/AttackDataBox";
 
 export default function App() {
   const [showDefenceModal, setShowDefenceModal] = useState(false);
@@ -53,14 +54,10 @@ export default function App() {
   return (
     <main className="font-primary flex min-h-screen flex-col items-center bg-[url('/smokebg.png')] bg-cover bg-center py-4 text-white">
       <Header />
-
       <div className="relative grid w-8/10 grid-cols-2 gap-4">
-        {/* <RandomNumber min={1} max={10} duration={3000} /> */}
-
-        <PlayersTable
-          changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
-        />
-        <AttackDataTable />
+        <div className="col-span-2">
+          <AttackDataBox attackData={attackData} />
+        </div>
         <div className="col-span-2">
           <CharacterTable
             chooseCharacter={(id) => socket.emit("chooseCharacter", id)}
@@ -81,6 +78,12 @@ export default function App() {
             }}
           />
         </div>
+        <PlayersTable
+          changeGameMaster={(id) => socket.emit("changeGameMaster", id)}
+        />
+        <AttackDataTable />
+
+        {/* --------- MODALS --------- */}
 
         {showDefenceModal && (
           <DefenceModal

@@ -31,7 +31,7 @@ export async function handleAttackCharacter(
   socket: Socket,
   io: Server,
   attackDataProp: AttackData,
-  updateGameState: () => void,
+  updateGameState: (animationDelay?: number) => void,
   updateAttackData: () => void
 ) {
   const {
@@ -92,7 +92,7 @@ export async function handleAttackCharacter(
       Object.assign(AttackDataSingleton.getInstance(), finalAttackData);
       AttackDataSingleton.getInstance().attackStage = "executed_attack";
 
-      updateGameState();
+      updateGameState(2000);
       updateAttackData();
     });
   });

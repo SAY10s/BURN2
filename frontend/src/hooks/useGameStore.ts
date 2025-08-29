@@ -9,6 +9,7 @@ interface GameStore {
   setGameState: (state: GameState) => void;
   attackData: AttackData;
   setAttackData: (data: AttackData) => void;
+
   clientPlayer: {
     controlledCharacterID: string;
     isGameMaster: boolean;
@@ -19,6 +20,13 @@ interface GameStore {
     isGameMaster: boolean;
     socketID: string;
   }) => void;
+
+  animationData: {
+    isAnimating: boolean;
+    duration: number;
+  };
+  setAnimationData: (data: { isAnimating: boolean; duration: number }) => void;
+
   updateCharacterStat: (
     characterID: string,
     stat: "currentHP" | "currentStamina" | "currentStunScore",
@@ -38,6 +46,11 @@ export const useGameStore = create<GameStore>((set) => ({
     socketID: "",
   },
   setClientPlayer: (player) => set({ clientPlayer: player }),
+  animationData: {
+    isAnimating: false,
+    duration: 1000,
+  },
+  setAnimationData: (data) => set({ animationData: data }),
   updateCharacterStat: (characterID, stat, delta) =>
     set((state) => ({
       gameState: {

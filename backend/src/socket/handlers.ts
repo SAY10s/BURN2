@@ -13,8 +13,11 @@ import { handleDeathRoll } from "./handleDeathRoll";
 
 export function registerSocketHandlers(io: Server) {
   io.on("connection", (socket: Socket) => {
-    const updateGameState = () => {
-      io.emit("updateGameState", GameStateSingleton.getInstance());
+    const updateGameState = (animationDelay = 0) => {
+      io.emit("updateGameState", {
+        gameState: GameStateSingleton.getInstance(),
+        animationDelay,
+      });
     };
     const updateAttackData = () => {
       io.emit("updateAttackData", AttackDataSingleton.getInstance());
