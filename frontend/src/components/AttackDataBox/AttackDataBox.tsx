@@ -8,6 +8,7 @@ import waitingForDefence from "../../assets/AttackDataBox/waiting-for-defence.sv
 import waitingForGMfrom from "../../assets/AttackDataBox/waiting-for-gm.svg";
 import d20 from "../../assets/AttackDataBox/d20.svg";
 import AllCharactersValueBars from "../UI/AllCharactersValueBars";
+import { TYPES_OF_DEFENCE_TRANSLATION } from "../../shared/types/typesOfDefence";
 
 interface AttackDataBoxProps {
   attackData: AttackData;
@@ -131,7 +132,10 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
             "Obrońca"}
         </div>
         <AllCharactersValueBars character={targetCharacter} />
-        <div>{attackData.typeOfDefence}</div>
+        <div>
+          {attackData.attackStage !== "none" &&
+            TYPES_OF_DEFENCE_TRANSLATION[attackData.typeOfDefence]}
+        </div>
         {/* <div className="flex justify-center space-x-2 text-lg">
           {targetCharacter?.status.includes(TypesOfStatus.BLEEDING) && (
             <span className="text-red-500" title="Krwawienie">
