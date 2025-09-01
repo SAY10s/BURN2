@@ -26,7 +26,7 @@
   background-position: center;
 }
 
-.attack-box-wrapper div {
+.attack-box-wrapper > div {
   border-color: var(--color-border) /* #504239 */;
   border-width: 4px;
   border-style: double;

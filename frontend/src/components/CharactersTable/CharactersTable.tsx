@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { Character } from "../../shared/types/character";
-import ValueBar from "./ValueBar";
 import SkillsTable from "./SkillsTable";
 import StatsTable from "./StatsTable";
 import { TypesOfStatus } from "../../shared/types/typesOfStatus";
@@ -10,6 +9,7 @@ import { useGameStore } from "../../hooks/useGameStore";
 import attackIcon from "../../assets/attack-icon.svg";
 import editCharactersIcon from "../../assets/character-special-actions.svg";
 import Button from "../UI/Button";
+import AllCharactersValueBars from "../UI/AllCharactersValueBars";
 
 interface CharacterTableProps {
   chooseCharacter: (characterId: string) => void;
@@ -110,31 +110,7 @@ export default function CharacterTable({
                   </div>
                 </div>
                 {/* Bars */}
-                <div className="flex flex-col items-center justify-center space-y-2">
-                  <ValueBar
-                    current={character.currentHP}
-                    max={character.maxHP}
-                    height="h-3"
-                    isPlayer={character.isPlayer}
-                    title="HP"
-                  />
-                  <div className="grid w-full grid-cols-2 gap-2">
-                    <ValueBar
-                      current={character.currentStamina}
-                      max={character.maxStamina}
-                      bgColor="bg-bar-stamina"
-                      isPlayer={character.isPlayer}
-                      title="Stamina"
-                    />
-                    <ValueBar
-                      current={character.currentStunScore}
-                      max={character.maxStunScore}
-                      bgColor="bg-bar-stun"
-                      title="Przytomność"
-                      isPlayer={character.isPlayer}
-                    />
-                  </div>
-                </div>
+                <AllCharactersValueBars character={character} />
                 {/* Actions */}
                 <div className="flex justify-center gap-2">
                   {character.isAlive && (

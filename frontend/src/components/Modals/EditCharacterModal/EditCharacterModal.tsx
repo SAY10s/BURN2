@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useGameStore } from "../../../hooks/useGameStore";
 import { getCharacterByCharactersId } from "../../../shared/helpers/characterGetters";
-import { ValueBar } from "../../CharactersTable/ValueBar";
+import { ValueBar } from "../../UI/ValueBar";
 import Button from "../../UI/Button";
 import Modal from "../../UI/Modal";
 

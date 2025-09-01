@@ -1,5 +1,5 @@
 import type { ArmorPiece as ArmorPieceType } from "../../../../shared/types/character";
-import ValueBar from "./ValueBar";
+import ValueBar from "../UI/ValueBar";
 import { TYPES_OF_DAMAGE_TRANSLATION } from "../../shared/types/typesOfDamage";
 
 import armLeft from "../../assets/armor/arm-left.svg";
