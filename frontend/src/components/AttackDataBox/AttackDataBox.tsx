@@ -7,8 +7,8 @@ import executedAttack from "../../assets/AttackDataBox/executed-attack.svg";
 import waitingForDefence from "../../assets/AttackDataBox/waiting-for-defence.svg";
 import waitingForGMfrom from "../../assets/AttackDataBox/waiting-for-gm.svg";
 import d20 from "../../assets/AttackDataBox/d20.svg";
-import AllCharactersValueBars from "../UI/AllCharactersValueBars";
 import { TYPES_OF_DEFENCE_TRANSLATION } from "../../shared/types/typesOfDefence";
+import CharacterBox from "./CharacterBox";
 
 interface AttackDataBoxProps {
   attackData: AttackData;
@@ -17,6 +17,8 @@ interface AttackDataBoxProps {
 export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
   const characters = useGameStore((state) => state.gameState.characters);
   const isAnimating = useGameStore((state) => state.animationData.isAnimating);
+
+  let winner = undefined;
 
   let actorCharacter;
   let targetCharacter;
@@ -37,6 +39,13 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
       );
     } catch (error) {
       console.error("Error fetching target character:", error);
+    }
+  }
+  if (attackData.attackStage === "executed_attack") {
+    if (attackData.isTargetHit) {
+      winner = "actor";
+    } else {
+      winner = "target";
     }
   }
 
@@ -102,20 +111,14 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
   return (
     <div className="my-16 grid grid-cols-3">
       {/* ACTOR */}
-      <div className="attack-box-wrapper flex flex-col items-center">
-        <div className="attack-box-inner-div text-center text-3xl font-bold uppercase">
-          {(attackData.attackStage !== "none" &&
-            actorCharacter &&
-            actorCharacter.name) ||
-            "Atakujący"}
-        </div>
-        <AllCharactersValueBars character={actorCharacter} />
-        <div>
-          Rzut:{" "}
-          {attackData.attackStage === "executed_attack" &&
-            (isAnimating ? randomNum : attackData.offensiveRoll.total)}
-        </div>
-      </div>
+      <CharacterBox
+        character={actorCharacter}
+        attackStage={attackData.attackStage}
+        isAnimating={isAnimating}
+        isWinner={winner === "actor"}
+        rollValue={attackData.offensiveRoll.total}
+        randomNum={randomNum}
+      />
 
       {/* ADDITIONAL DATA */}
       <div className="height-full flex flex-col items-center justify-center">
@@ -126,39 +129,19 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
       </div>
 
       {/* TARGET */}
-      <div className="attack-box-wrapper flex flex-col items-center">
-        <div className="text-center text-3xl font-bold uppercase">
-          {(attackData.attackStage !== "none" && targetCharacter?.name) ||
-            "Obrońca"}
-        </div>
-        <AllCharactersValueBars character={targetCharacter} />
+      <CharacterBox
+        character={targetCharacter}
+        attackStage={attackData.attackStage}
+        isAnimating={isAnimating}
+        isWinner={winner === "target"}
+        rollValue={attackData.defensiveRoll.total}
+        randomNum={randomNum}
+      >
         <div>
           {attackData.attackStage !== "none" &&
             TYPES_OF_DEFENCE_TRANSLATION[attackData.typeOfDefence]}
         </div>
-        {/* <div className="flex justify-center space-x-2 text-lg">
-          {targetCharacter?.status.includes(TypesOfStatus.BLEEDING) && (
-            <span className="text-red-500" title="Krwawienie">
-              🩸
-            </span>
-          )}
-          {targetCharacter?.status.includes(TypesOfStatus.BURN) && (
-            <span className="text-orange-500" title="Podpalenie">
-              🔥
-            </span>
-          )}
-          {targetCharacter?.status.includes(TypesOfStatus.POISON) && (
-            <span className="text-green-500" title="Zatrucie">
-              🧪
-            </span>
-          )}
-        </div> */}
-        <div>
-          Rzut:{" "}
-          {attackData.attackStage === "executed_attack" &&
-            (isAnimating ? randomNum : attackData.defensiveRoll.total)}
-        </div>
-      </div>
+      </CharacterBox>
     </div>
   );
 }
