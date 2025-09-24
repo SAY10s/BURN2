@@ -9,6 +9,7 @@ import waitingForGMfrom from "../../assets/AttackDataBox/waiting-for-gm.svg";
 import d20 from "../../assets/AttackDataBox/d20.svg";
 import { TYPES_OF_DEFENCE_TRANSLATION } from "../../shared/types/typesOfDefence";
 import CharacterBox from "./CharacterBox";
+import { TYPES_OF_ATTACK_TRANSLATION } from "../../shared/types/TypesOfAttack";
 
 interface AttackDataBoxProps {
   attackData: AttackData;
@@ -109,39 +110,46 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
   }, [isAnimating]);
 
   return (
-    <div className="my-16 grid grid-cols-3">
-      {/* ACTOR */}
-      <CharacterBox
-        character={actorCharacter}
-        attackStage={attackData.attackStage}
-        isAnimating={isAnimating}
-        isWinner={winner === "actor"}
-        rollValue={attackData.offensiveRoll.total}
-        randomNum={randomNum}
-      />
+    <>
+      <div className="my-16 grid grid-cols-3">
+        {/* ACTOR */}
+        <CharacterBox
+          character={actorCharacter}
+          attackStage={attackData.attackStage}
+          isAnimating={isAnimating}
+          isWinner={winner === "actor"}
+          rollValue={attackData.offensiveRoll.total}
+          randomNum={randomNum}
+        >
+          <div>
+            {attackData.attackStage !== "none" &&
+              TYPES_OF_ATTACK_TRANSLATION[attackData.typeOfAttack]}
+          </div>
+        </CharacterBox>
 
-      {/* ADDITIONAL DATA */}
-      <div className="height-full flex flex-col items-center justify-center">
-        <div className="text-center uppercase">{currentStageTitle} </div>
-        <div className="mt-4 flex items-center justify-center">
-          {currentStageIcon}
+        {/* ADDITIONAL DATA */}
+        <div className="height-full flex flex-col items-center justify-center">
+          <div className="text-center uppercase">{currentStageTitle} </div>
+          <div className="mt-4 flex items-center justify-center">
+            {currentStageIcon}
+          </div>
         </div>
+
+        {/* TARGET */}
+        <CharacterBox
+          character={targetCharacter}
+          attackStage={attackData.attackStage}
+          isAnimating={isAnimating}
+          isWinner={winner === "target"}
+          rollValue={attackData.defensiveRoll.total}
+          randomNum={randomNum}
+        >
+          <div>
+            {attackData.attackStage !== "none" &&
+              TYPES_OF_DEFENCE_TRANSLATION[attackData.typeOfDefence]}
+          </div>
+        </CharacterBox>
       </div>
-
-      {/* TARGET */}
-      <CharacterBox
-        character={targetCharacter}
-        attackStage={attackData.attackStage}
-        isAnimating={isAnimating}
-        isWinner={winner === "target"}
-        rollValue={attackData.defensiveRoll.total}
-        randomNum={randomNum}
-      >
-        <div>
-          {attackData.attackStage !== "none" &&
-            TYPES_OF_DEFENCE_TRANSLATION[attackData.typeOfDefence]}
-        </div>
-      </CharacterBox>
-    </div>
+    </>
   );
 }
