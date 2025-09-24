@@ -20,37 +20,57 @@ export function useSocketHandlers(
   const setAnimationData = useGameStore((state) => state.setAnimationData);
 
   useEffect(() => {
-    socket.on(
-      "updateGameState",
-      ({
-        gameState,
+    const handleUpdateGameState = ({
+      gameState,
+      animationDelay,
+    }: {
+      gameState: GameState;
+      animationDelay: number;
+    }) => {
+      console.log("Received game state update from server", {
         animationDelay,
-      }: {
-        gameState: GameState;
-        animationDelay: number;
-      }) => {
-        setAnimationData({ isAnimating: true, duration: animationDelay });
-        setTimeout(() => {
-          setGameState(gameState);
-          setClientPlayer(
-            getPlayerByPlayersSocketId(socket.id, gameState.players),
-          );
-          setAnimationData({ isAnimating: false, duration: 0 });
-        }, animationDelay);
-      },
-    );
+      });
+      if (animationDelay > 0) {
+        console.log("Playing animation sound");
+        const animationSound = new Audio("/sounds/skillcheck.mp3");
+        animationSound.play();
+      }
+      setAnimationData({ isAnimating: true, duration: animationDelay });
+      setTimeout(() => {
+        setGameState(gameState);
+        setClientPlayer(
+          getPlayerByPlayersSocketId(socket.id, gameState.players),
+        );
+        setAnimationData({ isAnimating: false, duration: 0 });
+      }, animationDelay);
+    };
 
-    socket.on("updateAttackData", (attackData: AttackData) => {
+    const handleUpdateAttackData = (attackData: AttackData) => {
       setAttackData(attackData);
-    });
+    };
 
-    socket.on("requestDefence", () => {
+    const handleRequestDefence = () => {
       setShowDefenceModal(true);
-    });
+    };
 
-    socket.on("requestGameMastersApproval", () => {
+    const handleRequestGameMastersApproval = () => {
       setShowGMsApprovalModal(true);
-    });
+    };
+
+    socket.on("updateGameState", handleUpdateGameState);
+    socket.on("updateAttackData", handleUpdateAttackData);
+    socket.on("requestDefence", handleRequestDefence);
+    socket.on("requestGameMastersApproval", handleRequestGameMastersApproval);
+
+    return () => {
+      socket.off("updateGameState", handleUpdateGameState);
+      socket.off("updateAttackData", handleUpdateAttackData);
+      socket.off("requestDefence", handleRequestDefence);
+      socket.off(
+        "requestGameMastersApproval",
+        handleRequestGameMastersApproval,
+      );
+    };
   }, []);
 }
 
