@@ -79,7 +79,7 @@ const getRandomArmorPiece = (isEmpty: boolean = false): ArmorPiece => {
   }
   const maxSP = Math.floor(Math.random() * 5) + 1;
   return {
-    reductions: [TypesOfDamage.BLUDGEONING],
+    reductions: [],
     maxSP: maxSP,
     currentSP: maxSP,
     encumbranceValue: 0,
@@ -152,8 +152,8 @@ export const generateRandomCharacter = (
       leftLeg: getRandomArmorPiece(true),
     },
     weapons: [WEAPON_1, WEAPON_2],
-    susceptibilities: [TypesOfDamage.SLASHING],
-    immunities: [TypesOfDamage.PIERCING],
+    susceptibilities: [],
+    immunities: [],
   };
 
   return character;
