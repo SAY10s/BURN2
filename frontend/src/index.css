@@ -71,7 +71,10 @@
 
 @keyframes highlightFade {
   0% {
-    opacity: 1;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
   }
   100% {
     opacity: 0;
@@ -84,15 +87,15 @@
     transform: translate3d(0, 0, 0);
   }
   20% {
-    transform: translate3d(-5px, 0, 0) rotate3d(0, 1, 0, -10deg);
+    transform: translate3d(-1px, 0, 0);
   }
   40% {
-    transform: translate3d(5px, 0, 0) rotate3d(0, 1, 0, 10deg);
+    transform: translate3d(1px, 0, 0);
   }
   60% {
-    transform: translate3d(-5px, 0, 0) rotate3d(1, 0, 0, -10deg);
+    transform: translate3d(-1px, 0, 0);
   }
   80% {
-    transform: translate3d(5px, 0, 0) rotate3d(1, 0, 0, 10deg);
+    transform: translate3d(1px, 0, 0);
   }
 }

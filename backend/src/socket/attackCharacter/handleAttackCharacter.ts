@@ -92,7 +92,7 @@ export async function handleAttackCharacter(
       Object.assign(AttackDataSingleton.getInstance(), finalAttackData);
       AttackDataSingleton.getInstance().attackStage = "executed_attack";
 
-      updateGameState(2000);
+      updateGameState(1000);
       updateAttackData();
     });
   });

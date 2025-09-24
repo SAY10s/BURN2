@@ -6,8 +6,6 @@ import { useGameStore } from "./hooks/useGameStore";
 import PlayersTable from "./components/PlayersTable/PlayersTable";
 import CharacterTable from "./components/CharactersTable/CharactersTable";
 import AttackDataTable from "./components/DEV/attackData/AttackData";
-import Header from "./components/Header/Header";
-// import RandomNumber from "./components/Header/rolltest";
 
 //Modals
 import AttackModal from "./components/Modals/AttackModal/AttackModal";
@@ -55,8 +53,11 @@ export default function App() {
     <main className="font-primary flex min-h-screen flex-col items-center bg-[url('/smokebg.png')] bg-cover bg-center py-4 text-white">
       {/* <Header /> */}
       <div className="relative grid w-8/10 grid-cols-2 gap-4">
-        <div className="col-span-2">
+        <div className="col-span-2 mt-16">
           <AttackDataBox attackData={attackData} />
+        </div>
+        <div className="text-secondary col-span-2 mt-8 text-center text-lg">
+          {gameState.debugMessage}
         </div>
         <div className="col-span-2">
           <CharacterTable

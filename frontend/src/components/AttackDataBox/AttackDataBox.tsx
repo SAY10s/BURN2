@@ -98,8 +98,8 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
 
     if (isAnimating) {
       interval = setInterval(() => {
-        setRandomNum(Math.floor(Math.random() * 15) + 1);
-      }, 100);
+        setRandomNum(Math.floor(Math.random() * 35) + 1);
+      }, 50);
     } else {
       clearInterval(interval);
     }
@@ -111,7 +111,8 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
 
   return (
     <>
-      <div className="my-16 grid grid-cols-3">
+      <div>{isAnimating}</div>
+      <div className="grid grid-cols-3">
         {/* ACTOR */}
         <CharacterBox
           character={actorCharacter}
@@ -121,7 +122,7 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
           rollValue={attackData.offensiveRoll.total}
           randomNum={randomNum}
         >
-          <div>
+          <div className="text-center text-xl uppercase">
             {attackData.attackStage !== "none" &&
               TYPES_OF_ATTACK_TRANSLATION[attackData.typeOfAttack]}
           </div>
@@ -144,7 +145,7 @@ export default function AttackDataBox({ attackData }: AttackDataBoxProps) {
           rollValue={attackData.defensiveRoll.total}
           randomNum={randomNum}
         >
-          <div>
+          <div className="text-center text-xl uppercase">
             {attackData.attackStage !== "none" &&
               TYPES_OF_DEFENCE_TRANSLATION[attackData.typeOfDefence]}
           </div>
