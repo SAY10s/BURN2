@@ -41,3 +41,16 @@ export enum TypesOfAttack {
    */
   SPELL = "SPELL",
 }
+
+export const TYPES_OF_ATTACK_TRANSLATION: Record<TypesOfAttack, string> = {
+  [TypesOfAttack.FAST_STRIKE]: "Szybki cios",
+  [TypesOfAttack.REGULAR_STRIKE]: "Zwykły cios",
+  [TypesOfAttack.DOUBLE_STRIKE]: "Podwójny cios",
+  [TypesOfAttack.STRONG_STRIKE]: "Silne uderzenie",
+  [TypesOfAttack.DISARM]: "Rozbrojenie",
+  [TypesOfAttack.TRIP]: "Podcięcie",
+  [TypesOfAttack.CHARGE]: "Szarża",
+  [TypesOfAttack.POMMEL_STRIKE]: "Płazowanie",
+  [TypesOfAttack.FEINT]: "Finta",
+  [TypesOfAttack.SPELL]: "Zaklęcie",
+};
