@@ -26,6 +26,7 @@ export function resolveDefence(
     (targetCharacter.currentHP / targetCharacter.maxHP) * 100;
 
   attackDataProp.attackStage = "waiting_for_gms_approval";
+  attackDataProp.typeOfDefence = defenceType;
 
   switch (defenceType) {
     case TypesOfDefence.DODGE:
