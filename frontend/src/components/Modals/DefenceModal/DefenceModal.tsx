@@ -1,7 +1,10 @@
 import { getCharacterByCharactersId } from "../../../shared/helpers/characterGetters";
 import type { AttackData } from "../../../shared/types/attackData";
 import type { Character } from "../../../shared/types/character";
-import { TypesOfDefence } from "../../../shared/types/typesOfDefence";
+import {
+  TYPES_OF_DEFENCE_TRANSLATION,
+  TypesOfDefence,
+} from "../../../shared/types/typesOfDefence";
 import Button from "../../UI/Button";
 import Modal from "../../UI/Modal";
 
@@ -29,10 +32,10 @@ export default function DefenceModal({
         <span className="text-primary font-bold">{actorCharacter.name}</span>{" "}
         atakuje Cię przy użyciu {attackData.actorWeapon.name}.
       </p>
-      <div className="flex justify-center gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {Object.values(TypesOfDefence).map((value) => (
           <Button key={value} onClick={() => onDefend(value as TypesOfDefence)}>
-            {value.replace(/_/g, " ")}
+            {TYPES_OF_DEFENCE_TRANSLATION[value as TypesOfDefence]}
           </Button>
         ))}
       </div>

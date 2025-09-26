@@ -1,7 +1,11 @@
 import { getCharacterByCharactersId } from "../../../shared/helpers/characterGetters";
 import type { AttackData } from "../../../shared/types/attackData";
 import type { Character } from "../../../shared/types/character";
-import { TypesOfAttack } from "../../../shared/types/TypesOfAttack";
+import {
+  TYPES_OF_ATTACK_TRANSLATION,
+  TypesOfAttack,
+} from "../../../shared/types/TypesOfAttack";
+import { TYPES_OF_DAMAGE_TRANSLATION } from "../../../shared/types/typesOfDamage";
 import Button from "../../UI/Button";
 import Modal from "../../UI/Modal";
 
@@ -85,7 +89,7 @@ export default function AttackModal({
           >
             {Object.values(TypesOfAttack).map((type) => (
               <option key={type} value={type}>
-                {type.replace(/_/g, " ")}
+                {TYPES_OF_ATTACK_TRANSLATION[type]}
               </option>
             ))}
           </select>
@@ -109,7 +113,7 @@ export default function AttackModal({
             </option>
             {attackData.actorWeapon.typesOfDamage.map((damageType) => (
               <option key={damageType} value={damageType}>
-                {damageType.replace(/_/g, " ")}
+                {TYPES_OF_DAMAGE_TRANSLATION[damageType]}
               </option>
             ))}
           </select>

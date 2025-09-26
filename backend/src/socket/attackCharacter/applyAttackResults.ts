@@ -7,7 +7,42 @@ import { getActorAndTarget } from "./utils/getActorAndTarget";
 import { Socket } from "socket.io";
 import { AttackData } from "../../shared/types/attackData";
 import { addDebugMessage } from "../utils/addDebugMessage";
-import { AttackDataSingleton } from "../../singletons/AttackDataSingleton";
+import { Character } from "../../shared/types/character";
+
+const locationToArmorPieceKey: Record<
+  number,
+  keyof Character["characterArmor"]
+> = {
+  1: "head",
+  2: "torso",
+  3: "torso",
+  4: "torso",
+  5: "rightArm",
+  6: "leftArm",
+  7: "rightLeg",
+  8: "rightLeg",
+  9: "leftLeg",
+  10: "leftLeg",
+};
+const LOCATION_NAMES_TRANSLATION: Record<
+  keyof Character["characterArmor"],
+  string
+> = {
+  head: "głowa",
+  torso: "tułów",
+  rightArm: "prawa ręka",
+  leftArm: "lewa ręka",
+  rightLeg: "prawa noga",
+  leftLeg: "lewa noga",
+};
+const locationMultipliers: Record<keyof Character["characterArmor"], number> = {
+  head: 3,
+  torso: 1,
+  rightArm: 0.5,
+  leftArm: 0.5,
+  rightLeg: 0.5,
+  leftLeg: 0.5,
+};
 
 export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
   const {
@@ -61,24 +96,12 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
     }
 
     const location = locationRoll.total;
-    const locationToArmorPieceKey: Record<
-      number,
-      keyof typeof targetCharacter.characterArmor
-    > = {
-      1: "head",
-      2: "torso",
-      3: "torso",
-      4: "torso",
-      5: "rightArm",
-      6: "leftArm",
-      7: "rightLeg",
-      8: "rightLeg",
-      9: "leftLeg",
-      10: "leftLeg",
-    };
+
     const armorPieceKey = locationToArmorPieceKey[location];
     if (!armorPieceKey) throw new Error("Invalid location roll: " + location);
-    addDebugMessage(`Trafienie w ${armorPieceKey}.`);
+    addDebugMessage(
+      `Trafienie w ${LOCATION_NAMES_TRANSLATION[armorPieceKey]}.`
+    );
 
     const armorPiece = targetCharacter.characterArmor[armorPieceKey];
     const armorSP = armorPiece?.currentSP ?? 0;
@@ -117,18 +140,6 @@ export function applyAttackResults(socket: Socket, attackDataProp: AttackData) {
       damage = Math.floor(damage * 2);
       addDebugMessage(`Cel jest podatny na obrażenia.`);
     }
-
-    const locationMultipliers: Record<
-      keyof typeof targetCharacter.characterArmor,
-      number
-    > = {
-      head: 3,
-      torso: 1,
-      rightArm: 0.5,
-      leftArm: 0.5,
-      rightLeg: 0.5,
-      leftLeg: 0.5,
-    };
 
     const locationMultiplier = locationMultipliers[armorPieceKey] || 1;
     damage = Math.floor(damage * locationMultiplier);
