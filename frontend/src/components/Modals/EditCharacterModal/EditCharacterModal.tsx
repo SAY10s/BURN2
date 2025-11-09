@@ -4,6 +4,7 @@ import { getCharacterByCharactersId } from "../../../shared/helpers/characterGet
 import { ValueBar } from "../../UI/ValueBar";
 import Button from "../../UI/Button";
 import Modal from "../../UI/Modal";
+import { TypesOfStatus } from "../../../shared/types/typesOfStatus";
 
 type EditCharacterModalProps = {
   onConfirm: () => void;
@@ -22,6 +23,7 @@ export default function EditCharacterModal({
   const updateCharacterStat = useGameStore(
     (state) => state.updateCharacterStat,
   );
+  const switchStatusEffect = useGameStore((state) => state.switchStatusEffect);
   const switchIsAlive = useGameStore((state) => state.switchIsAlive);
   const targetCharacter = getCharacterByCharactersId(
     targetCharacterID,
@@ -122,6 +124,24 @@ export default function EditCharacterModal({
           {targetCharacter.isAlive ? "Zabij" : "Wskrześ"}
         </Button>
         <Button onClick={onConfirm}>Potwierdź</Button>
+      </div>
+      <div>
+        <div>Statusy</div>
+        <div>
+          {Object.values(TypesOfStatus).map((status) => (
+            <div
+              key={status}
+              className="flex items-center justify-between py-1"
+            >
+              <div>{status}</div>
+              <Button
+                onClick={() => switchStatusEffect(targetCharacterID, status)}
+              >
+                {targetCharacter.status.includes(status) ? "Usuń" : "Dodaj"}
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
     </Modal>
   );

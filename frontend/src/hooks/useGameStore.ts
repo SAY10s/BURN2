@@ -3,6 +3,7 @@ import type { GameState } from "../shared/types/gameState";
 import type { AttackData } from "../shared/types/attackData";
 import { INITIAL_GAME_STATE } from "../shared/consts/initialGameState";
 import { INITIAL_ATTACK_DATA } from "../shared/consts/initialAttackData";
+import type { TypesOfStatus } from "../shared/types/typesOfStatus";
 
 interface GameStore {
   gameState: GameState;
@@ -33,6 +34,7 @@ interface GameStore {
     delta: number,
   ) => void;
   switchIsAlive: (characterID: string) => void;
+  switchStatusEffect: (characterID: string, status: TypesOfStatus) => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -69,6 +71,24 @@ export const useGameStore = create<GameStore>((set) => ({
         characters: state.gameState.characters.map((char) =>
           char.id === characterID ? { ...char, isAlive: !char.isAlive } : char,
         ),
+      },
+    })),
+  switchStatusEffect: (characterID, status) =>
+    set((state) => ({
+      gameState: {
+        ...state.gameState,
+        characters: state.gameState.characters.map((char) => {
+          if (char.id === characterID) {
+            const hasStatus = char.status.includes(status);
+            return {
+              ...char,
+              status: hasStatus
+                ? char.status.filter((s) => s !== status)
+                : [...char.status, status],
+            };
+          }
+          return char;
+        }),
       },
     })),
 }));
