@@ -36,7 +36,7 @@ npm start
 Database that BURN2 is using is MongoDB. To run the project, you need to create a .env configuration file in `backend` directory.
 
 1. Create a file named .env in `backend/` folder
-2. Copy the required environment variables from the example file (.env.example)
+2. Copy the required environment variables from the example file `(.env.example)`
 3. Fill in the appropriate values
 
 ### Frontend
